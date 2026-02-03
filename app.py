@@ -332,8 +332,8 @@ def page_login_register():
     
     with tab1:
         st.subheader(tr("Se connecter à votre compte", "Log in to your account"))
-        email = st.text_input("Email", key="login_email")
-        password = st.text_input("Mot de passe", type="password", key="login_password")
+        email = st.text_input("Email", placeholder="exemple@email.com", key="login_email")
+        password = st.text_input("Mot de passe", type="password", placeholder="••••••••", key="login_password")
         
         # Load user to check if verification is required
         from src.auth import load_users
@@ -343,7 +343,7 @@ def page_login_register():
         
         if needs_verification and email in users:
             st.info("⚠️ Votre email n'a pas encore été vérifié. Veuillez entrer le code reçu par email.")
-            verification_code = st.text_input("Code de vérification (6 chiffres)", key="login_ver_code", max_chars=6)
+            verification_code = st.text_input("Code de vérification (6 chiffres)", placeholder="000000", key="login_ver_code", max_chars=6)
         else:
             verification_code = None
         
@@ -392,9 +392,9 @@ def page_login_register():
         st.subheader(tr("Créer un nouveau compte", "Create a new account"))
         st.markdown("Remplissez les champs ci-dessous pour créer un compte.")
         
-        reg_name = st.text_input("Nom complet", key="reg_name")
-        reg_email = st.text_input("Email", key="reg_email")
-        reg_password = st.text_input("Mot de passe (min 8 caractères)", type="password", key="reg_password")
+        reg_name = st.text_input("Nom complet", placeholder="Jean Dupont", key="reg_name")
+        reg_email = st.text_input("Email", placeholder="votre@email.com", key="reg_email")
+        reg_password = st.text_input("Mot de passe (min 8 caractères)", type="password", placeholder="••••••••••••", key="reg_password")
         
         if st.button("S'inscrire", key="btn_register", use_container_width=True):
             if reg_name and reg_email and reg_password:
