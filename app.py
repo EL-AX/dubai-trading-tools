@@ -35,8 +35,23 @@ setInterval(clickRefresh, 5000);
 """, unsafe_allow_html=True)
 
 def apply_custom_theme():
-    """Simple styling - no custom theme override. Let Streamlit handle it."""
-    pass
+    """Simple styling - boutons bleu nuit uniquement."""
+    st.markdown(r"""
+    <style>
+    .stButton > button {
+        background-color: #001a4d !important;
+        color: white !important;
+        border: 2px solid #003d99 !important;
+        border-radius: 8px !important;
+        font-weight: bold !important;
+        padding: 10px 20px !important;
+    }
+    .stButton > button:hover {
+        background-color: #003d99 !important;
+        border: 2px solid #0055cc !important;
+    }
+    </style>
+    """, unsafe_allow_html=True)
 
 # Simple translator helper (FR/EN)
 def tr(fr_text, en_text):
@@ -46,8 +61,10 @@ def tr(fr_text, en_text):
 def show_header():
     col1, col2, col3 = st.columns([1, 3, 1])
     with col1:
-        st.write("")
-        st.markdown("<h1 style='text-align: center; font-size: 60px;'>📊</h1>", unsafe_allow_html=True)
+        try:
+            st.image("logo/IMG-20250824-WA0020.jpg", width=120)
+        except:
+            st.write("📊")
     with col2:
         st.markdown("<h1 style='text-align: center;'>📈 Dubai Trading Tools</h1>", unsafe_allow_html=True)
         st.markdown("<p style='text-align:center;'>Plateforme de trading pour les professionnels</p>", unsafe_allow_html=True)
