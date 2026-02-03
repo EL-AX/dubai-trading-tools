@@ -85,7 +85,7 @@ def show_header():
             st.write("📊")
     with col2:
         st.markdown("<h1 style='text-align: center;'>📈 Dubai Trading Tools</h1>", unsafe_allow_html=True)
-        st.markdown("<p style='text-align:center;'>🤖 Assistant d'analyse pour traders - Signaux IA, Indicateurs, Risques</p>", unsafe_allow_html=True)
+        st.markdown("<p style='text-align:center;'>Plateforme de trading pour les professionnels</p>", unsafe_allow_html=True)
 
 def get_ai_news(force_refresh=False):
     """Fetch AI-powered news from multiple sources with caching (5h) and force refresh capability"""
@@ -1049,6 +1049,100 @@ def page_dashboard():
         if concept:
             st.markdown(format_tooltip_markdown(concept))
 
+def page_patterns():
+    """Affiche les patterns de bougies et stratégies basés sur les PDFs d'apprentissage"""
+    st.markdown("## 🕯️ Patterns de Bougies & Stratégies")
+    
+    # Retour vers le tableau de bord
+    if st.button(tr("← Retour au tableau de bord", "← Back to dashboard"), key="btn_back_patterns", use_container_width=True):
+        st.session_state.current_page = "dashboard"
+        st.session_state.page_selector = tr("📊 Tableau de Bord", "📊 Dashboard")
+        st.rerun()
+    
+    st.divider()
+    
+    # Onglets pour les patterns
+    tab1, tab2, tab3 = st.tabs([tr("📚 Patterns Haussiers", "📚 Bullish Patterns"), 
+                                  tr("📍 Patterns Baissiers", "📍 Bearish Patterns"),
+                                  tr("⚠️ Gestion du Risque", "⚠️ Risk Management")])
+    
+    with tab1:
+        st.subheader(tr("Patterns Haussiers Clés", "Key Bullish Patterns"))
+        patterns_bullish = {
+            tr("Marteau (Hammer)", "Hammer"): tr("Bas long, corps petit, pas de mèche supérieure. Signal d'inversion haussière.", 
+                                                  "Long lower wick, small body, no upper wick. Bullish reversal signal."),
+            tr("Engulfante Haussière", "Bullish Engulfing"): tr("Bougies opposées: baissière puis haussière qui l'engloutit. Forte inversion.", 
+                                                                "Opposite candles: bearish then bullish that engulfs it. Strong reversal."),
+            tr("Piercing Line", "Piercing Line"): tr("Baissière suivi de haussière qui perce 50% du précédent. Inversion.", 
+                                                      "Bearish followed by bullish piercing 50% of previous. Reversal."),
+            tr("Étoile du Matin", "Morning Star"): tr("3 bougies: baissière, petite, haussière. Inversion significative.", 
+                                                      "3 candles: bearish, small, bullish. Significant reversal."),
+        }
+        
+        for pattern, description in patterns_bullish.items():
+            with st.expander(f"✅ {pattern}"):
+                st.write(description)
+                st.info(tr("🎯 Action: Considérez l'achat avec confirmation de volume.", 
+                          "🎯 Action: Consider buying with volume confirmation."))
+    
+    with tab2:
+        st.subheader(tr("Patterns Baissiers Clés", "Key Bearish Patterns"))
+        patterns_bearish = {
+            tr("Pendue (Hanging Man)", "Hanging Man"): tr("Similaire au Marteau mais en contexte haussier. Signal de faiblesse.", 
+                                                           "Similar to Hammer but in bullish context. Weakness signal."),
+            tr("Engulfante Baissière", "Bearish Engulfing"): tr("Haussière suivi de baissière qui l'engloutit. Forte inversion.", 
+                                                                "Bullish followed by bearish that engulfs it. Strong reversal."),
+            tr("Nuage Sombre", "Dark Cloud Cover"): tr("Haussière suivi de baissière qui perce 50% du précédent. Inversion.", 
+                                                        "Bullish followed by bearish piercing 50% of previous. Reversal."),
+            tr("Étoile du Soir", "Evening Star"): tr("3 bougies: haussière, petite, baissière. Inversion significative.", 
+                                                      "3 candles: bullish, small, bearish. Significant reversal."),
+        }
+        
+        for pattern, description in patterns_bearish.items():
+            with st.expander(f"🔴 {pattern}"):
+                st.write(description)
+                st.info(tr("🎯 Action: Considérez la vente avec confirmation de volume.", 
+                          "🎯 Action: Consider selling with volume confirmation."))
+    
+    with tab3:
+        st.subheader(tr("Gestion du Risque & Capital", "Risk & Capital Management"))
+        
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            st.markdown(tr("### 💰 Stratégies Gagnantes", "### 💰 Winning Strategies"))
+            st.write(tr("""
+            - **Position Sizing**: Risquez max 2% par trade
+            - **Stop Loss**: Fixez toujours un stop loss
+            - **Take Profit**: Visez 1:2 ou 1:3 (risk:reward)
+            - **Diversification**: Ne concentrez pas tout sur 1 asset
+            - **Journal**: Notez chaque trade et leçon apprise
+            """, """
+            - **Position Sizing**: Risk max 2% per trade
+            - **Stop Loss**: Always set a stop loss
+            - **Take Profit**: Target 1:2 or 1:3 (risk:reward)
+            - **Diversification**: Don't concentrate on 1 asset
+            - **Journal**: Log every trade and lesson learned
+            """))
+        
+        with col2:
+            st.markdown(tr("### ⚠️ Erreurs à Éviter", "### ⚠️ Mistakes to Avoid"))
+            st.write(tr("""
+            - ❌ Trader sans plan
+            - ❌ Overtrading (trop de trades)
+            - ❌ Ne pas respecter le stop loss
+            - ❌ Trader avec émotion
+            - ❌ Risquer plus que 2% du capital
+            - ❌ Ignorer la gestion du risque
+            """, """
+            - ❌ Trading without a plan
+            - ❌ Overtrading (too many trades)
+            - ❌ Not respecting stop loss
+            - ❌ Trading with emotion
+            - ❌ Risking more than 2% of capital
+            - ❌ Ignoring risk management
+            """))
+
 def page_settings():
     st.markdown("## ⚙️ Paramètres")
     
@@ -1079,17 +1173,21 @@ def page_settings():
             st.session_state.currency = currency
             st.session_state.candle_style = candle_style
             st.success(tr("✅ Paramètres enregistrés!", "✅ Settings saved!"))
+            # Update selector and rerun
+            st.session_state.page_selector = tr("⚙️ Paramètres", "⚙️ Settings")
             st.rerun()
     
     with col2:
         if st.button("👁️ Aperçu", use_container_width=True):
             st.session_state.preview_candle_style = True
             st.session_state.candle_style = candle_style
+            st.session_state.page_selector = tr("⚙️ Paramètres", "⚙️ Settings")
             st.info(f"Aperçu: {candle_style}")
     
     with col3:
         if st.button("❌ Annuler", use_container_width=True):
             st.session_state.current_page = "dashboard"
+            st.session_state.page_selector = tr("📊 Tableau de Bord", "📊 Dashboard")
             st.rerun()
 
 def main():
@@ -1117,30 +1215,48 @@ def main():
     else:
         if "current_page" not in st.session_state:
             st.session_state.current_page = "dashboard"
+        if "page_selector" not in st.session_state:
+            st.session_state.page_selector = tr("📊 Tableau de Bord", "📊 Dashboard")
         
         with st.sidebar:
             st.title(tr("📍 Navigation", "📍 Navigation"))
             menu_options = [
                 tr("📊 Tableau de Bord", "📊 Dashboard"),
                 tr("📚 Tutoriel", "📚 Tutorial"),
+                tr("�️ Patterns", "🕯️ Patterns"),
                 tr("📰 Actualités IA", "📰 AI News"),
                 tr("⚙️ Paramètres", "⚙️ Settings")
             ]
-            page = st.radio(tr("Menu:", "Menu:"), menu_options, key="page_selector")
+            # Map current_page to menu index
+            current_index = 0
+            if st.session_state.current_page == "tutorial":
+                current_index = 1
+            elif st.session_state.current_page == "patterns":
+                current_index = 2
+            elif st.session_state.current_page == "news":
+                current_index = 3
+            elif st.session_state.current_page == "settings":
+                current_index = 4
+            
+            page = st.radio(tr("Menu:", "Menu:"), menu_options, index=current_index, key="page_selector")
 
             if page == menu_options[0]:
                 st.session_state.current_page = "dashboard"
             elif page == menu_options[1]:
                 st.session_state.current_page = "tutorial"
             elif page == menu_options[2]:
-                st.session_state.current_page = "news"
+                st.session_state.current_page = "patterns"
             elif page == menu_options[3]:
+                st.session_state.current_page = "news"
+            elif page == menu_options[4]:
                 st.session_state.current_page = "settings"
         
         if st.session_state.current_page == "dashboard":
             page_dashboard()
         elif st.session_state.current_page == "tutorial":
             page_tutorial()
+        elif st.session_state.current_page == "patterns":
+            page_patterns()
         elif st.session_state.current_page == "news":
             page_news_ai()
         elif st.session_state.current_page == "settings":
