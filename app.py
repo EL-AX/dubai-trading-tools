@@ -35,120 +35,8 @@ setInterval(clickRefresh, 5000);
 """, unsafe_allow_html=True)
 
 def apply_custom_theme():
-    """Let the browser/system handle light/dark mode via prefers-color-scheme.
-    This removes the manual theme toggle and respects OS settings. Also allows an explicit user override stored in session."""
-    st.markdown("""
-    <style>
-    /* Let the system/browser handle theme - CSS follows prefers-color-scheme */
-    @media (prefers-color-scheme: dark) {
-        :root {
-            --primary-color: #00d4ff;
-            --background-color: #0a0e27;
-            --secondary-background-color: #1a2540;
-            --accent-color: #26a69a;
-            --danger-color: #ef5350;
-        }
-        
-        .stApp {
-            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
-            color: #e0e0e0;
-            font-family: 'Segoe UI', Roboto, Arial, sans-serif;
-            -webkit-backdrop-filter: blur(6px);
-            backdrop-filter: blur(6px);
-        }
-        
-        .stMetric {
-            background: linear-gradient(135deg, #1a2540 0%, #242d4a 100%);
-            color: #ffffff;
-            border: 2px solid #00d4ff;
-            st.markdown('''<style>
-            @media (prefers-color-scheme: dark) {
-                :root {
-                    --primary-color: #00d4ff;
-                    --background-color: #0a0e27;
-                    --secondary-background-color: #1a2540;
-                    --accent-color: #26a69a;
-                    --danger-color: #ef5350;
-                }
-                .stApp {
-                    background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
-                    color: #f5f6fa !important;
-                    font-family: "Segoe UI", "Roboto", Arial, sans-serif;
-                    text-shadow: 0 1px 2px rgba(0,0,0,0.18);
-                }
-                h1, h2, h3, h4, h5, h6 {
-                    color: #00d4ff !important;
-                    font-family: "Segoe UI", "Roboto", Arial, sans-serif;
-                    text-shadow: 0 2px 8px rgba(0,0,0,0.22);
-                }
-                .stMarkdown, .stText, .stCaption, .stSubheader, .stTitle, .stHeader {
-                    color: #f5f6fa !important;
-                    font-family: "Segoe UI", "Roboto", Arial, sans-serif;
-                }
-                .stButton > button {
-                    background: linear-gradient(135deg, #00d4ff 0%, #00b8d4 100%);
-                    color: #0a0e27 !important;
-                    font-weight: bold;
-                    border-radius: 8px;
-                    box-shadow: 0 2px 8px rgba(0,212,255,0.12);
-                }
-                .stRadio label, .stCheckbox label, .stSelectbox label {
-                    color: #e0e0e0 !important;
-                    font-size: 1.08em;
-                }
-                .stMetric {
-                    background: linear-gradient(135deg, #1a2540 0%, #242d4a 100%);
-                    color: #ffffff !important;
-                    border: 2px solid #00d4ff;
-                    border-radius: 12px;
-                    padding: 25px;
-                    box-shadow: 0 8px 32px rgba(0, 212, 255, 0.15);
-                }
-                .stDataFrame, .stTable {
-                    color: #f5f6fa !important;
-                    background: #181c2a !important;
-                }
-                .stAlert, .stSuccess, .stWarning, .stError {
-                    color: #f5f6fa !important;
-                }
-            }
-            @media (prefers-color-scheme: light) {
-                .stApp {
-                    background-color: #ffffff;
-                    color: #0d1117 !important;
-                    font-family: "Segoe UI", "Roboto", Arial, sans-serif;
-                }
-                h1, h2, h3, h4, h5, h6 {
-                    color: #0d1117 !important;
-                    font-family: "Segoe UI", "Roboto", Arial, sans-serif;
-                }
-                .stButton > button {
-                    background-color: #0d1117;
-                    color: #ffffff !important;
-                    font-weight: bold;
-                    border-radius: 8px;
-                }
-                .stRadio label, .stCheckbox label, .stSelectbox label {
-                    color: #222 !important;
-                    font-size: 1.08em;
-                }
-                .stMetric {
-                    background: #f5f6fa !important;
-                    color: #0d1117 !important;
-                    border: 2px solid #0d1117;
-                    border-radius: 12px;
-                    padding: 25px;
-                    box-shadow: 0 8px 32px rgba(0,0,0,0.08);
-                }
-                .stDataFrame, .stTable {
-                    color: #0d1117 !important;
-                    background: #f5f6fa !important;
-                }
-                .stAlert, .stSuccess, .stWarning, .stError {
-                    color: #0d1117 !important;
-                }
-            }
-            </style>''', unsafe_allow_html=True)
+    """Simple styling - no custom theme override. Let Streamlit handle it."""
+    pass
 
 # Simple translator helper (FR/EN)
 def tr(fr_text, en_text):
@@ -158,16 +46,11 @@ def tr(fr_text, en_text):
 def show_header():
     col1, col2, col3 = st.columns([1, 3, 1])
     with col1:
-        logo_path = "logo/IMG-20250824-WA0020.jpg"
-        logo_style = r"<style>.supernova-logo { width: 120px; height: 120px; border-radius: 50%; display:block; margin-left:auto; margin-right:auto; border: 4px solid rgba(255,255,255,0.06); box-shadow: 0 8px 24px rgba(0,0,0,0.6); background: linear-gradient(135deg, rgba(0,212,255,0.08), rgba(255,255,255,0.02)); }</style>"
-        st.markdown(logo_style, unsafe_allow_html=True)
-        try:
-            st.image(logo_path, width=120)
-        except Exception:
-            st.write("📊")
+        st.write("")
+        st.markdown("<h1 style='text-align: center; font-size: 60px;'>📊</h1>", unsafe_allow_html=True)
     with col2:
-        st.markdown(tr("<h1 style='text-align: center; font-size: 40px;'>📈 Dubai Trading Tools</h1>", "<h1 style='text-align: center; font-size: 40px;'>📈 Dubai Trading Tools</h1>"), unsafe_allow_html=True)
-        st.markdown(tr("<p style='text-align:center; color: #9aa; margin-top:-10px;'>La plateforme Super‑Nova pour traders quant</p>", "<p style='text-align:center; color: #9aa; margin-top:-10px;'>Super‑Nova platform for quant traders</p>"), unsafe_allow_html=True)
+        st.markdown("<h1 style='text-align: center;'>📈 Dubai Trading Tools</h1>", unsafe_allow_html=True)
+        st.markdown("<p style='text-align:center;'>Plateforme de trading pour les professionnels</p>", unsafe_allow_html=True)
 
 def get_ai_news():
     """Fetch real AI-powered news from multiple sources with French translations and real impact.
