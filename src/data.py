@@ -455,8 +455,11 @@ def fetch_gold_historical(days=90):
             
             simulation_price = close_price
         
-        df = pd.DataFrame(df_data).set_index('timestamp').sort_index()
-        return df
+        df = pd.DataFrame(df_data)
+        # Ensure timestamp is a column, not index
+        if 'timestamp' not in df.columns and df.index.name == 'timestamp':
+            df.reset_index(inplace=True)
+        return df.sort_values('timestamp')
     except Exception as e:
         # Ultimate fallback
         return generate_mock_data("XAU", days)

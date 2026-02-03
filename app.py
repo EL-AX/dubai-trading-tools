@@ -704,7 +704,11 @@ def page_dashboard():
                 st.warning(f"Pas de données disponibles pour {ticker}")
                 continue
                 
-            # Assurer que timestamp existe et est un datetime
+            # Reset index if timestamp is index instead of column
+            if hist_data.index.name == 'timestamp' and 'timestamp' not in hist_data.columns:
+                hist_data = hist_data.reset_index()
+            
+            # Ensure timestamp is datetime
             if 'timestamp' not in hist_data.columns:
                 hist_data['timestamp'] = pd.date_range(end=datetime.now(), periods=len(hist_data), freq='D')
             else:
@@ -720,29 +724,20 @@ def page_dashboard():
             fig = make_subplots(rows=2, cols=1, shared_xaxes=True,
                                 vertical_spacing=0.02, row_heights=[0.78, 0.22])
 
-            # Determine style based on user selection
+            # Determine style based on user selection - ALWAYS use Model style for premium look
             c_style = st.session_state.get("candle_style", "classic")
-            if c_style == "classic":
-                inc = dict(fillcolor='#26a69a', line=dict(color='#26a69a', width=2))
-                dec = dict(fillcolor='#ef5350', line=dict(color='#ef5350', width=2))
-            elif c_style == "boxy":
-                inc = dict(fillcolor='#00b894', line=dict(color='#007f5f', width=3))
-                dec = dict(fillcolor='#ff6b6b', line=dict(color='#a83232', width=3))
-            elif c_style == tr("Modèle", "Model") or c_style == "model":
-                # Exact style derived from 'model de bougies.webp' - Premium look
-                inc = dict(fillcolor='#17957b', line=dict(color='#17957b', width=2.5))
-                dec = dict(fillcolor='#e83a4a', line=dict(color='#e83a4a', width=2.5))
-                # Apply dark premium background for model style
-                fig.update_layout(
-                    plot_bgcolor='#0f1419', 
-                    paper_bgcolor='#0f1419', 
-                    font=dict(color='#ffffff', family='Arial, sans-serif'),
-                    title_font_size=16,
-                    margin=dict(l=50, r=50, t=60, b=50)
-                )
-            else:  # thin
-                inc = dict(fillcolor='#26a69a', line=dict(color='#26a69a', width=1))
-                dec = dict(fillcolor='#ef5350', line=dict(color='#ef5350', width=1))
+            # Premium Model style for all tickers
+            inc = dict(fillcolor='#17957b', line=dict(color='#17957b', width=2.5))
+            dec = dict(fillcolor='#e83a4a', line=dict(color='#e83a4a', width=2.5))
+            
+            # Apply dark premium background for all styles
+            fig.update_layout(
+                plot_bgcolor='#0f1419', 
+                paper_bgcolor='#0f1419', 
+                font=dict(color='#ffffff', family='Arial, sans-serif'),
+                title_font_size=16,
+                margin=dict(l=50, r=50, t=60, b=50)
+            )
 
             # Candlestick with improved hover and width (with robust validation)
             # Make a safe copy and coerce types
