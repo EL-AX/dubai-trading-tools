@@ -1,3 +1,16 @@
+"""
+© 2025-2026 ELOADXFAMILY - Tous droits réservés
+Module de données en temps réel et historiques
+
+Utilise APIs authentiques pour récupérer les données réelles:
+- CoinGecko API pour les cryptomonnaies (BTC, ETH, SOL)
+- exchangerate.host pour les paires de change (EUR, GBP, JPY, AUD)
+- metals.live pour les métaux précieux (Or/XAU)
+
+Avec fallback sur données mock réalistes pour continuité de service.
+Cache optimisé: 24h pour prix, 1h pour données historiques
+"""
+
 import requests
 import pandas as pd
 import numpy as np

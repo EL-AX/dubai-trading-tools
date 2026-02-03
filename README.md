@@ -1,6 +1,6 @@
 # 🚀 Dubai Trading Tools - Supernova Edition
 
-**Assistant d'analyse pour traders - IA & données crypto temps réel**
+**Assistant de trading professionnel avec IA & données cryptos en temps réel**
 
 Version: **5.0 (Supernova - Production Ready)**  
 Statut: ✅ **Déploiement complet**
@@ -45,7 +45,7 @@ Statut: ✅ **Déploiement complet**
 
 ## 📋 Vue d'ensemble
 
-Dubai Trading Tools est un **assistant d'analyse pour traders** - outils IA pour analyser les marchés crypto, forex, et or. 
+Dubai Trading Tools est un assistant de trading **PROFESSIONNEL** pour analyser les marchés crypto, forex, et or. 
 
 ### ✅ Ce que vous pouvez faire :
 - 📊 **Analyser** crypto/forex/or en temps réel
