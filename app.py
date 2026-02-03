@@ -774,11 +774,11 @@ def page_dashboard():
                     name='Prix',
                     increasing=dict(
                         fillcolor=inc['fillcolor'],
-                        line=dict(color=inc['line']['color'], width=2)
+                        line=dict(color=inc['line']['color'], width=2.5)
                     ),
                     decreasing=dict(
                         fillcolor=dec['fillcolor'],
-                        line=dict(color=dec['line']['color'], width=2)
+                        line=dict(color=dec['line']['color'], width=2.5)
                     ),
                     opacity=0.95,
                     showlegend=False,
@@ -845,16 +845,16 @@ def page_dashboard():
                     title='Volume', 
                     showline=True, linewidth=1, linecolor='rgba(255,255,255,0.2)'
                 ),
-                plot_bgcolor='#0a0e27',
-                paper_bgcolor='#0a0e27',
+                plot_bgcolor='#0f1419',
+                paper_bgcolor='#0f1419',
                 font=dict(color='#e0e0e0', size=12, family="Arial, Helvetica, sans-serif"),
                 margin=dict(b=80, t=100, l=60, r=80),
                 title_font_size=18,
                 showlegend=True,
                 legend=dict(
                     x=0.01, y=0.97, 
-                    bgcolor='rgba(10, 14, 39, 0.85)', 
-                    bordercolor='#26a69a', 
+                    bgcolor='rgba(15, 20, 25, 0.95)', 
+                    bordercolor='#17957b', 
                     borderwidth=2, 
                     font=dict(size=10, color='#e0e0e0')
                 )
