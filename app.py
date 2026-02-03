@@ -662,21 +662,48 @@ def page_dashboard():
                 dec = dict(fillcolor='#ef5350', line=dict(color='#ef5350', width=1))
                 candle_w = 0.35
 
-            # Candlestick with improved hover and width
-            fig.add_trace(go.Candlestick(
-                x=hist_data['timestamp'],
-                open=hist_data['open'],
-                high=hist_data['high'],
-                low=hist_data['low'],
-                close=hist_data['close'],
-                name='Prix',
-                increasing=inc,
-                decreasing=dec,
-                width=candle_w,
-                opacity=1,
-                showlegend=False,
-                hovertemplate='Date: %{x}<br>Open: %{open:.2f}<br>High: %{high:.2f}<br>Low: %{low:.2f}<br>Close: %{close:.2f}<extra></extra>'
-            ), row=1, col=1)
+            # Candlestick with improved hover and width (with robust validation)
+            # Make a safe copy and coerce types
+            df_candle = hist_data.copy()
+            required_cols = ['timestamp', 'open', 'high', 'low', 'close']
+            missing = [c for c in required_cols if c not in df_candle.columns]
+            if missing:
+                st.warning(f"Données manquantes pour {ticker}: {missing}")
+                continue
+
+            # Ensure timestamp is datetime
+            df_candle['timestamp'] = pd.to_datetime(df_candle['timestamp'], errors='coerce')
+
+            # Coerce OHLC to numeric and drop invalid rows
+            for c in ['open', 'high', 'low', 'close']:
+                df_candle[c] = pd.to_numeric(df_candle[c], errors='coerce')
+
+            df_candle = df_candle.dropna(subset=['timestamp', 'open', 'high', 'low', 'close'])
+            if df_candle.empty:
+                st.warning(f"Pas de données OHLC valides pour {ticker}.")
+                continue
+
+            # Sort by timestamp to avoid ordering issues
+            df_candle = df_candle.sort_values('timestamp')
+
+            try:
+                fig.add_trace(go.Candlestick(
+                    x=df_candle['timestamp'].tolist(),
+                    open=df_candle['open'].tolist(),
+                    high=df_candle['high'].tolist(),
+                    low=df_candle['low'].tolist(),
+                    close=df_candle['close'].tolist(),
+                    name='Prix',
+                    increasing=inc,
+                    decreasing=dec,
+                    width=candle_w,
+                    opacity=1,
+                    showlegend=False,
+                    hovertemplate='Date: %{x}<br>Open: %{open:.2f}<br>High: %{high:.2f}<br>Low: %{low:.2f}<br>Close: %{close:.2f}<extra></extra>'
+                ), row=1, col=1)
+            except Exception as e:
+                st.error(f"Erreur affichage bougies pour {ticker}: {e}")
+                continue
 
             # Volume bars - synchronized with candle colors
             if 'volume' in hist_data.columns:
