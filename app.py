@@ -523,15 +523,16 @@ def page_dashboard():
 
     # Show one-time welcome message after successful login - ANIMATED
     if st.session_state.get("show_welcome"):
-        name = st.session_state.get("just_logged_in_user", st.session_state.get("user_name"))
+        name = st.session_state.get("just_logged_in_user", st.session_state.get("user_name", "Trader"))
+        name = name if name else "Trader"  # Fallback if None
         # Animated welcome with confetti effect
-        st.markdown("""
+        st.markdown(f"""
         <style>
-        @keyframes slideInDown {
-            from { transform: translateY(-100px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-        .welcome-box {
+        @keyframes slideInDown {{
+            from {{ transform: translateY(-100px); opacity: 0; }}
+            to {{ transform: translateY(0); opacity: 1; }}
+        }}
+        .welcome-box {{
             animation: slideInDown 0.8s ease-out;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             padding: 30px;
@@ -542,13 +543,13 @@ def page_dashboard():
             font-weight: bold;
             box-shadow: 0 8px 32px rgba(0,0,0,0.2);
             margin-bottom: 20px;
-        }
+        }}
         </style>
         <div class="welcome-box">
-        ✨ Bienvenue <b>{}</b>! 🎉 ✨<br>
+        ✨ Bienvenue <b>{name}</b>! 🎉 ✨<br>
         <small style="font-size: 14px; margin-top: 10px;">Prêt à trader comme un pro? 🚀</small>
         </div>
-        """.format(name), unsafe_allow_html=True)
+        """, unsafe_allow_html=True)
         st.balloons()
         st.session_state.show_welcome = False
         st.session_state.just_logged_in_user = None
