@@ -769,6 +769,7 @@ def page_dashboard():
             df_candle = df_candle.sort_values('timestamp')
 
             try:
+                # Add candlestick with proper styling for thickness
                 fig.add_trace(go.Candlestick(
                     x=df_candle['timestamp'].tolist(),
                     open=df_candle['open'].tolist(),
@@ -776,11 +777,17 @@ def page_dashboard():
                     low=df_candle['low'].tolist(),
                     close=df_candle['close'].tolist(),
                     name='Prix',
-                    increasing=inc,
-                    decreasing=dec,
-                    opacity=1,
+                    increasing=dict(
+                        fillcolor=inc['fillcolor'],
+                        line=dict(color=inc['line']['color'], width=2)
+                    ),
+                    decreasing=dict(
+                        fillcolor=dec['fillcolor'],
+                        line=dict(color=dec['line']['color'], width=2)
+                    ),
+                    opacity=0.95,
                     showlegend=False,
-                    hovertemplate='Date: %{x}<br>Open: %{open:.2f}<br>High: %{high:.2f}<br>Low: %{low:.2f}<br>Close: %{close:.2f}<extra></extra>'
+                    hovertemplate='<b>%{x|%d-%m-%Y}</b><br>Open: %{open:.2f}<br>High: %{high:.2f}<br>Low: %{low:.2f}<br>Close: %{close:.2f}<extra></extra>'
                 ), row=1, col=1)
             except Exception as e:
                 st.error(f"Erreur affichage bougies pour {ticker}: {e}")
