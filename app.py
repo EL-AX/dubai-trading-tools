@@ -159,7 +159,7 @@ def show_header():
     col1, col2, col3 = st.columns([1, 3, 1])
     with col1:
         logo_path = "logo/IMG-20250824-WA0020.jpg"
-        logo_style = """<style>.supernova-logo { width: 120px; height: 120px; border-radius: 50%; display:block; margin-left:auto; margin-right:auto; border: 4px solid rgba(255,255,255,0.06); box-shadow: 0 8px 24px rgba(0,0,0,0.6); background: linear-gradient(135deg, rgba(0,212,255,0.08), rgba(255,255,255,0.02)); }</style>"""
+        logo_style = r"<style>.supernova-logo { width: 120px; height: 120px; border-radius: 50%; display:block; margin-left:auto; margin-right:auto; border: 4px solid rgba(255,255,255,0.06); box-shadow: 0 8px 24px rgba(0,0,0,0.6); background: linear-gradient(135deg, rgba(0,212,255,0.08), rgba(255,255,255,0.02)); }</style>"
         st.markdown(logo_style, unsafe_allow_html=True)
         try:
             st.image(logo_path, width=120)
