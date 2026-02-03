@@ -774,16 +774,26 @@ def page_dashboard():
                     name='Prix',
                     increasing=dict(
                         fillcolor=inc['fillcolor'],
-                        line=dict(color=inc['line']['color'], width=2.5)
+                        line=dict(color=inc['line']['color'], width=3)
                     ),
                     decreasing=dict(
                         fillcolor=dec['fillcolor'],
-                        line=dict(color=dec['line']['color'], width=2.5)
+                        line=dict(color=dec['line']['color'], width=3)
                     ),
                     opacity=0.95,
                     showlegend=False,
                     hovertemplate='<b>%{x|%d-%m-%Y}</b><br>Open: %{open:.2f}<br>High: %{high:.2f}<br>Low: %{low:.2f}<br>Close: %{close:.2f}<extra></extra>'
                 ), row=1, col=1)
+
+                # Ensure the last added trace keeps the styling regardless of later layout/template changes
+                try:
+                    last_trace = fig.data[-1]
+                    # Force update of increasing/decreasing line widths and colors
+                    last_trace.update(increasing=dict(fillcolor=inc['fillcolor'], line=dict(color=inc['line']['color'], width=3)),
+                                      decreasing=dict(fillcolor=dec['fillcolor'], line=dict(color=dec['line']['color'], width=3)),
+                                      opacity=0.95)
+                except Exception:
+                    pass
             except Exception as e:
                 st.error(f"Erreur affichage bougies pour {ticker}: {e}")
                 continue
