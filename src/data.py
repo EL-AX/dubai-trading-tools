@@ -263,13 +263,54 @@ def generate_mock_data(ticker, days=1, hours=None):
     return data
 
 def get_historical_data(ticker, days=90):
+    """Fetch real OHLC data from CoinGecko for crypto, mock for others"""
     cached = cache.get(f"history_{ticker}_{days}")
     if cached is not None:
         return cached
     
+    # Try real OHLC data for cryptos from CoinGecko
+    if ticker in ["BTC", "ETH", "SOL"]:
+        try:
+            ohlc_data = fetch_coingecko_ohlc(ticker, days)
+            if not ohlc_data.empty:
+                cache.set(f"history_{ticker}_{days}", ohlc_data, ttl=3600)  # 1h cache for real data
+                return ohlc_data
+        except Exception as e:
+            pass
+    
+    # Fallback to realistic mock data if API fails
     data = generate_mock_data(ticker, days)
     cache.set(f"history_{ticker}_{days}", data, ttl=600)
     return data
+
+def fetch_coingecko_ohlc(ticker, days):
+    """Fetch real OHLC data from CoinGecko"""
+    try:
+        coins = {
+            "BTC": "bitcoin",
+            "ETH": "ethereum",
+            "SOL": "solana"
+        }
+        if ticker not in coins:
+            return pd.DataFrame()
+        
+        # CoinGecko OHLC endpoint (daily data)
+        url = f"https://api.coingecko.com/api/v3/coins/{coins[ticker]}/ohlc?vs_currency=usd&days={days}"
+        response = requests.get(url, timeout=10)
+        
+        if response.status_code == 200:
+            ohlc_list = response.json()
+            if isinstance(ohlc_list, list) and len(ohlc_list) > 0:
+                df = pd.DataFrame(ohlc_list, columns=['timestamp', 'open', 'high', 'low', 'close'])
+                # Convert milliseconds to datetime
+                df['timestamp'] = pd.to_datetime(df['timestamp'], unit='ms')
+                # Add mock volume (CoinGecko OHLC doesn't include volume)
+                df['volume'] = df['close'] * np.random.uniform(0.5, 1.5, len(df))
+                return df
+    except Exception as e:
+        pass
+    
+    return pd.DataFrame()
 
 def get_live_price_batch(tickers):
     results = {}
