@@ -696,7 +696,6 @@ def page_dashboard():
                     name='Prix',
                     increasing=inc,
                     decreasing=dec,
-                    width=candle_w,
                     opacity=1,
                     showlegend=False,
                     hovertemplate='Date: %{x}<br>Open: %{open:.2f}<br>High: %{high:.2f}<br>Low: %{low:.2f}<br>Close: %{close:.2f}<extra></extra>'
