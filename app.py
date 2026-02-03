@@ -618,6 +618,18 @@ def page_dashboard():
             st.subheader(f"📈 {ticker} - Analyse Technique Complète")
             
             hist_data = get_historical_data(ticker, days=30)
+            
+            # Sécuriser les données pour le candlestick
+            if hist_data.empty:
+                st.warning(f"Pas de données disponibles pour {ticker}")
+                continue
+                
+            # Assurer que timestamp existe et est un datetime
+            if 'timestamp' not in hist_data.columns:
+                hist_data['timestamp'] = pd.date_range(end=datetime.now(), periods=len(hist_data), freq='D')
+            else:
+                hist_data['timestamp'] = pd.to_datetime(hist_data['timestamp'], errors='coerce')
+            
             prices = hist_data['close'].values
             
             rsi = calculate_rsi(prices)
