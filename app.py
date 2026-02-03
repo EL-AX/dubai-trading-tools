@@ -61,59 +61,94 @@ def apply_custom_theme():
             background: linear-gradient(135deg, #1a2540 0%, #242d4a 100%);
             color: #ffffff;
             border: 2px solid #00d4ff;
-            border-radius: 12px;
-            padding: 25px;
-            box-shadow: 0 8px 32px rgba(0, 212, 255, 0.15);
-        }
-        
-        h1, h2, h3, h4, h5, h6 {
-            color: #00d4ff;
-            font-family: 'Segoe UI', Roboto, Arial, sans-serif;
-        }
-        
-        .stButton > button {
-            background: linear-gradient(135deg, #00d4ff 0%, #00b8d4 100%);
-            color: #0a0e27 !important;
-        }
-    }
-    
-    @media (prefers-color-scheme: light) {
-        .stApp {
-            background-color: #ffffff;
-            color: #0d1117;
-            font-family: 'Segoe UI', Roboto, Arial, sans-serif;
-        }
-        
-        h1, h2, h3, h4, h5, h6 {
-            color: #0d1117;
-            font-family: 'Segoe UI', Roboto, Arial, sans-serif;
-        }
-        
-        .stButton > button {
-            background-color: #0d1117;
-            color: #ffffff !important;
-        }
-    }
-    </style>
-    """, unsafe_allow_html=True)
-
-    # If user explicitly selected a theme in settings, apply an immediate override
-    try:
-        user_override = st.session_state.get("theme", None)
-        if user_override == "dark":
-            st.markdown("""
-            <style>
-            .stApp { background: linear-gradient(135deg,#081026,#0f1630) !important; color: #e7eef8 !important; font-family: 'Segoe UI', Roboto, Arial, sans-serif; -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);}
-            </style>
-            """, unsafe_allow_html=True)
-        elif user_override == "light":
-            st.markdown("""
-            <style>
-            .stApp { background-color: #ffffff !important; color: #0d1117 !important; font-family: 'Segoe UI', Roboto, Arial, sans-serif;}
-            </style>
-            """, unsafe_allow_html=True)
-    except Exception:
-        pass
+            st.markdown('''<style>
+            @media (prefers-color-scheme: dark) {
+                :root {
+                    --primary-color: #00d4ff;
+                    --background-color: #0a0e27;
+                    --secondary-background-color: #1a2540;
+                    --accent-color: #26a69a;
+                    --danger-color: #ef5350;
+                }
+                .stApp {
+                    background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+                    color: #f5f6fa !important;
+                    font-family: "Segoe UI", "Roboto", Arial, sans-serif;
+                    text-shadow: 0 1px 2px rgba(0,0,0,0.18);
+                }
+                h1, h2, h3, h4, h5, h6 {
+                    color: #00d4ff !important;
+                    font-family: "Segoe UI", "Roboto", Arial, sans-serif;
+                    text-shadow: 0 2px 8px rgba(0,0,0,0.22);
+                }
+                .stMarkdown, .stText, .stCaption, .stSubheader, .stTitle, .stHeader {
+                    color: #f5f6fa !important;
+                    font-family: "Segoe UI", "Roboto", Arial, sans-serif;
+                }
+                .stButton > button {
+                    background: linear-gradient(135deg, #00d4ff 0%, #00b8d4 100%);
+                    color: #0a0e27 !important;
+                    font-weight: bold;
+                    border-radius: 8px;
+                    box-shadow: 0 2px 8px rgba(0,212,255,0.12);
+                }
+                .stRadio label, .stCheckbox label, .stSelectbox label {
+                    color: #e0e0e0 !important;
+                    font-size: 1.08em;
+                }
+                .stMetric {
+                    background: linear-gradient(135deg, #1a2540 0%, #242d4a 100%);
+                    color: #ffffff !important;
+                    border: 2px solid #00d4ff;
+                    border-radius: 12px;
+                    padding: 25px;
+                    box-shadow: 0 8px 32px rgba(0, 212, 255, 0.15);
+                }
+                .stDataFrame, .stTable {
+                    color: #f5f6fa !important;
+                    background: #181c2a !important;
+                }
+                .stAlert, .stSuccess, .stWarning, .stError {
+                    color: #f5f6fa !important;
+                }
+            }
+            @media (prefers-color-scheme: light) {
+                .stApp {
+                    background-color: #ffffff;
+                    color: #0d1117 !important;
+                    font-family: "Segoe UI", "Roboto", Arial, sans-serif;
+                }
+                h1, h2, h3, h4, h5, h6 {
+                    color: #0d1117 !important;
+                    font-family: "Segoe UI", "Roboto", Arial, sans-serif;
+                }
+                .stButton > button {
+                    background-color: #0d1117;
+                    color: #ffffff !important;
+                    font-weight: bold;
+                    border-radius: 8px;
+                }
+                .stRadio label, .stCheckbox label, .stSelectbox label {
+                    color: #222 !important;
+                    font-size: 1.08em;
+                }
+                .stMetric {
+                    background: #f5f6fa !important;
+                    color: #0d1117 !important;
+                    border: 2px solid #0d1117;
+                    border-radius: 12px;
+                    padding: 25px;
+                    box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+                }
+                .stDataFrame, .stTable {
+                    color: #0d1117 !important;
+                    background: #f5f6fa !important;
+                }
+                .stAlert, .stSuccess, .stWarning, .stError {
+                    color: #0d1117 !important;
+                }
+            }
+            </style>''', unsafe_allow_html=True)
 
 # Simple translator helper (FR/EN)
 def tr(fr_text, en_text):
@@ -123,15 +158,18 @@ def tr(fr_text, en_text):
 def show_header():
     col1, col2, col3 = st.columns([1, 3, 1])
     with col1:
-        # Stylish logo: rounded, gradient border, subtle shadow for a modern Windows 11 feel
-        st.markdown("""
-        <style>
-        .supernova-logo { width: 120px; height: 120px; border-radius: 50%; display:block; margin-left:auto; margin-right:auto; border: 4px solid rgba(255,255,255,0.06); box-shadow: 0 8px 24px rgba(0,0,0,0.6); background: linear-gradient(135deg, rgba(0,212,255,0.08), rgba(255,255,255,0.02)); }
-        </style>
-        """, unsafe_allow_html=True)
+        # Try Streamlit image first, fallback to HTML if needed
+        logo_path = "logo/IMG-20250824-WA0020.jpg"
         try:
-            st.markdown(f"<img src='logo/IMG-20250824-WA0020.jpg' class='supernova-logo' alt='Logo' />", unsafe_allow_html=True)
-        except:
+            st.image(logo_path, width=120)
+        except Exception:
+            st.markdown("""
+            <style>
+            .supernova-logo { width: 120px; height: 120px; border-radius: 50%; display:block; margin-left:auto; margin-right:auto; border: 4px solid rgba(255,255,255,0.06); box-shadow: 0 8px 24px rgba(0,0,0,0.6); background: linear-gradient(135deg, rgba(0,212,255,0.08), rgba(255,255,255,0.02)); }
+            </style>
+            """, unsafe_allow_html=True)
+            st.markdown(f"<img src='{logo_path}' class='supernova-logo' alt='Logo' />", unsafe_allow_html=True)
+        except Exception:
             st.write("📊")
     with col2:
         st.markdown(tr("<h1 style='text-align: center; font-size: 40px;'>📈 Dubai Trading Tools</h1>", "<h1 style='text-align: center; font-size: 40px;'>📈 Dubai Trading Tools</h1>"), unsafe_allow_html=True)
