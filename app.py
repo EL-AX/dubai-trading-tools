@@ -731,22 +731,24 @@ def page_dashboard():
             if c_style == "classic":
                 inc = dict(fillcolor='#26a69a', line=dict(color='#26a69a', width=2))
                 dec = dict(fillcolor='#ef5350', line=dict(color='#ef5350', width=2))
-                candle_w = 0.6
             elif c_style == "boxy":
                 inc = dict(fillcolor='#00b894', line=dict(color='#007f5f', width=3))
                 dec = dict(fillcolor='#ff6b6b', line=dict(color='#a83232', width=3))
-                candle_w = 0.9
             elif c_style == tr("Modèle", "Model") or c_style == "model":
-                # Exact style derived from 'model de bougies.webp'
+                # Exact style derived from 'model de bougies.webp' - Premium look
                 inc = dict(fillcolor='#17957b', line=dict(color='#17957b', width=2.5))
                 dec = dict(fillcolor='#e83a4a', line=dict(color='#e83a4a', width=2.5))
-                candle_w = 0.8
-                # Apply model background for better visual match
-                fig.update_layout(plot_bgcolor='#141922', paper_bgcolor='#141922', font=dict(color='#ffffff'))
+                # Apply dark premium background for model style
+                fig.update_layout(
+                    plot_bgcolor='#0f1419', 
+                    paper_bgcolor='#0f1419', 
+                    font=dict(color='#ffffff', family='Arial, sans-serif'),
+                    title_font_size=16,
+                    margin=dict(l=50, r=50, t=60, b=50)
+                )
             else:  # thin
                 inc = dict(fillcolor='#26a69a', line=dict(color='#26a69a', width=1))
                 dec = dict(fillcolor='#ef5350', line=dict(color='#ef5350', width=1))
-                candle_w = 0.35
 
             # Candlestick with improved hover and width (with robust validation)
             # Make a safe copy and coerce types
@@ -826,21 +828,40 @@ def page_dashboard():
                 ), row=1, col=1)
 
             fig.update_layout(
-                title=f"{ticker} - Graphe Candlestick (30 jours)",
-                height=850,
+                title=f"<b>{ticker} - Analyse Candlestick (30J)</b>",
+                height=750,
                 xaxis_rangeslider_visible=False,
                 template="plotly_dark",
                 hovermode='x unified',
-                xaxis=dict(showgrid=True, gridwidth=1, gridcolor='#2a2a2a'),
-                yaxis=dict(showgrid=True, gridwidth=1, gridcolor='#2a2a2a', side='right', domain=[0.22,1.0]),
-                yaxis2=dict(showgrid=False, domain=[0.0,0.18], title='Volume'),
+                xaxis=dict(
+                    showgrid=True, gridwidth=1, gridcolor='rgba(255,255,255,0.08)',
+                    showline=True, linewidth=1, linecolor='rgba(255,255,255,0.2)',
+                    type='date'
+                ),
+                yaxis=dict(
+                    showgrid=True, gridwidth=1, gridcolor='rgba(255,255,255,0.08)', 
+                    side='right', domain=[0.22, 1.0],
+                    showline=True, linewidth=1, linecolor='rgba(255,255,255,0.2)',
+                    automargin=True
+                ),
+                yaxis2=dict(
+                    showgrid=False, domain=[0.0, 0.18], 
+                    title='Volume', 
+                    showline=True, linewidth=1, linecolor='rgba(255,255,255,0.2)'
+                ),
                 plot_bgcolor='#0a0e27',
                 paper_bgcolor='#0a0e27',
-                font=dict(color='#ffffff', size=14, family="Arial"),
-                margin=dict(b=120, t=120, l=60, r=100),
-                title_font_size=24,
+                font=dict(color='#e0e0e0', size=12, family="Arial, Helvetica, sans-serif"),
+                margin=dict(b=80, t=100, l=60, r=80),
+                title_font_size=18,
                 showlegend=True,
-                legend=dict(x=0.01, y=0.99, bgcolor='rgba(10, 14, 39, 0.8)', bordercolor='#26a69a', borderwidth=2, font=dict(size=12, color='#ffffff'))
+                legend=dict(
+                    x=0.01, y=0.97, 
+                    bgcolor='rgba(10, 14, 39, 0.85)', 
+                    bordercolor='#26a69a', 
+                    borderwidth=2, 
+                    font=dict(size=10, color='#e0e0e0')
+                )
             )
 
             st.plotly_chart(fig, use_container_width=True)
