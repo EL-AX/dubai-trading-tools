@@ -5,7 +5,7 @@ from plotly.subplots import make_subplots
 from datetime import datetime, timedelta
 import requests
 
-from src.auth import register_user, login_user, verify_user_email, get_user_settings, save_user_settings, logout, resend_verification_code
+from src.auth import register_user, login_user, verify_user_email, get_user_settings, save_user_settings, logout, resend_verification_code, init_session_state
 from src.alerts import check_alerts, get_alert_history
 from src.data import get_live_price, get_historical_data
 from src.indicators import calculate_rsi, calculate_macd, calculate_bollinger_bands
@@ -19,19 +19,24 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Auto-refresh for live prices - smooth animation like a sports watch
+# Auto-refresh for live prices - robust approach: click the '🔄' refresh button every 5s
 st.markdown("""
 <script>
-// Auto-refresh every 5 seconds for live price updates
-setTimeout(function() {
-    window.parent.document.querySelector('button[data-testid="stElementContainer"]')?.click?.();
-}, 5000);
+function clickRefresh() {
+  try {
+    const buttons = Array.from(window.parent.document.querySelectorAll('button'));
+    for (const b of buttons) {
+      if (b.innerText && b.innerText.trim() === '🔄') { b.click(); break; }
+    }
+  } catch(e) { /* ignore cross-origin or layout issues */ }
+}
+setInterval(clickRefresh, 5000);
 </script>
 """, unsafe_allow_html=True)
 
 def apply_custom_theme():
     """Let the browser/system handle light/dark mode via prefers-color-scheme.
-    This removes the manual theme toggle and respects OS settings."""
+    This removes the manual theme toggle and respects OS settings. Also allows an explicit user override stored in session."""
     st.markdown("""
     <style>
     /* Let the system/browser handle theme - CSS follows prefers-color-scheme */
@@ -47,6 +52,9 @@ def apply_custom_theme():
         .stApp {
             background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
             color: #e0e0e0;
+            font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+            -webkit-backdrop-filter: blur(6px);
+            backdrop-filter: blur(6px);
         }
         
         .stMetric {
@@ -60,6 +68,7 @@ def apply_custom_theme():
         
         h1, h2, h3, h4, h5, h6 {
             color: #00d4ff;
+            font-family: 'Segoe UI', Roboto, Arial, sans-serif;
         }
         
         .stButton > button {
@@ -72,10 +81,12 @@ def apply_custom_theme():
         .stApp {
             background-color: #ffffff;
             color: #0d1117;
+            font-family: 'Segoe UI', Roboto, Arial, sans-serif;
         }
         
         h1, h2, h3, h4, h5, h6 {
             color: #0d1117;
+            font-family: 'Segoe UI', Roboto, Arial, sans-serif;
         }
         
         .stButton > button {
@@ -86,15 +97,45 @@ def apply_custom_theme():
     </style>
     """, unsafe_allow_html=True)
 
+    # If user explicitly selected a theme in settings, apply an immediate override
+    try:
+        user_override = st.session_state.get("theme", None)
+        if user_override == "dark":
+            st.markdown("""
+            <style>
+            .stApp { background: linear-gradient(135deg,#081026,#0f1630) !important; color: #e7eef8 !important; font-family: 'Segoe UI', Roboto, Arial, sans-serif; -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);}
+            </style>
+            """, unsafe_allow_html=True)
+        elif user_override == "light":
+            st.markdown("""
+            <style>
+            .stApp { background-color: #ffffff !important; color: #0d1117 !important; font-family: 'Segoe UI', Roboto, Arial, sans-serif;}
+            </style>
+            """, unsafe_allow_html=True)
+    except Exception:
+        pass
+
+# Simple translator helper (FR/EN)
+def tr(fr_text, en_text):
+    return en_text if st.session_state.get("user_language", "fr") == "en" else fr_text
+
+
 def show_header():
     col1, col2, col3 = st.columns([1, 3, 1])
     with col1:
+        # Stylish logo: rounded, gradient border, subtle shadow for a modern Windows 11 feel
+        st.markdown("""
+        <style>
+        .supernova-logo { width: 120px; height: 120px; border-radius: 50%; display:block; margin-left:auto; margin-right:auto; border: 4px solid rgba(255,255,255,0.06); box-shadow: 0 8px 24px rgba(0,0,0,0.6); background: linear-gradient(135deg, rgba(0,212,255,0.08), rgba(255,255,255,0.02)); }
+        </style>
+        """, unsafe_allow_html=True)
         try:
-            st.image("logo/IMG-20250824-WA0020.jpg", width=80)
+            st.markdown(f"<img src='logo/IMG-20250824-WA0020.jpg' class='supernova-logo' alt='Logo' />", unsafe_allow_html=True)
         except:
             st.write("📊")
     with col2:
-        st.markdown("<h1 style='text-align: center; font-size: 40px;'>📈 Dubai Trading Tools</h1>", unsafe_allow_html=True)
+        st.markdown(tr("<h1 style='text-align: center; font-size: 40px;'>📈 Dubai Trading Tools</h1>", "<h1 style='text-align: center; font-size: 40px;'>📈 Dubai Trading Tools</h1>"), unsafe_allow_html=True)
+        st.markdown(tr("<p style='text-align:center; color: #9aa; margin-top:-10px;'>La plateforme Super‑Nova pour traders quant</p>", "<p style='text-align:center; color: #9aa; margin-top:-10px;'>Super‑Nova platform for quant traders</p>"), unsafe_allow_html=True)
 
 def get_ai_news():
     """Fetch real AI-powered news from multiple sources with French translations and real impact.
@@ -350,7 +391,7 @@ def page_tutorial():
 
 def page_login_register():
     """Redesigned login/register flow with email verification integrated"""
-    st.markdown("## Connexion / Inscription")
+    st.markdown(tr("## Connexion / Inscription", "## Login / Register"))
     
     # Check if user just registered (for showing verification code entry on login)
     show_verification_code = st.session_state.get("show_verification_code", False)
@@ -358,7 +399,7 @@ def page_login_register():
     tab1, tab2 = st.tabs(["Connexion", "Inscription"])
     
     with tab1:
-        st.subheader("Se connecter à votre compte")
+        st.subheader(tr("Se connecter à votre compte", "Log in to your account"))
         email = st.text_input("Email", key="login_email")
         password = st.text_input("Mot de passe", type="password", key="login_password")
         
@@ -385,7 +426,9 @@ def page_login_register():
                             st.session_state.authenticated = True
                             st.session_state.user_email = email
                             st.session_state.user_name = result["name"]
-                            st.success(f"Bienvenue {result['name']}! 🎉")
+                            # Show welcome on next run so it survives rerun
+                            st.session_state.show_welcome = True
+                            st.session_state.just_logged_in_user = result["name"]
                             st.rerun()
                         else:
                             st.error(result["message"])
@@ -395,7 +438,9 @@ def page_login_register():
                         st.session_state.authenticated = True
                         st.session_state.user_email = email
                         st.session_state.user_name = result["name"]
-                        st.success(f"Bienvenue {result['name']}! 🎉")
+                        # Show welcome on next run so it survives rerun
+                        st.session_state.show_welcome = True
+                        st.session_state.just_logged_in_user = result["name"]
                         st.rerun()
                     else:
                         st.error(result["message"])
@@ -412,7 +457,7 @@ def page_login_register():
                     st.error(f"Erreur: {resend.get('message')}")
     
     with tab2:
-        st.subheader("Créer un nouveau compte")
+        st.subheader(tr("Créer un nouveau compte", "Create a new account"))
         st.markdown("Remplissez les champs ci-dessous pour créer un compte.")
         
         reg_name = st.text_input("Nom complet", key="reg_name")
@@ -449,12 +494,12 @@ def page_login_register():
 
 def page_news_ai():
     """Real AI-powered news section with French/English translations"""
-    st.title("📰 Actualités Temps Réel & Intelligence Artificielle")
+    st.title(tr("📰 Actualités Temps Réel & Intelligence Artificielle", "📰 Real-Time AI & Market News"))
     
     # Language selection
     col1, col2 = st.columns([3, 1])
     with col2:
-        language = st.radio("Langue", ["🇫🇷 Français", "🇬🇧 English"], key="news_lang")
+        language = st.radio(tr("Langue", "Language"), ["🇫🇷 Français", "🇬🇧 English"], key="news_lang")
         st.session_state.user_language = "en" if "English" in language else "fr"
     
     news_items = get_ai_news()
@@ -509,14 +554,21 @@ def page_news_ai():
 def page_dashboard():
     col1, col2, col3 = st.columns([4, 1, 1])
     with col1:
-        st.title("📊 Tableau de Bord")
+        st.title(tr("📊 Tableau de Bord", "📊 Dashboard"))
     with col2:
-        language = st.radio("Langue", ["🇫🇷", "🇬🇧"], horizontal=True, key="dashboard_lang")
+        language = st.radio(tr("Langue", "Language"), ["🇫🇷", "🇬🇧"], horizontal=True, key="dashboard_lang")
         st.session_state.user_language = "en" if "🇬🇧" in language else "fr"
     with col3:
-        if st.button("Se déconnecter", key="btn_logout", use_container_width=True):
+        if st.button(tr("Se déconnecter", "Log out"), key="btn_logout", use_container_width=True):
             logout(st)
             st.rerun()
+
+    # Show one-time welcome message after successful login
+    if st.session_state.get("show_welcome"):
+        name = st.session_state.get("just_logged_in_user", st.session_state.get("user_name"))
+        st.success(tr(f"Bienvenue {name}! 🎉", f"Welcome {name}! 🎉"))
+        st.session_state.show_welcome = False
+        st.session_state.just_logged_in_user = None
     
     st.write(f"**Utilisateur:** {st.session_state.user_name}")
     
@@ -592,7 +644,29 @@ def page_dashboard():
             fig = make_subplots(rows=2, cols=1, shared_xaxes=True,
                                 vertical_spacing=0.02, row_heights=[0.78, 0.22])
 
-            # Candlestick (wicks preserved with better colors)
+            # Determine style based on user selection
+            c_style = st.session_state.get("candle_style", "classic")
+            if c_style == "classic":
+                inc = dict(fillcolor='#26a69a', line=dict(color='#26a69a', width=2))
+                dec = dict(fillcolor='#ef5350', line=dict(color='#ef5350', width=2))
+                candle_w = 0.6
+            elif c_style == "boxy":
+                inc = dict(fillcolor='#00b894', line=dict(color='#007f5f', width=3))
+                dec = dict(fillcolor='#ff6b6b', line=dict(color='#a83232', width=3))
+                candle_w = 0.9
+            elif c_style == tr("Modèle", "Model") or c_style == "model":
+                # Exact style derived from 'model de bougies.webp'
+                inc = dict(fillcolor='#17957b', line=dict(color='#17957b', width=2.5))
+                dec = dict(fillcolor='#e83a4a', line=dict(color='#e83a4a', width=2.5))
+                candle_w = 0.8
+                # Apply model background for better visual match
+                fig.update_layout(plot_bgcolor='#141922', paper_bgcolor='#141922', font=dict(color='#ffffff'))
+            else:  # thin
+                inc = dict(fillcolor='#26a69a', line=dict(color='#26a69a', width=1))
+                dec = dict(fillcolor='#ef5350', line=dict(color='#ef5350', width=1))
+                candle_w = 0.35
+
+            # Candlestick with improved hover and width
             fig.add_trace(go.Candlestick(
                 x=hist_data['timestamp'],
                 open=hist_data['open'],
@@ -600,10 +674,12 @@ def page_dashboard():
                 low=hist_data['low'],
                 close=hist_data['close'],
                 name='Prix',
-                increasing=dict(fillcolor='#26a69a', line=dict(color='#26a69a', width=2)),  # Vert classique
-                decreasing=dict(fillcolor='#ef5350', line=dict(color='#ef5350', width=2)),  # Rouge classique
+                increasing=inc,
+                decreasing=dec,
+                width=candle_w,
+                opacity=1,
                 showlegend=False,
-                hoverinfo='x+y'
+                hovertemplate='Date: %{x}<br>Open: %{open:.2f}<br>High: %{high:.2f}<br>Low: %{low:.2f}<br>Close: %{close:.2f}<extra></extra>'
             ), row=1, col=1)
 
             # Volume bars - synchronized with candle colors
@@ -612,12 +688,19 @@ def page_dashboard():
                     x=hist_data['timestamp'],
                     y=hist_data['volume'],
                     marker=dict(
-                        color=['#26a69a' if c >= o else '#ef5350' for c, o in zip(hist_data['close'], hist_data['open'])],
-                        opacity=0.7
+                        color=[inc['fillcolor'] if c >= o else dec['fillcolor'] for c, o in zip(hist_data['close'], hist_data['open'])],
+                        opacity=0.8,
+                        line=dict(width=0)
                     ),
                     name='Volume',
                     hoverinfo='y'
                 ), row=2, col=1)
+
+            # If preview requested, limit to short range and add annotation
+            if st.session_state.get('preview_candle_style'):
+                fig.update_layout(title=f"Preview - Style: {c_style}")
+                # After showing preview once, clear flag
+                st.session_state.preview_candle_style = False
 
             # Bollinger and other indicator overlays
             if show_bollinger and bb_mid is not None:
@@ -834,34 +917,68 @@ def page_dashboard():
 def page_settings():
     st.markdown("## ⚙️ Paramètres")
     
-    if st.button("← Retour au tableau de bord", key="btn_back_settings"):
+    if st.button(tr("← Retour au tableau de bord", "← Back to dashboard"), key="btn_back_settings"):
         st.session_state.current_page = "dashboard"
+        # also update sidebar selector to keep UI consistent
+        try:
+            st.session_state.page_selector = tr("📊 Tableau de Bord", "📊 Dashboard")
+        except Exception:
+            pass
         st.rerun()
     
     settings = get_user_settings(st.session_state.user_email)
     
     st.subheader("Préférences Utilisateur")
     
-    new_theme = st.radio("Thème:", ["light", "dark"], index=0 if settings.get("theme") == "light" else 1)
-    alerts_enabled = st.checkbox("Activer les alertes", value=settings.get("alerts_enabled", True))
-    currency = st.selectbox("Devise préférée:", ["USD", "EUR", "GBP"], index=0 if settings.get("currency") == "USD" else (1 if settings.get("currency") == "EUR" else 2))
+    themes = [tr("Système (recommandé)", "System (recommended)"), tr("Clair", "Light"), tr("Sombre", "Dark")]
+    current_theme = settings.get("theme", "system")
+    theme_map = {"system": 0, "light": 1, "dark": 2}
+    new_theme_label = st.radio(tr("Thème:", "Theme:"), themes, index=theme_map.get(current_theme, 0))
+    # convert label back to internal value
+    label_to_value = {themes[0]: "system", themes[1]: "light", themes[2]: "dark"}
+    new_theme = label_to_value.get(new_theme_label, "system")
+
+    alerts_enabled = st.checkbox(tr("Activer les alertes", "Enable alerts"), value=settings.get("alerts_enabled", True))
+    currency = st.selectbox(tr("Devise préférée:", "Preferred currency:"), ["USD", "EUR", "GBP"], index=0 if settings.get("currency") == "USD" else (1 if settings.get("currency") == "EUR" else 2))
+    candle_style = st.selectbox(tr("Style des bougies:", "Candle style:"), ["classic", "boxy", "thin", tr("Modèle", "Model")], index=0 if settings.get("candle_style", "classic") == "classic" else (1 if settings.get("candle_style") == "boxy" else (2 if settings.get("candle_style") == "thin" else 3)))
     
     if st.button("💾 Enregistrer les paramètres", use_container_width=True):
         settings["theme"] = new_theme
         settings["alerts_enabled"] = alerts_enabled
         settings["currency"] = currency
+        settings["candle_style"] = candle_style
         save_user_settings(st.session_state.user_email, settings)
-        st.success("✅ Paramètres enregistrés!")
+        # Apply to current session immediately
+        st.session_state.theme = new_theme
+        st.session_state.alerts_enabled = alerts_enabled
+        st.session_state.currency = currency
+        st.session_state.candle_style = candle_style
+        st.success(tr("✅ Paramètres enregistrés!", "✅ Settings saved!"))
+
+    # Quick preview button
+    if st.button(tr("Aperçu du style des bougies", "Preview candle style")):
+        st.session_state.preview_candle_style = True
+        st.rerun()
+        # Re-apply theme and UI changes now
+        st.rerun()
 
 def main():
+    # Initialize session state early so theme and preferences can be applied immediately
+    init_session_state(st)
+    if "user_language" not in st.session_state:
+        st.session_state.user_language = "fr"
     apply_custom_theme()
-    
+    init_session_state(st)
+
     if "authenticated" not in st.session_state:
         st.session_state.authenticated = False
     if "user_email" not in st.session_state:
         st.session_state.user_email = None
     if "user_name" not in st.session_state:
         st.session_state.user_name = None
+    # Default candle style
+    if "candle_style" not in st.session_state:
+        st.session_state.candle_style = "classic"
     
     show_header()
     
@@ -872,16 +989,22 @@ def main():
             st.session_state.current_page = "dashboard"
         
         with st.sidebar:
-            st.title("📍 Navigation")
-            page = st.radio("Menu:", ["📊 Tableau de Bord", "📚 Tutoriel", "📰 Actualités IA", "⚙️ Paramètres"], key="page_selector")
-            
-            if page == "📊 Tableau de Bord":
+            st.title(tr("📍 Navigation", "📍 Navigation"))
+            menu_options = [
+                tr("📊 Tableau de Bord", "📊 Dashboard"),
+                tr("📚 Tutoriel", "📚 Tutorial"),
+                tr("📰 Actualités IA", "📰 AI News"),
+                tr("⚙️ Paramètres", "⚙️ Settings")
+            ]
+            page = st.radio(tr("Menu:", "Menu:"), menu_options, key="page_selector")
+
+            if page == menu_options[0]:
                 st.session_state.current_page = "dashboard"
-            elif page == "📚 Tutoriel":
+            elif page == menu_options[1]:
                 st.session_state.current_page = "tutorial"
-            elif page == "📰 Actualités IA":
+            elif page == menu_options[2]:
                 st.session_state.current_page = "news"
-            elif page == "⚙️ Paramètres":
+            elif page == menu_options[3]:
                 st.session_state.current_page = "settings"
         
         if st.session_state.current_page == "dashboard":

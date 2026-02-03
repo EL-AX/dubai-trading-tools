@@ -62,6 +62,10 @@ class SmartSignals:
         
         composite = (rsi_score + macd_score + bb_score + trend_score) / 4
         return composite
+
+    # Backwards-compatible alias
+    def generate_composite_signal(self):
+        return self.get_composite_signal()
     
     def get_signal_text(self):
         score = self.get_composite_signal()

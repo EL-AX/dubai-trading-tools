@@ -51,7 +51,7 @@ def get_crypto_price(ticker):
                         "change_24h": float(coin_data.get("usd_24h_change", 0) or 0),
                         "timestamp": datetime.now()
                     }
-                    cache.set(f"price_{ticker}", result, ttl=7200)  # 2h cache
+                    cache.set(f"price_{ticker}", result, ttl=10)  # live TTL (10s) for responsive UI
                     return result
         except Exception as e:
             pass
@@ -78,7 +78,7 @@ def get_crypto_price(ticker):
             "change_24h": np.random.uniform(-5, 5),
             "timestamp": datetime.now()
         }
-        cache.set(f"price_{ticker}", result, ttl=7200)  # 2h cache
+        cache.set(f"price_{ticker}", result, ttl=10)  # live TTL (10s) for responsive UI
         return result
         
     except Exception as e:
@@ -180,23 +180,50 @@ def get_gold_price():
         response = requests.get(url, timeout=5)
         if response.status_code == 200:
             data = response.json()
-            price = data.get("items", [{}])[0].get("xau", None)
+            items = data.get("items", [{}])[0] if isinstance(data.get("items"), list) else {}
+            # Try multiple possible keys commonly used by gold APIs
+            price = None
+            for k in ("xauPrice", "xau", "price", "xau_price", "price_usd"):
+                if isinstance(items, dict) and items.get(k):
+                    price = items.get(k)
+                    break
+            # try top-level keys
+            if not price:
+                price = data.get("xauPrice") or data.get("price")
+            # Fallback to exchangerate.host convert endpoint (supports XAU)
+            if not price:
+                try:
+                    conv_url = "https://api.exchangerate.host/convert?from=XAU&to=USD"
+                    r2 = requests.get(conv_url, timeout=5)
+                    if r2.status_code == 200:
+                        j2 = r2.json()
+                        price = j2.get("result")
+                except:
+                    pass
             if price:
-                result = {
-                    "ticker": "XAU",
-                    "price": float(price),
-                    "volume": 0,
-                    "market_cap": 0,
-                    "timestamp": datetime.now()
-                }
-                cache.set("price_XAU", result, ttl=300)
-                return result
+                try:
+                    price_val = float(price)
+                except Exception:
+                    price_val = None
+                if price_val:
+                    result = {
+                        "ticker": "XAU",
+                        "price": float(price_val),
+                        "volume": 0,
+                        "market_cap": 0,
+                        "timestamp": datetime.now()
+                    }
+                    cache.set("price_XAU", result, ttl=60)  # short TTL for live-like updates
+                    return result
     except:
         pass
-    
+
+    # Final fallback to mock
     return generate_mock_data("XAU", 1).iloc[-1].to_dict()
 
-def generate_mock_data(ticker, days=1):
+def generate_mock_data(ticker, days=1, hours=None):
+    """Generate mock candlestick data.
+    Accepts either 'days' or 'hours' for backward compatibility with older tests that pass hours=.."""
     base_prices = {
         "BTC": 45000,
         "ETH": 2500,
@@ -209,7 +236,10 @@ def generate_mock_data(ticker, days=1):
     }
     
     base_price = base_prices.get(ticker, 100)
-    num_candles = days * 24
+    if hours is not None:
+        num_candles = int(hours)
+    else:
+        num_candles = int(days * 24)
     dates = pd.date_range(end=datetime.now(), periods=num_candles, freq="h")
     
     returns = np.random.normal(0.0001, 0.01, num_candles)
@@ -223,6 +253,12 @@ def generate_mock_data(ticker, days=1):
         "close": prices,
         "volume": np.random.randint(1000000, 10000000, num_candles)
     })
+    # Provide backward-compatible capitalised OHLCV column names
+    data["Open"] = data["open"]
+    data["High"] = data["high"]
+    data["Low"] = data["low"]
+    data["Close"] = data["close"]
+    data["Volume"] = data["volume"]
     
     return data
 

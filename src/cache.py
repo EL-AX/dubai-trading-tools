@@ -13,7 +13,10 @@ class CacheManager:
     def _get_cache_file(self, key):
         return os.path.join(self.cache_dir, f"{key}.json")
     
-    def set(self, key, value, ttl=None):
+    def set(self, key, value, ttl=None, ttl_seconds=None):
+        # Accept either ttl (seconds) or ttl_seconds for backwards compatibility
+        if ttl_seconds is not None and ttl is None:
+            ttl = ttl_seconds
         ttl = ttl or self.default_ttl
         timestamp = datetime.now()
         expiry = timestamp + timedelta(seconds=ttl)
@@ -31,7 +34,9 @@ class CacheManager:
                 json.dump(cache_data, f)
         except:
             pass
-    
+
+# Module-level instance for convenience
+
     def get(self, key):
         if key in self.memory_cache:
             data = self.memory_cache[key]
@@ -75,3 +80,6 @@ class CacheManager:
             "memory_items": len(self.memory_cache),
             "disk_items": len([f for f in os.listdir(self.cache_dir) if f.endswith(".json")])
         }
+
+# Module-level instance for convenience
+cache_manager = CacheManager()
