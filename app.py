@@ -35,9 +35,27 @@ setInterval(clickRefresh, 5000);
 """, unsafe_allow_html=True)
 
 def apply_custom_theme():
-    """Simple styling - boutons bleu nuit uniquement."""
+    """Simple styling - boutons bleu nuit + animations."""
     st.markdown(r"""
     <style>
+    @keyframes pulse-green {
+        0% { opacity: 1; }
+        50% { opacity: 0.7; }
+        100% { opacity: 1; }
+    }
+    @keyframes pulse-red {
+        0% { opacity: 1; }
+        50% { opacity: 0.7; }
+        100% { opacity: 1; }
+    }
+    @keyframes pulse-neutral {
+        0% { opacity: 1; }
+        50% { opacity: 0.8; }
+        100% { opacity: 1; }
+    }
+    .pulse-green { animation: pulse-green 1.5s ease-in-out infinite; }
+    .pulse-red { animation: pulse-red 1.5s ease-in-out infinite; }
+    .pulse-neutral { animation: pulse-neutral 1.5s ease-in-out infinite; }
     .stButton > button {
         background-color: #001a4d !important;
         color: white !important;
@@ -208,20 +226,28 @@ def display_live_price_with_animation(ticker):
         price_str = f"${price:,.2f}"
         change_str = f"{change_24h:+.2f}%" if change_24h != 0 else "→"
         
-        # Color based on change
+        # Color and emoji based on change with animations
         if change_24h > 0:
             color = "🟢"
+            emoji = "📈"
+            animation = "pulse-green"
         elif change_24h < 0:
             color = "🔴"
+            emoji = "📉"
+            animation = "pulse-red"
         else:
             color = "⚫"
+            emoji = "➡️"
+            animation = "pulse-neutral"
         
         return {
             "price": price,
             "price_str": price_str,
             "change_24h": change_24h,
             "change_str": change_str,
-            "color": color
+            "color": color,
+            "emoji": emoji,
+            "animation": animation
         }
     else:
         return {
@@ -495,10 +521,35 @@ def page_dashboard():
             logout(st)
             st.rerun()
 
-    # Show one-time welcome message after successful login
+    # Show one-time welcome message after successful login - ANIMATED
     if st.session_state.get("show_welcome"):
         name = st.session_state.get("just_logged_in_user", st.session_state.get("user_name"))
-        st.success(tr(f"Bienvenue {name}! 🎉", f"Welcome {name}! 🎉"))
+        # Animated welcome with confetti effect
+        st.markdown("""
+        <style>
+        @keyframes slideInDown {
+            from { transform: translateY(-100px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .welcome-box {
+            animation: slideInDown 0.8s ease-out;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+            margin-bottom: 20px;
+        }
+        </style>
+        <div class="welcome-box">
+        ✨ Bienvenue <b>{}</b>! 🎉 ✨<br>
+        <small style="font-size: 14px; margin-top: 10px;">Prêt à trader comme un pro? 🚀</small>
+        </div>
+        """.format(name), unsafe_allow_html=True)
+        st.balloons()
         st.session_state.show_welcome = False
         st.session_state.just_logged_in_user = None
     
