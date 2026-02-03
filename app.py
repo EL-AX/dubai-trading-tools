@@ -854,7 +854,6 @@ def page_settings():
         st.success("✅ Paramètres enregistrés!")
 
 def main():
-    init_theme()
     apply_custom_theme()
     
     if "authenticated" not in st.session_state:
