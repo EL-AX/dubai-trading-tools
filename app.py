@@ -266,53 +266,139 @@ def page_tutorial():
         st.markdown("""
         **Étapes:**
         1. **Inscription**: Créez un compte avec votre email et mot de passe
-        2. **Vérification**: Entrez le code de vérification reçu (6 chiffres)
-        3. **Connexion**: Utilisez vos identifiants pour accéder à l'app
+        2. **Vérification**: Entrez le code de vérification reçu par email (6 chiffres)
+        3. **Connexion**: Utilisez vos identifiants pour accéder au tableau de bord
         
         **Conseils de sécurité:**
-        - Utilisez un mot de passe fort (min 8 caractères)
-        - Ne partagez pas votre code de vérification
-        - Déconnectez-vous après chaque session
+        - Utilisez un mot de passe fort (minimum 8 caractères)
+        - Ne partagez jamais votre code de vérification
+        - Déconnectez-vous toujours après chaque session
+        - Vérifiez régulièrement vos paramètres de compte
         """)
     
-    with st.expander("📊 2. Tableau de Bord"):
+    with st.expander("📊 2. Tableau de Bord - Votre Centre de Contrôle"):
         st.markdown("""
-        **Section 1: Sélection des Actifs**
-        - Choisissez les crypto-monnaies et devises à analyser
-        - BTC, ETH, SOL pour crypto
-        - EUR, GBP, JPY, AUD pour forex
-        - XAU pour l'or
+        **🎯 Sélection des Actifs**
+        - Choisissez jusqu'à 8 actifs à analyser simultanément
+        - **Crypto**: BTC (Bitcoin), ETH (Ethereum), SOL (Solana)
+        - **Forex**: EUR, GBP, JPY, AUD (parités de change)
+        - **Matières**: XAU (Or / Gold)
         
-        **Section 2: Prix en Temps Réel**
-        - Affiche le prix instantané de chaque actif
-        - Mise à jour toutes les 5 minutes
-        - Inclut volume 24h et market cap
+        **💹 Prix en Temps Réel**
+        - Prix instantané avec changement 24h
+        - Volume 24h et capitalisation boursière
+        - Mise à jour automatique toutes les 5 minutes
+        - Indicateurs visuels: 🟢 (hausse), 🔴 (baisse)
         
-        **Section 3: Graphiques & Indicateurs**
-        - Graphique candlestick interactif (30 jours)
-        - Bandes de Bollinger (volatilité)
-        - Moyennes mobiles
+        **📈 Graphiques Interactifs**
+        - Bougies (Candlestick) sur 30 jours
+        - Bandes de Bollinger pour la volatilité
+        - Volume d'échange synchronisé
+        - Styles personnalisables: Classic, Boxy, Thin, Model
+        
+        **🚨 Signaux & Alertes**
+        - Signaux composites automatiques (STRONG_BUY à STRONG_SELL)
+        - Alertes pour RSI, volatilité, changements 24h
+        - Activez/désactivez les alertes dans les paramètres
         """)
     
-    with st.expander("📈 3. Indicateurs Techniques"):
+    with st.expander("📈 3. Indicateurs Techniques - Comprendre les Signaux"):
         st.markdown("""
         **RSI (Relative Strength Index)**
-        - Mesure le momentum (0-100)
-        - >70 = Suracheté (vendre)
-        - <30 = Survendu (acheter)
+        - Mesure le momentum de 0 à 100
+        - **>70**: Suracheté (vendre potentiellement)
+        - **<30**: Survendu (acheter potentiellement)
+        - Période: 14 bougies
         
         **MACD (Moving Average Convergence Divergence)**
         - Détecte les changements de tendance
-        - Croisement: Signal d'achat/vente
+        - **Croisement haussier**: Signal d'achat
+        - **Croisement baissier**: Signal de vente
+        - Utilise les moyennes mobiles 12 et 26 jours
         
         **Bandes de Bollinger**
-        - Montre la volatilité
-        - Prix aux extrêmes = signal potentiel
+        - Montre la volatilité et les niveaux de support/résistance
+        - **Prix aux limites**: Potentiel retour à la moyenne
+        - Bande supérieure/inférieure = écart-type ±2
+        - Utile pour identifier les extrêmes
         
         **Signaux Composites**
-        - Combine 4 indicateurs
-        - STRONG_BUY (80-100) → BUY → NEUTRAL → SELL → STRONG_SELL (0-20)
+        - Combine **4 indicateurs** pour une fiabilité accrue
+        - **STRONG_BUY (80-100)**: Signal très bullish
+        - **BUY (60-80)**: Signal bullish modéré
+        - **NEUTRAL (40-60)**: Pas de direction claire
+        - **SELL (20-40)**: Signal bearish modéré
+        - **STRONG_SELL (0-20)**: Signal très bearish
         """)
+    
+    with st.expander("🎯 4. Stratégies de Trading"):
+        st.markdown("""
+        **Stratégie Simple (Débutants)**
+        - Attendez STRONG_BUY (>80) pour acheter
+        - Attendez STRONG_SELL (<20) pour vendre
+        - Combinez avec les bandes de Bollinger pour confirmation
+        
+        **Stratégie Avancée (Professionnels)**
+        - Utilisez RSI + MACD + Bollinger ensemble
+        - Cherchez les divergences (prix monte, RSI baisse = signal faible)
+        - Identifiez les zones de support/résistance
+        - Gérez votre risque avec stop-loss et take-profit
+        
+        **Gestion du Risque**
+        - Risquez jamais >2% du portefeuille par trade
+        - Définissez un ratio risque/récompense minimum 1:2
+        - Utilisez les alertes pour détecter les mouvements
+        - Diversifiez sur plusieurs actifs
+        
+        **Utilisation des Alertes**
+        1. Activez les alertes dans Paramètres
+        2. L'app monitore RSI, volatilité, changements 24h
+        3. Revenez régulièrement pour vérifier les signaux
+        4. Combiné avec une stratégie pour plus de robustesse
+        """)
+    
+    with st.expander("⚙️ 5. Paramètres & Configuration"):
+        st.markdown("""
+        **Devise Préférée**
+        - Choisissez entre USD, EUR, GBP
+        - Tous les prix seront affichés dans cette devise
+        
+        **Style des Bougies**
+        - **Classic**: Apparence traditionnelle
+        - **Boxy**: Bougies plus carrées
+        - **Thin**: Bougies fines (pour beaucoup de données)
+        - **Model**: Style premium professionnel
+        
+        **Alertes**
+        - Activez/désactivez les notifications
+        - Consultez l'historique des alertes déclenchées
+        - Archivez les anciennes alertes
+        
+        **Sauvegarde**
+        - Les paramètres sont automatiquement sauvegardés
+        - Ils persistent entre les sessions
+        """)
+    
+    with st.expander("❓ 6. FAQ & Dépannage"):
+        st.markdown("""
+        **Q: Pourquoi les prix ne se mettent pas à jour?**
+        A: L'app s'actualise toutes les 5 minutes. Attendez ou recharger la page.
+        
+        **Q: Les bougies ne s'affichent pas?**
+        A: Cela peut signifier qu'il n'y a pas assez de données. Attendez 24h pour plus de points.
+        
+        **Q: Comment interpréter les signaux?**
+        A: Consultez la section "Indicateurs Techniques" ci-dessus pour chaque métrique.
+        
+        **Q: Puis-je trader en direct?**
+        A: Cette app est un **outil d'analyse**, pas une plateforme de trading. Utilisez une plateforme (Binance, Kraken, etc.)
+        
+        **Q: Mes données sont-elles sécurisées?**
+        A: Oui. Mot de passe hashé, emails vérifiés, données encryptées.
+        """)
+    
+    st.divider()
+    st.info("💡 **Conseil Pro**: Testez vos stratégies avec les graphiques en papier avant d'investir de l'argent réel. Les performances passées n'indiquent pas les performances futures.")
     
     with st.expander("🎯 4. Signaux de Trading"):
         st.markdown("""
@@ -345,7 +431,7 @@ def page_tutorial():
         """)
     
     st.divider()
-    st.success("💡 Astuce: L'app s'actualise toutes les 5 minutes. Utilisez le thème sombre pour une meilleure expérience visuelle!")
+    st.info("💡 Astuce: L'app s'actualise toutes les 5 minutes pour des prix en temps réel.")
 
 def page_login_register():
     """Redesigned login/register flow with email verification integrated"""
@@ -952,26 +1038,16 @@ def page_settings():
     
     st.subheader("Préférences Utilisateur")
     
-    themes = [tr("Système (recommandé)", "System (recommended)"), tr("Clair", "Light"), tr("Sombre", "Dark")]
-    current_theme = settings.get("theme", "system")
-    theme_map = {"system": 0, "light": 1, "dark": 2}
-    new_theme_label = st.radio(tr("Thème:", "Theme:"), themes, index=theme_map.get(current_theme, 0))
-    # convert label back to internal value
-    label_to_value = {themes[0]: "system", themes[1]: "light", themes[2]: "dark"}
-    new_theme = label_to_value.get(new_theme_label, "system")
-
     alerts_enabled = st.checkbox(tr("Activer les alertes", "Enable alerts"), value=settings.get("alerts_enabled", True))
     currency = st.selectbox(tr("Devise préférée:", "Preferred currency:"), ["USD", "EUR", "GBP"], index=0 if settings.get("currency") == "USD" else (1 if settings.get("currency") == "EUR" else 2))
     candle_style = st.selectbox(tr("Style des bougies:", "Candle style:"), ["classic", "boxy", "thin", tr("Modèle", "Model")], index=0 if settings.get("candle_style", "classic") == "classic" else (1 if settings.get("candle_style") == "boxy" else (2 if settings.get("candle_style") == "thin" else 3)))
     
     if st.button("💾 Enregistrer les paramètres", use_container_width=True):
-        settings["theme"] = new_theme
         settings["alerts_enabled"] = alerts_enabled
         settings["currency"] = currency
         settings["candle_style"] = candle_style
         save_user_settings(st.session_state.user_email, settings)
         # Apply to current session immediately
-        st.session_state.theme = new_theme
         st.session_state.alerts_enabled = alerts_enabled
         st.session_state.currency = currency
         st.session_state.candle_style = candle_style
