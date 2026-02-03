@@ -4,6 +4,7 @@ import os
 import random
 import smtplib
 import ssl
+import shutil
 from email.message import EmailMessage
 from datetime import datetime, timedelta
 
@@ -30,7 +31,11 @@ def generate_verification_code():
     return str(random.randint(100000, 999999))
 
 def register_user(email, password, name):
-    """Register a new user and send verification email immediately"""
+    """Register a new user and send verification email immediately
+    Normalise l'email (strip + lower) pour éviter les problèmes de casse/espaces"""
+    # Normalize email to avoid mismatch issues
+    email = email.strip().lower()
+
     users = load_users()
     if email in users:
         return {"success": False, "message": "Email already registered"}
@@ -73,7 +78,8 @@ def register_user(email, password, name):
         }
 
 def login_user(email, password, verification_code=None):
-    """Login user - must verify email first with code"""
+    """Login user - must verify email first with code. Normalize email for lookup."""
+    email = email.strip().lower()
     users = load_users()
     if email not in users:
         return {"success": False, "message": "Email not found"}
@@ -112,6 +118,7 @@ def login_user(email, password, verification_code=None):
     return {"success": True, "message": "Login successful", "name": user["name"]}
 
 def verify_user_email(email, code):
+    email = email.strip().lower()
     users = load_users()
     if email not in users:
         return {"success": False, "message": "User not found"}
@@ -175,6 +182,7 @@ def send_verification_email(recipient_email, code, name):
         return False, str(e)
 
 def resend_verification_code(email):
+    email = email.strip().lower()
     users = load_users()
     if email not in users:
         return {"success": False, "message": "User not found"}
@@ -193,16 +201,59 @@ def resend_verification_code(email):
         return {"success": False, "message": f"Failed to send email: {info}"}
 
 def get_user_settings(email):
+    email = email.strip().lower()
     users = load_users()
     if email in users:
         return users[email].get("settings", {})
     return {"theme": "light", "alerts_enabled": True, "currency": "USD"}
 
 def save_user_settings(email, settings):
+    email = email.strip().lower()
     users = load_users()
     if email in users:
         users[email]["settings"] = settings
         save_users(users)
+
+
+def migrate_users_normalize_emails(backup=True):
+    """Migrate existing users.json by normalizing all emails (strip + lower).
+    Creates a backup of the file (users.json.bak_YYYYMMDDHHMMSS) before writing.
+    Returns a summary dict with migration counts and any collisions detected.
+    """
+    users = load_users()
+    if not users:
+        return {"success": False, "message": "No users found to migrate"}
+
+    new_users = {}
+    collisions = []
+    for old_email, data in users.items():
+        new_email = old_email.strip().lower()
+        if new_email in new_users and old_email != new_email:
+            # Collision: two different emails normalize to the same value
+            collisions.append({"from": old_email, "to": new_email})
+            # Keep the first seen entry and skip the conflicting one
+            continue
+        new_users[new_email] = data
+
+    backup_file = None
+    try:
+        if backup and os.path.exists(USERS_FILE):
+            backup_file = USERS_FILE + f".bak_{datetime.now().strftime('%Y%m%d%H%M%S')}"
+            shutil.copy2(USERS_FILE, backup_file)
+        save_users(new_users)
+        return {"success": True, "migrated": len(new_users), "collisions": collisions, "backup": backup_file}
+    except Exception as e:
+        return {"success": False, "message": str(e)}
+
+
+if __name__ == "__main__":
+    import sys
+    if len(sys.argv) > 1 and sys.argv[1] == "migrate":
+        res = migrate_users_normalize_emails()
+        print(res)
+    else:
+        print("Auth module. Use 'python src/auth.py migrate' to normalize user emails (creates backup).")
+
 
 def init_session_state(st):
     if "authenticated" not in st.session_state:

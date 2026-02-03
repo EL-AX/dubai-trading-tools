@@ -431,7 +431,9 @@ def page_login_register():
     
     with tab1:
         st.subheader("Se connecter à votre compte")
-        email = st.text_input("Email", placeholder="exemple@email.com", key="login_email")
+        email_input = st.text_input("Email", placeholder="exemple@email.com", key="login_email")
+        # Normalize email locally for lookups but keep the raw input in the field
+        email = email_input.strip().lower() if email_input else ""
         password = st.text_input("Mot de passe", type="password", placeholder="••••••••", key="login_password")
         
         # Load user to check if verification is required
