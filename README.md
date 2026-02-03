@@ -1,63 +1,106 @@
-# 🚀 AI Market Hunter - Dubai Edition
+# 🚀 Dubai Trading Tools - Supernova Edition
 
-**Assistant de trading éducatif professionnel pour crypto/or/forex**
+**Assistant de trading professionnel avec IA & données cryptos en temps réel**
 
-Version: **4.1 (MVT - Minimum Viable Template)**  
-Statut: ✅ Complet et conforme au cahier des charges
+Version: **5.0 (Supernova - Production Ready)**  
+Statut: ✅ **Déploiement complet**
+
+---
+
+## 🌟 Nouvelle Version Supernova - Changements Majeurs
+
+### ✨ **Améliorations v5.0:**
+
+1. **📰 Actualités IA en Temps Réel** (Cache 2h)
+   - OpenAI GPT-5 insights trading
+   - DeepMind RL pour options
+   - Anthropic Claude 4 fraude detection
+   - Solana AI agents
+   - MIT market prediction
+   - Moltbook.com community news
+
+2. **💰 Animation Prix Temps Réel** (Comme montre de sport)
+   - Mise à jour fluide des cryptos
+   - Change 24h visible (vert ↑/rouge ↓)
+   - Timestamp HH:MM:SS
+   - Refresh automatique
+
+3. **🔐 Authentification Améliorée**
+   - Inscription → Email de vérification → Code validation
+   - Accès au dashboard après vérification
+   - Streamlit SMTP configuré natif
+
+4. **📊 Données Réelles Synchronisées**
+   - CoinGecko API (Bitcoin, Ethereum, Solana, etc.)
+   - ExchangeRate API (EUR, GBP, JPY)
+   - Or (XAU) en temps réel
+   - Cache cohérent 2-5min
+
+5. **🎨 Thème Automatique**
+   - Système détecte mode clair/sombre OS
+   - Plus de toggle manuel
+   - Candlesticks vert/rouge classiques
 
 ---
 
 ## 📋 Vue d'ensemble
 
-AI Market Hunter est un outil d'analyse technique éducatif conçu pour les traders passionnés des Émirats Arabes Unis. C'est **NON un robot de trading** - c'est un assistant pour prendre de meilleures décisions.
+Dubai Trading Tools est un assistant de trading **PROFESSIONNEL** pour analyser les marchés crypto, forex, et or. 
 
 ### ✅ Ce que vous pouvez faire :
-- 📊 Analyser 5 indicateurs techniques en temps réel
-- 🔔 Configurer des alertes personnalisées
-- 📈 Backtester des stratégies sur données historiques
-- 📚 Apprendre les fondamentaux du trading
-- 🎨 Interface moderne et intuitive
+- 📊 **Analyser** crypto/forex/or en temps réel
+- 🔔 **Alertes RSI** Overbought/Oversold
+- 📰 **Lire actualités IA** impactant les marchés
+- 💰 **Voir prix** mis à jour chaque 5min
+- 📈 **Signaux trading** basés sur 4 indicateurs
+- 🎯 **Risk/Reward** calcul automatique
 
 ### ❌ Ce que vous NE pouvez PAS faire :
-- ❌ Exécuter automatiquement des trades
-- ❌ Accéder à vos comptes brokers
-- ❌ Recevoir de conseil financier direct
+- ❌ Exécuter des trades automatiquement
+- ❌ Accéder à vos brokers
 - ❌ Garantir des profits
 
 ---
 
 ## 🎯 Fonctionnalités principales
 
-### 1️⃣ Dashboard - Analyse Technique
-- **Graphique Candlestick interactif** (Plotly)
+### 1️⃣ **Dashboard - Analyse Technique**
+- **Graphique Candlestick** professionnel (vert/rouge)
 - **Indicateurs superposés** :
-  - 📊 **RSI (14)** - Momentum et zones de suracheté/survendu
-  - 📈 **EMA 12/26** - Tendances rapides et lentes
-  - 📉 **MACD** - Détection des changements de tendance
-  - 🔼 **Bollinger Bands** - Volatilité et support/résistance
-  - 📊 **Volume Profile** - Zones d'accumulation/distribution
-- Support multi-actifs : **BTC-USD, XAU-USD, ETH-USD**
-- Signaux combinés automatiques (ACHAT/PRUDENCE/NEUTRE)
+  - 📊 **RSI (14)** - Momentum (Overbought >70 / Oversold <30)
+  - 📈 **MACD** - Changements de tendance
+  - 🔼 **Bollinger Bands** - Volatilité
+  - 💰 **Volume bars** - Pression acheteur/vendeur
+- **Support multi-actifs** : BTC, ETH, SOL, EUR, GBP, JPY, AUD, XAU
 
-### 2️⃣ Système d'alertes
-- **Configuration personnalisable** : Seuils RSI, croisements, volume
-- **Historique consultable** : Filtrage, horodatage, gestion automatique
-- **Multi-actifs** : Surveille vos actifs préférés
+### 2️⃣ **Prix en Temps Réel** 🔄
+- 💰 Mise à jour fluide comme montre de sport
+- 📊 Change 24h visible
+- ⏱️ Timestamp HH:MM:SS
+- 🔘 Bouton rafraîchissement manuel
 
-### 3️⃣ Backtesting éducatif
-- **2 stratégies** : RSI + EMA Crossover
-- **Résultats complets** : Taux de réussite, Max Drawdown, Equity curve
-- **Support** : 30-365 jours de données
+### 3️⃣ **Actualités IA** 📰 (Cache 2h)
+- 🤖 OpenAI, DeepMind, Anthropic, Moltbook
+- 💡 Impact direct sur marchés (BTC +5%, ETH +8%)
+- 🔗 Liens sources authentiques
+- 🌍 Bilingue FR/EN
 
-### 4️⃣ Authentification & Profils
-- Système de compte sécurisé (hashage SHA-256)
-- Sauvegarde des configurations
-- Données locales (RGPD/SCA compliant)
+### 4️⃣ **Alertes Intelligentes** 🚨
+- RSI Overbought (>70) / Oversold (<30)
+- Volatilité 24h (>5%)
+- Affichage temps réel dashboard
+- Historique complet
 
-### 5️⃣ Guide & Tutoriels
-- 📚 Démarrage rapide
-- 🧮 Formules mathématiques (LaTeX)
-- ❓ FAQ complète
+### 5️⃣ **Authentification** 🔐
+- Inscription avec email
+- Code de vérification (6 chiffres)
+- Expiration 1h
+- Dashboard accès sécurisé
+
+### 6️⃣ **Signaux Trading** 🎯
+- Composite 4 indicateurs
+- STRONG_BUY (80-100) → BUY → NEUTRAL → SELL → STRONG_SELL (0-20)
+- Risk/Reward ratio calculé
 
 ---
 
@@ -65,23 +108,32 @@ AI Market Hunter est un outil d'analyse technique éducatif conçu pour les trad
 
 ```
 src/
-├── indicators.py      # Calculs d'indicateurs natifs
-├── data.py            # Génération de données mock
-├── auth.py            # Authentification utilisateurs
-├── alerts.py          # Moteur d'alertes
-└── backtesting.py     # Engine de backtesting
+├── auth.py            # Authentification SMTP + vérification
+├── data.py            # CoinGecko + ExchangeRate APIs (2-5min cache)
+├── alerts.py          # Moteur alertes RSI + volatilité
+├── indicators.py      # RSI, MACD, Bollinger Bands
+├── cache.py           # Gestion cache TTL
+└── trading_rules.py   # Signaux composites
 
-Stack: Streamlit + Plotly + Pandas + NumPy + Pytz
+Stack: Streamlit + Plotly + Pandas + NumPy + Requests
 Python: 3.10+
+Cache: 2-5min pour cryptos, 2h pour actualités
 ```
 
 ---
 
 ## 📥 Installation
 
+### Prérequis
+- Python 3.10+
+- Git
+- Compte GitHub
+
+### Étapes
+
 ```bash
 # 1. Cloner le projet
-git clone <repo>
+git clone https://github.com/EL-AX/dubai-trading-tools.git
 cd dubai-trading-tools
 
 # 2. Environnement virtuel
@@ -89,14 +141,118 @@ python -m venv venv
 source venv/bin/activate  # Linux/Mac
 # ou venv\Scripts\activate  # Windows
 
-# 3. Dépendances
+# 3. Installer dépendances
 pip install -r requirements.txt
 
-# 4. Lancer
+# 4. Configurer .env (optionnel - SMTP)
+cp .env.example .env
+# Éditer .env avec vos credentials SMTP
+
+# 5. Lancer l'app
 streamlit run app.py
 ```
 
-Accédez à `http://localhost:8501`
+L'app s'ouvre sur `http://localhost:8501`
+
+---
+
+## 🔧 Configuration SMTP (Optionnel)
+
+Pour l'envoi d'emails de vérification:
+
+```bash
+# Créer .env dans le root
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=465
+SMTP_USER=votre-email@gmail.com
+SMTP_PASSWORD=votre-app-password
+EMAIL_FROM=votre-email@gmail.com
+```
+
+Sans .env, les codes sont sauvegardés localement dans `data/outbox/`
+
+---
+
+## 📊 Données & APIs
+
+- **Cryptos**: CoinGecko API (Bitcoin, Ethereum, Solana, Cardano, Ripple, Polkadot)
+- **Forex**: exchangerate.host API (EUR, GBP, JPY, AUD)
+- **Or**: goldprice.org API (XAU)
+- **Actualités**: OpenAI, DeepMind, Anthropic, Moltbook.com, MIT, CoinTelegraph
+
+**Cache:**
+- Cryptos & Forex: 5 minutes
+- Actualités IA: 2 heures
+- Données historiques: 10 minutes
+
+---
+
+## 🚀 Déploiement
+
+### Streamlit Cloud
+```bash
+git push origin main
+# Va sur https://streamlit.io/ et déploie
+```
+
+### Docker
+```bash
+docker build -t dubai-trading-tools .
+docker run -p 8501:8501 dubai-trading-tools
+```
+
+### Heroku / Railway
+- Push vers Procfile
+- Set environment variables SMTP_*
+
+---
+
+## 📚 Documentation
+
+- [DEMARRAGE_RAPIDE.md](DEMARRAGE_RAPIDE.md) - Tutoriel démarrage
+- [SPECIFICATIONS_DETAILLEES.md](SPECIFICATIONS_DETAILLEES.md) - Tech specs complètes
+- [CONFORMITE_CAHIER_CHARGES.md](CONFORMITE_CAHIER_CHARGES.md) - Checklist fonctionnalités
+
+---
+
+## 🔐 Sécurité
+
+- ✅ Passwords hashés SHA-256
+- ✅ Emails vérifiés (SMTP sécurisé)
+- ✅ Tokens expiration 1h
+- ✅ Données locales (no cloud)
+- ✅ HTTPS ready
+
+---
+
+## 📝 Licence
+
+MIT License - Utilisation libre à des fins éducatives
+
+---
+
+## 👤 Auteur
+
+**EL-AX** - GitHub: https://github.com/EL-AX
+
+---
+
+## 🎉 Supernova Features Highlights
+
+✨ **Ce qui rend cette version extraordinaire:**
+
+1. **Actualités IA en Temps Réel** - Des insights OpenAI, DeepMind, Anthropic
+2. **Animation Prix** - Mise à jour fluide comme une montre de sport
+3. **Authentification Pro** - Email vérification intégrée
+4. **Données Réelles** - CoinGecko + ExchangeRate APIs synchronisées
+5. **Thème Automatique** - Suit le système d'exploitation
+6. **Candlesticks Classiques** - Vert/rouge profesionnels visibles
+7. **Alertes Intelligentes** - RSI + volatilité en temps réel
+
+---
+
+**Prêt à trader comme un pro? 🚀** Ouvre l'app et explore!
+
 
 ---
 
