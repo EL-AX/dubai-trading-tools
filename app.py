@@ -85,7 +85,7 @@ def show_header():
             st.write("📊")
     with col2:
         st.markdown("<h1 style='text-align: center;'>📈 Dubai Trading Tools</h1>", unsafe_allow_html=True)
-        st.markdown("<p style='text-align:center;'>Plateforme de trading pour les professionnels</p>", unsafe_allow_html=True)
+        st.markdown("<p style='text-align:center;'>🤖 Assistant d'analyse pour traders - Signaux IA, Indicateurs, Risques</p>", unsafe_allow_html=True)
 
 def get_ai_news(force_refresh=False):
     """Fetch AI-powered news from multiple sources with caching (5h) and force refresh capability"""
