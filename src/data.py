@@ -47,10 +47,10 @@ def get_crypto_price(ticker):
         if ticker not in coins:
             return generate_mock_data(ticker, 1).iloc[-1].to_dict()
         
-        # Try CoinGecko - real prices with 2h cache
+        # CoinGecko - REAL PRICES with proper caching
         try:
             url = f"https://api.coingecko.com/api/v3/simple/price?ids={coins[ticker]}&vs_currencies=usd&include_market_cap=true&include_24hr_vol=true&include_24hr_change=true"
-            response = requests.get(url, timeout=5)
+            response = requests.get(url, timeout=10)
             if response.status_code == 200:
                 data = response.json()
                 coin_data = data.get(coins[ticker], {})
@@ -64,50 +64,21 @@ def get_crypto_price(ticker):
                         "change_24h": float(coin_data.get("usd_24h_change", 0) or 0),
                         "timestamp": datetime.now()
                     }
-                    cache.set(f"price_{ticker}", result, ttl=10)  # live TTL (10s) for responsive UI
+                    # No cache for live prices - always fresh from API
                     return result
         except Exception as e:
             pass
         
-        # Fallback to realistic mock data based on historical ranges
-        mock_prices = {
-            "BTC": 76500,
-            "ETH": 2250,
-            "SOL": 100,
-            "ADA": 1.05,
-            "XRP": 2.45,
-            "DOT": 8.50
-        }
-        base_price = mock_prices.get(ticker, 100)
-        # Add small random variation (±1%)
-        variation = base_price * (np.random.uniform(-0.01, 0.01))
-        price = base_price + variation
-        
-        result = {
+        # NO FALLBACK WITH FAKE PRICES - If API fails, return error so we know
+        return {
             "ticker": ticker,
-            "price": float(price),
-            "volume": float(np.random.uniform(1e9, 5e9)),
-            "market_cap": float(np.random.uniform(1e12, 5e12)),
-            "change_24h": np.random.uniform(-5, 5),
-            "timestamp": datetime.now()
+            "price": 0,
+            "volume": 0,
+            "market_cap": 0,
+            "change_24h": 0,
+            "timestamp": datetime.now(),
+            "error": "Price data unavailable"
         }
-        cache.set(f"price_{ticker}", result, ttl=10)  # live TTL (10s) for responsive UI
-        return result
-        
-    except Exception as e:
-        pass
-    
-    # Fallback: use mock data with proper format
-    mock_df = generate_mock_data(ticker, 1)
-    mock_row = mock_df.iloc[-1]
-    return {
-        "ticker": ticker,
-        "price": float(mock_row['close']),
-        "volume": float(mock_row.get('volume', 0)),
-        "market_cap": 0,
-        "change_24h": 0,
-        "timestamp": datetime.now()
-    }
 
 def get_forex_price(ticker):
     try:

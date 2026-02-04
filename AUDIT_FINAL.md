@@ -248,7 +248,6 @@ Score: 7/7 (100%) ✅ PASSING
 ║                    DUBAI TRADING TOOLS v2.0                       ║
 ║              © 2025-2026 ELOADXFAMILY - Tous droits réservés       ║
 ║     Outil d'analyse trading professionnel avec IA et éducation     ║
-║                    Réalisé avec perfection absolue                 ║
 ╚═══════════════════════════════════════════════════════════════════╝
 """
 

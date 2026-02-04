@@ -3,7 +3,6 @@
 ║                    DUBAI TRADING TOOLS v2.0                       ║
 ║              © 2025-2026 ELOADXFAMILY - Tous droits réservés       ║
 ║     Outil d'analyse trading professionnel avec IA et éducation     ║
-║                    Réalisé avec perfection absolue                 ║
 ╚═══════════════════════════════════════════════════════════════════╝
 """
 
@@ -539,18 +538,20 @@ def page_login_register():
                 st.warning("⚠️ Remplissez tous les champs")
 
 def page_news_ai():
-    """Section actualités IA en temps réel (français uniquement)"""
-    st.title("📰 Actualités Temps Réel & Intelligence Artificielle")
+    """Section actualités IA en temps réel - Vraies sources (Reddit, RSS, CoinGecko)"""
+    st.title("📰 Actualités Temps Réel - Sources Réelles")
     if st.button("🔄 Actualiser", use_container_width=True):
         # Force clear cache and refresh
         from src.cache import CacheManager
         cache = CacheManager()
-        user_language = st.session_state.get("user_language", "fr")
-        cache_key = f"ai_news_{user_language}"
-        cache.delete(cache_key)
+        cache.delete("real_news_all")
         st.rerun()
-    news_items = get_ai_news()
-    st.info("✅ Cache 5h | Sources réelles | Affichage: 50+ actualités")
+    
+    # Get REAL news from real sources
+    from src.real_news import get_all_real_news
+    news_items = get_all_real_news()
+    
+    st.info("✅ Cache 10min | Sources réelles: Reddit, RSS (CoinDesk, CoinTelegraph), CoinGecko Trending")
     if news_items:
         sentiments = [n.get('sentiment', 'neutral') for n in news_items]
         bullish_count = sentiments.count('bullish')
@@ -570,30 +571,30 @@ def page_news_ai():
             with st.container():
                 col1, col2, col3 = st.columns([3, 1, 1])
                 with col1:
-                    st.markdown(f"**{idx}. {news['titre']}**")
+                    st.markdown(f"**{idx}. {news.get('titre', 'N/A')}**")
                 with col2:
                     symbol = news.get('symbol', '')
                     if symbol:
                         st.code(symbol, language="")
                 with col3:
-                    if news['sentiment'] == 'bullish':
+                    if news.get('sentiment') == 'bullish':
                         st.success("📈 HAUSSIER")
-                    elif news['sentiment'] == 'bearish':
+                    elif news.get('sentiment') == 'bearish':
                         st.error("📉 BAISSIER")
                     else:
                         st.info("➡️ NEUTRE")
-                summary = news.get('resume', 'N/A')
-                st.markdown(f"{summary}")
-                col1, col2, col3 = st.columns([2, 2, 1])
+                resume = news.get('resume', 'N/A')
+                st.markdown(f"{resume}")
+                col1, col2 = st.columns([3, 1])
                 with col1:
-                    st.markdown(f"📌 **Source:** {news['source']}")
-                links = news.get('links', [])
-                if links:
-                    links_text = " | ".join([f"[{link['text']}]({link['url']})" for link in links])
-                    st.markdown(f"🔗 **Sources:** {links_text}")
+                    st.markdown(f"📌 **Source:** {news.get('source', 'Unknown')}")
+                with col2:
+                    url = news.get('url', '')
+                    if url:
+                        st.markdown(f"[🔗 Lire]({url})")
                 st.divider()
     else:
-        st.warning("Aucune news disponible pour le moment")
+        st.warning("❌ Aucune news disponible pour le moment. Les APIs peuvent être momentanément indisponibles.")
 
 def page_dashboard():
     st.title("📊 Tableau de Bord")
@@ -1434,7 +1435,6 @@ def main():
         <div style='text-align: center; color: #888; font-size: 0.85rem; margin-top: 40px; padding: 20px;'>
         <p>© 2025-2026 <strong>ELOADXFAMILY</strong> - Tous droits réservés</p>
         <p><em>Dubai Trading Tools - Professional Trading Dashboard</em></p>
-        <p>Réalisé avec perfection absolue</p>
         </div>
         """, unsafe_allow_html=True)
 
