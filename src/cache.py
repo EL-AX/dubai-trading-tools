@@ -70,6 +70,20 @@ class CacheManager:
             except:
                 pass
     
+    def delete(self, key):
+        """Delete a specific cache entry"""
+        # Remove from memory cache
+        if key in self.memory_cache:
+            del self.memory_cache[key]
+        
+        # Remove from disk cache
+        cache_file = self._get_cache_file(key)
+        if os.path.exists(cache_file):
+            try:
+                os.remove(cache_file)
+            except:
+                pass
+    
     def get_ttl_remaining(self, key):
         if key in self.memory_cache:
             expiry = datetime.fromisoformat(self.memory_cache[key]["expiry"])
