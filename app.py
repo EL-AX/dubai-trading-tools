@@ -640,7 +640,8 @@ def page_dashboard():
     st.markdown("---")
     st.subheader("1️⃣ Sélection des Actifs")
     
-    tickers = ["BTC", "ETH", "SOL", "EUR", "GBP", "JPY", "AUD", "XAU"]
+    # ALL supported tickers
+    tickers = ["BTC", "ETH", "SOL", "ADA", "XRP", "DOT", "EUR", "GBP", "JPY", "AUD", "XAU"]
     selected_tickers = st.multiselect("Sélectionnez les actifs à analyser:", tickers, default=["BTC", "EUR"])
     
     if selected_tickers:

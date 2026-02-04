@@ -1,0 +1,50 @@
+Voici le condensé technique de toutes les API 100% gratuites et permanentes pour intégrer des actualités crypto à ton application Python, après vérification de l'ensemble des plateformes demandées.
+
+📋 Synthèse des Options Valables
+
+Plateforme/API Type d'accès Gratuit & Permanent ? Comment l'utiliser dans ton app Python
+Free Crypto News API API REST (Open Source) ✅ OUI - Pas de clé, pas de limites. requests.get("https://free-crypto-news-api.vercel.app/api/news")
+NewsAPI.org API REST (Plan gratuit) ✅ OUI - 100 requêtes/jour, permanent. Filtre avec q="bitcoin cryptocurrency" dans tes requêtes.
+Flux RSS (CoinDesk, etc.) Flux XML public ✅ OUI - Le plus stable dans le temps. Parser avec la librairie feedparser.
+YouTube Data API API REST (Plan standard) ⚠️ LIMITÉ - 10k unités/jour gratuites. Pour lister des vidéos (coût: 100 unités/recherche), pas pour extraire du texte.
+
+❌ Plateformes vérifiées mais inutilisables pour toi
+
+· X (Twitter), Reddit (API officielle), Twitch : Accès API payant ou sévèrement limité pour un usage gratuit de collecte d'actualités.
+· Moltbook.com, plateformes de streaming asiatiques : Aucune API publique documentée pour récupérer un flux structuré d'actualités financières ou crypto.
+· YouTube / Twitch (flux vidéo) : Aucune API gratuite ne peut extraire et synthétiser le contenu textuel des lives ou des vidéos pour en faire des "news". Seule la recherche de métadonnées (titre, lien) est possible.
+
+🛠️ Architecture recommandée pour ton application
+
+Pour une fonctionnalité fiable et toujours gratuite, voici la stack à implémenter :
+
+1. Couche Principale (free-crypto-news-api) : Ta source primaire pour les articles. Intègre-la avec requests et planifie des appels périodiques.
+2. Couche de Secours (NewsAPI.org) : Configure-la comme fallback en cas d'échec de la source principale. Utilise la même fonction d'affichage.
+3. Couche Périphérique (YouTube Data API - Optionnelle) : Si tu veux des vidéos, ajoute un onglet séparé qui liste les liens vers les dernières analyses vidéo en utilisant la recherche. Ne tente pas d'en faire une source d'actualités textuelles.
+4. Gestion des Erreurs & Cache : Utilise try...except autour de tes appels API et mets en cache les résultats 2-3 minutes (avec un dictionnaire ou functools.lru_cache) pour éviter les pannes et respecter les quotas.
+
+```python
+# Schéma de structure
+import requests, feedparser, time
+
+def get_primary_news():
+    # Appel à la Free Crypto News API
+    pass
+
+def get_fallback_news():
+    # Appel à NewsAPI.org avec ta clé
+    pass
+
+def fetch_news():
+    """Fonction principale avec fallback et cache."""
+    news = get_primary_news()
+    if not news:
+        news = get_fallback_news()
+    return news
+
+# Appeler cette fonction depuis ton thread de mise à jour GUI
+```
+
+Conclusion : Ta base solide est le combo Free Crypto News API + NewsAPI.org. Les plateformes sociales/vidéo populaires ne sont pas des sources exploitables gratuitement pour des news structurées en temps réel, malgré leur volume de discussion.
+
+Si tu as besoin d'aide pour écrire la fonction de cache ou l'intégration avec ton affichage de graphiques, n'hésite pas à demander.

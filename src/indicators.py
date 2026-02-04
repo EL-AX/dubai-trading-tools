@@ -84,13 +84,35 @@ def calculate_volatility(prices, period=20):
     return volatility
 
 def calculate_trend(prices, period=20):
-    if len(prices) < period:
-        return None
+    """Calcule la tendance sur les prix
     
-    trend = np.zeros_like(prices)
-    for i in range(period - 1, len(prices)):
+    Retourne:
+    - Array de -1 (baissier), 0 (neutre), 1 (haussier) pour chaque prix
+    - [] si pas assez de données (fallback gracieux)
+    """
+    if prices is None or len(prices) == 0:
+        return []
+    
+    # Adapter la période si pas assez de données
+    if len(prices) < period:
+        period = max(2, len(prices) // 2)
+    
+    trend = np.zeros(len(prices), dtype=int)
+    
+    # Remplir les premières valeurs avec la tendance simple (prix montant/baissant)
+    for i in range(1, min(period, len(prices))):
+        if prices[i] > prices[i-1]:
+            trend[i] = 1
+        elif prices[i] < prices[i-1]:
+            trend[i] = -1
+        else:
+            trend[i] = 0
+    
+    # Calculer la tendance sur la période complète pour les données restantes
+    for i in range(period, len(prices)):
         window = prices[i - period + 1:i + 1]
-        slope = (window[-1] - window[0]) / len(window)
-        trend[i] = 1 if slope > 0 else (-1 if slope < 0 else 0)
+        if len(window) > 0:
+            slope = (window[-1] - window[0]) / len(window)
+            trend[i] = 1 if slope > 0 else (-1 if slope < 0 else 0)
     
     return trend
