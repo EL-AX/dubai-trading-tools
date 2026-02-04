@@ -198,9 +198,17 @@ def get_ai_news(force_refresh=False):
             "date": datetime.now().isoformat()
         } for news in trading_news_data]
     
+    # Remove exact duplicates by title to prevent repetition
+    seen_titles = set()
+    unique_news = []
+    for item in news_data:
+        if item["titre"] not in seen_titles:
+            seen_titles.add(item["titre"])
+            unique_news.append(item)
+    
     # Cache pour 24 heures (actualisé quotidiennement)
-    cache.set(cache_key, news_data, ttl=86400)
-    return news_data
+    cache.set(cache_key, unique_news, ttl=86400)
+    return unique_news
 
 def display_live_price_with_animation(ticker):
     """Display live price with smooth animation updates like a sports watch"""
@@ -529,6 +537,12 @@ def page_news_ai():
     """Section actualités IA en temps réel (français uniquement)"""
     st.title("📰 Actualités Temps Réel & Intelligence Artificielle")
     if st.button("🔄 Actualiser", use_container_width=True):
+        # Force clear cache and refresh
+        from src.cache import CacheManager
+        cache = CacheManager()
+        user_language = st.session_state.get("user_language", "fr")
+        cache_key = f"ai_news_{user_language}"
+        cache.delete(cache_key)
         st.rerun()
     news_items = get_ai_news()
     st.info("✅ Cache 5h | Sources réelles | Affichage: 50+ actualités")
@@ -551,7 +565,7 @@ def page_news_ai():
             with st.container():
                 col1, col2, col3 = st.columns([3, 1, 1])
                 with col1:
-                    st.markdown(f"**{idx}. {news['title']}**")
+                    st.markdown(f"**{idx}. {news['titre']}**")
                 with col2:
                     symbol = news.get('symbol', '')
                     if symbol:
@@ -563,7 +577,7 @@ def page_news_ai():
                         st.error("📉 BAISSIER")
                     else:
                         st.info("➡️ NEUTRE")
-                summary = news.get('summary', 'N/A')
+                summary = news.get('resume', 'N/A')
                 st.markdown(f"{summary}")
                 col1, col2, col3 = st.columns([2, 2, 1])
                 with col1:
@@ -705,11 +719,11 @@ def page_dashboard():
             fig = make_subplots(rows=2, cols=1, shared_xaxes=True,
                                 vertical_spacing=0.02, row_heights=[0.78, 0.22])
 
-            # Determine style based on user selection - ALWAYS use Model style for premium look
+            # Determine style based on user selection - use consistent unified premium style for ALL tickers including GOLD
             c_style = st.session_state.get("candle_style", "classic")
-            # Premium Model style for all tickers
-            inc = dict(fillcolor='#17957b', line=dict(color='#17957b', width=6))
-            dec = dict(fillcolor='#e83a4a', line=dict(color='#e83a4a', width=6))
+            # Unified premium model style that works consistently for all tickers including GOLD
+            inc = dict(fillcolor='#17957b', line=dict(color='#17957b', width=4))
+            dec = dict(fillcolor='#e83a4a', line=dict(color='#e83a4a', width=4))
             
             # Apply dark premium background for all styles
             fig.update_layout(
@@ -745,7 +759,7 @@ def page_dashboard():
             df_candle = df_candle.sort_values('timestamp')
 
             try:
-                # Add candlestick with proper styling for thickness
+                # Add candlestick with unified styling that works for all tickers including GOLD
                 fig.add_trace(go.Candlestick(
                     x=df_candle['timestamp'].tolist(),
                     open=df_candle['open'].tolist(),
@@ -755,26 +769,16 @@ def page_dashboard():
                     name='Prix',
                     increasing=dict(
                         fillcolor=inc['fillcolor'],
-                        line=dict(color=inc['line']['color'], width=3)
+                        line=dict(color=inc['line']['color'], width=inc['line']['width'])
                     ),
                     decreasing=dict(
                         fillcolor=dec['fillcolor'],
-                        line=dict(color=dec['line']['color'], width=3)
+                        line=dict(color=dec['line']['color'], width=dec['line']['width'])
                     ),
                     opacity=0.95,
                     showlegend=False,
                     hovertemplate='<b>%{x|%d-%m-%Y}</b><br>Open: %{open:.2f}<br>High: %{high:.2f}<br>Low: %{low:.2f}<br>Close: %{close:.2f}<extra></extra>'
                 ), row=1, col=1)
-
-                # Ensure the last added trace keeps the styling regardless of later layout/template changes
-                try:
-                    last_trace = fig.data[-1]
-                    # Force update of increasing/decreasing line widths and colors
-                    last_trace.update(increasing=dict(fillcolor=inc['fillcolor'], line=dict(color=inc['line']['color'], width=6)),
-                                      decreasing=dict(fillcolor=dec['fillcolor'], line=dict(color=dec['line']['color'], width=6)),
-                                      opacity=0.95)
-                except Exception:
-                    pass
             except Exception as e:
                 st.error(f"Erreur affichage bougies pour {ticker}: {e}")
                 continue
