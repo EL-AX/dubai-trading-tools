@@ -722,8 +722,12 @@ def page_dashboard():
             # Determine style based on user selection - use consistent unified premium style for ALL tickers including GOLD
             c_style = st.session_state.get("candle_style", "classic")
             # Unified premium model style that works consistently for all tickers including GOLD
+            # Green for bullish (up), red for bearish (down)
             inc = dict(fillcolor='#17957b', line=dict(color='#17957b', width=4))
             dec = dict(fillcolor='#e83a4a', line=dict(color='#e83a4a', width=4))
+            
+            # Force reset Plotly template to prevent style override for GOLD
+            template_name = "plotly_dark"
             
             # Apply dark premium background for all styles
             fig.update_layout(
@@ -822,7 +826,7 @@ def page_dashboard():
                 title=f"<b>{ticker} - Analyse Candlestick (30J)</b>",
                 height=750,
                 xaxis_rangeslider_visible=False,
-                template="plotly_dark",
+                template=template_name,  # Use the template variable to ensure consistency
                 hovermode='x unified',
                 xaxis=dict(
                     showgrid=True, gridwidth=1, gridcolor='rgba(255,255,255,0.08)',
@@ -1319,9 +1323,13 @@ def page_patterns():
 def page_settings():
     st.markdown("## ⚙️ Paramètres")
     
-    if st.button("← Retour au tableau de bord", key="btn_back_settings", use_container_width=True):
-        st.session_state.current_page = "dashboard"
-        st.rerun()
+    col1, col2 = st.columns([4, 1])
+    with col1:
+        if st.button("← Retour au tableau de bord", key="btn_back_settings", use_container_width=True):
+            st.session_state.current_page = "dashboard"
+            st.rerun()
+    with col2:
+        pass
     
     st.divider()
     
@@ -1402,17 +1410,20 @@ def main():
                 current_index = 3
             elif st.session_state.current_page == "settings":
                 current_index = 4
+            
             page = st.radio("Menu:", menu_options, index=current_index, key="page_selector")
-            if page == menu_options[0]:
-                st.session_state.current_page = "dashboard"
-            elif page == menu_options[1]:
-                st.session_state.current_page = "tutorial"
-            elif page == menu_options[2]:
-                st.session_state.current_page = "patterns"
-            elif page == menu_options[3]:
-                st.session_state.current_page = "news"
-            elif page == menu_options[4]:
-                st.session_state.current_page = "settings"
+            
+            # Map selection to page
+            page_map = {
+                menu_options[0]: "dashboard",
+                menu_options[1]: "tutorial",
+                menu_options[2]: "patterns",
+                menu_options[3]: "news",
+                menu_options[4]: "settings"
+            }
+            
+            if page in page_map:
+                st.session_state.current_page = page_map[page]
         
         if st.session_state.current_page == "dashboard":
             page_dashboard()
