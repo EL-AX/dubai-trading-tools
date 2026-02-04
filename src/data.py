@@ -35,99 +35,98 @@ def get_live_price(ticker):
     return generate_mock_data(ticker, 1).iloc[-1].to_dict()
 
 def get_crypto_price(ticker):
+    coins = {
+        "BTC": "bitcoin",
+        "ETH": "ethereum",
+        "SOL": "solana",
+        "ADA": "cardano",
+        "XRP": "ripple",
+        "DOT": "polkadot"
+    }
+    if ticker not in coins:
+        return generate_mock_data(ticker, 1).iloc[-1].to_dict()
+    
+    # CoinGecko - REAL PRICES with proper caching
     try:
-        coins = {
-            "BTC": "bitcoin",
-            "ETH": "ethereum",
-            "SOL": "solana",
-            "ADA": "cardano",
-            "XRP": "ripple",
-            "DOT": "polkadot"
-        }
-        if ticker not in coins:
-            return generate_mock_data(ticker, 1).iloc[-1].to_dict()
-        
-        # CoinGecko - REAL PRICES with proper caching
-        try:
-            url = f"https://api.coingecko.com/api/v3/simple/price?ids={coins[ticker]}&vs_currencies=usd&include_market_cap=true&include_24hr_vol=true&include_24hr_change=true"
-            response = requests.get(url, timeout=10)
-            if response.status_code == 200:
-                data = response.json()
-                coin_data = data.get(coins[ticker], {})
-                price = coin_data.get("usd")
-                if price and isinstance(price, (int, float)) and price > 0:
-                    result = {
-                        "ticker": ticker,
-                        "price": float(price),
-                        "volume": float(coin_data.get("usd_24h_vol", 0) or 0),
-                        "market_cap": float(coin_data.get("usd_market_cap", 0) or 0),
-                        "change_24h": float(coin_data.get("usd_24h_change", 0) or 0),
-                        "timestamp": datetime.now()
-                    }
-                    # No cache for live prices - always fresh from API
-                    return result
-        except Exception as e:
-            pass
-        
-        # NO FALLBACK WITH FAKE PRICES - If API fails, return error so we know
-        return {
-            "ticker": ticker,
-            "price": 0,
-            "volume": 0,
-            "market_cap": 0,
-            "change_24h": 0,
-            "timestamp": datetime.now(),
-            "error": "Price data unavailable"
-        }
+        url = f"https://api.coingecko.com/api/v3/simple/price?ids={coins[ticker]}&vs_currencies=usd&include_market_cap=true&include_24hr_vol=true&include_24hr_change=true"
+        response = requests.get(url, timeout=10)
+        if response.status_code == 200:
+            data = response.json()
+            coin_data = data.get(coins[ticker], {})
+            price = coin_data.get("usd")
+            if price and isinstance(price, (int, float)) and price > 0:
+                result = {
+                    "ticker": ticker,
+                    "price": float(price),
+                    "volume": float(coin_data.get("usd_24h_vol", 0) or 0),
+                    "market_cap": float(coin_data.get("usd_market_cap", 0) or 0),
+                    "change_24h": float(coin_data.get("usd_24h_change", 0) or 0),
+                    "timestamp": datetime.now()
+                }
+                # No cache for live prices - always fresh from API
+                return result
+    except Exception as e:
+        pass
+    
+    # NO FALLBACK WITH FAKE PRICES - If API fails, return error so we know
+    return {
+        "ticker": ticker,
+        "price": 0,
+        "volume": 0,
+        "market_cap": 0,
+        "change_24h": 0,
+        "timestamp": datetime.now(),
+        "error": "Price data unavailable"
+    }
 
 def get_forex_price(ticker):
-    try:
-        # EUR vs USD 
-        if ticker == "EUR":
-            # Try multiple sources for better reliability
-            try:
-                url = "https://api.exchangerate.host/latest?base=USD&symbols=EUR"
-                response = requests.get(url, timeout=3)
-                if response.status_code == 200:
-                    data = response.json()
-                    if data.get("success") and "rates" in data:
-                        rate = data.get("rates", {}).get("EUR")
-                        if rate and isinstance(rate, (int, float)) and rate > 0:
-                            result = {
-                                "ticker": "EUR",
-                                "price": float(rate),
-                                "volume": 0,
-                                "market_cap": 0,
-                                "timestamp": datetime.now()
-                            }
-                            cache.set(f"price_EUR", result, ttl=7200)  # 2h cache
-                            return result
-            except:
-                pass
-            
-            # Fallback to alternative source
-            try:
-                url = "https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=eur&include_market_cap=false"
-                response = requests.get(url, timeout=3)
-                if response.status_code == 200:
-                    data = response.json()
-                    eth_eur = data.get("ethereum", {}).get("eur")
-                    if eth_eur:
-                        # Rough conversion
-                        rate = eth_eur / 2200  # Approx ETH price in EUR / 2200
-                        if rate > 0.5:  # EUR should be around 1.05
-                            result = {
-                                "ticker": "EUR",
-                                "price": float(rate),
-                                "volume": 0,
-                                "market_cap": 0,
-                                "timestamp": datetime.now()
-                            }
-                            cache.set(f"price_EUR", result, ttl=7200)
-                            return result
-            except:
-                pass
-        else:
+    # EUR vs USD 
+    if ticker == "EUR":
+        # Try multiple sources for better reliability
+        try:
+            url = "https://api.exchangerate.host/latest?base=USD&symbols=EUR"
+            response = requests.get(url, timeout=3)
+            if response.status_code == 200:
+                data = response.json()
+                if data.get("success") and "rates" in data:
+                    rate = data.get("rates", {}).get("EUR")
+                    if rate and isinstance(rate, (int, float)) and rate > 0:
+                        result = {
+                            "ticker": "EUR",
+                            "price": float(rate),
+                            "volume": 0,
+                            "market_cap": 0,
+                            "timestamp": datetime.now()
+                        }
+                        cache.set(f"price_EUR", result, ttl=7200)  # 2h cache
+                        return result
+        except:
+            pass
+        
+        # Fallback to alternative source
+        try:
+            url = "https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=eur&include_market_cap=false"
+            response = requests.get(url, timeout=3)
+            if response.status_code == 200:
+                data = response.json()
+                eth_eur = data.get("ethereum", {}).get("eur")
+                if eth_eur:
+                    # Rough conversion
+                    rate = eth_eur / 2200  # Approx ETH price in EUR / 2200
+                    if rate > 0.5:  # EUR should be around 1.05
+                        result = {
+                            "ticker": "EUR",
+                            "price": float(rate),
+                            "volume": 0,
+                            "market_cap": 0,
+                            "timestamp": datetime.now()
+                        }
+                        cache.set(f"price_EUR", result, ttl=7200)
+                        return result
+        except:
+            pass
+    else:
+        try:
             url = f"https://api.exchangerate.host/latest?base=USD&symbols={ticker}"
             response = requests.get(url, timeout=3)
             if response.status_code == 200:
@@ -144,8 +143,8 @@ def get_forex_price(ticker):
                         }
                         cache.set(f"price_{ticker}", result, ttl=7200)  # 2h cache
                         return result
-    except Exception as e:
-        pass
+        except Exception as e:
+            pass
     
     # Fallback to realistic mock data
     mock_forex_prices = {
