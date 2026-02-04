@@ -4,6 +4,7 @@ Module de données en temps réel et historiques
 
 Utilise APIs authentiques pour récupérer les données réelles:
 - CoinGecko API pour les cryptomonnaies (BTC, ETH, SOL)
+- WebSocket en temps réel (Binance, CoinCap) pour flux live
 - exchangerate.host pour les paires de change (EUR, GBP, JPY, AUD)
 - metals.live pour les métaux précieux (Or/XAU)
 
@@ -16,6 +17,17 @@ import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
 from src.cache import CacheManager
+
+# Import WebSocket feeds
+try:
+    from src.websocket_feeds import (
+        get_binance_feed, 
+        get_coincap_feed,
+        initialize_realtime_feeds
+    )
+    WEBSOCKET_AVAILABLE = True
+except:
+    WEBSOCKET_AVAILABLE = False
 
 cache = CacheManager()
 
@@ -46,7 +58,42 @@ def get_crypto_price(ticker):
     if ticker not in coins:
         return generate_mock_data(ticker, 1).iloc[-1].to_dict()
     
-    # CoinGecko - REAL PRICES with proper caching
+    # PRIORITY 1: Try WebSocket feeds (fastest, most real-time)
+    if WEBSOCKET_AVAILABLE:
+        try:
+            # Try Binance WebSocket
+            binance = get_binance_feed()
+            binance_symbol = f"{ticker}USDT"
+            binance_price = binance.get_price(binance_symbol)
+            if binance_price and binance_price.get('price', 0) > 0:
+                return {
+                    "ticker": ticker,
+                    "price": float(binance_price['price']),
+                    "volume": float(binance_price.get('volume', 0)),
+                    "bid": float(binance_price.get('bid', 0)),
+                    "ask": float(binance_price.get('ask', 0)),
+                    "timestamp": datetime.now(),
+                    "source": "binance-websocket"
+                }
+        except:
+            pass
+        
+        try:
+            # Try CoinCap WebSocket
+            coincap = get_coincap_feed()
+            coincap_price = coincap.get_price(coins[ticker])
+            if coincap_price and coincap_price.get('price', 0) > 0:
+                return {
+                    "ticker": ticker,
+                    "price": float(coincap_price['price']),
+                    "volume": 0,
+                    "timestamp": datetime.now(),
+                    "source": "coincap-websocket"
+                }
+        except:
+            pass
+    
+    # PRIORITY 2: CoinGecko REST API - REAL PRICES with proper caching
     try:
         url = f"https://api.coingecko.com/api/v3/simple/price?ids={coins[ticker]}&vs_currencies=usd&include_market_cap=true&include_24hr_vol=true&include_24hr_change=true"
         response = requests.get(url, timeout=10)
@@ -61,7 +108,8 @@ def get_crypto_price(ticker):
                     "volume": float(coin_data.get("usd_24h_vol", 0) or 0),
                     "market_cap": float(coin_data.get("usd_market_cap", 0) or 0),
                     "change_24h": float(coin_data.get("usd_24h_change", 0) or 0),
-                    "timestamp": datetime.now()
+                    "timestamp": datetime.now(),
+                    "source": "coingecko-api"
                 }
                 # No cache for live prices - always fresh from API
                 return result

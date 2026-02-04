@@ -1360,6 +1360,15 @@ def page_settings():
             st.rerun()
 
 def main():
+    # Initialize WebSocket feeds for real-time prices
+    try:
+        from src.websocket_feeds import initialize_realtime_feeds
+        if "websockets_initialized" not in st.session_state:
+            initialize_realtime_feeds()
+            st.session_state.websockets_initialized = True
+    except:
+        pass
+    
     # Initialize session state early so theme and preferences can be applied immediately
     init_session_state(st)
     if "user_language" not in st.session_state:
