@@ -1,0 +1,142 @@
+Voici les APIs crypto gratuites ou partiellement gratuites que tu peux utiliser dans ton application Python pour afficher :
+
+prix en temps réel
+
+données de marché
+
+candlesticks OHLC
+
+flux WebSocket en direct
+…sans forcément payer ou avec un plan gratuit accessible 👇
+
+
+
+---
+
+🆓 APIs gratuites ou avec plan gratuit
+
+✅ 1. CoinGecko API — Gratuit pour prix & marché
+
+🌐 API REST gratuite (sans carte de crédit)
+
+Donne les prix en temps réel, données de marché, données historiques, etc.
+
+Limite : ~30 requêtes/minute sur le plan gratuit. 
+
+
+👉 Idéal pour :
+✔️ Obtenir le prix actuel de BTC/ETH ou d’autres cryptos
+✔️ Construire des graphes
+✔️ Afficher des listes d’actifs
+
+🔗 Pas besoin de payer pour un usage de base. 
+
+📍 Exemple d’usage REST :
+
+import requests
+url = "https://api.coingecko.com/api/v3/simple/price"
+params = {"ids": "bitcoin,ethereum", "vs_currencies": "usd"}
+resp = requests.get(url, params=params).json()
+print(resp)
+
+
+---
+
+✅ 2. Binance WebSocket — flux de données en temps réel
+
+📈 WebSocket public pour obtenir :
+
+le prix en temps réel (<symbol>@ticker)
+
+les transactions (<symbol>@trade)
+
+les bougies OHLC (<symbol>@kline_<interval>)
+
+
+Pas besoin d’authentification pour ces flux publics. 
+
+
+👉 Idéal pour :
+👀 Live price tickers
+📊 Graphiques qui bougent en temps réel
+📡 Flux WebSocket rapide
+
+
+---
+
+✅ 3. Coinbase Pro WebSocket
+
+WebSocket gratuit pour :
+
+flux de prix (ticker)
+
+mises à jour niveau carnet d’ordres (level2)
+
+transactions
+
+
+Aucun token nécessaire pour les données publiques. 
+
+
+👉 Idéal pour dashboards en temps réel.
+
+
+---
+
+✅ 4. CoinCap WebSocket
+
+WebSocket super simple à utiliser
+
+Exemple d’URL :
+
+wss://ws.coincap.io/prices?assets=bitcoin,ethereum
+
+Retourne juste JSON avec les derniers prix. 
+
+
+👉 Idéal pour :
+📈 Suivre les prix en temps réel avec peu de code.
+
+
+---
+
+🧠 Résumé rapide
+
+API / Service	Gratuit ?	Type de données	Facilité d’intégration
+
+CoinGecko REST	✔️ Plan Gratuit	Prix en temps réel + historiques + métadonnées	⭐⭐⭐⭐⭐
+Binance WebSocket	✔️ Gratuit pour données publiques	Prix, trades, OHLC	⭐⭐⭐⭐⭐
+Coinbase Pro WebSocket	✔️ Gratuit pour données publiques	Prix & trades	⭐⭐⭐⭐
+CoinCap WebSocket	✔️ Gratuit	Prix simple live	⭐⭐⭐⭐
+
+
+
+---
+
+🛠 Conseils Python pour WebSocket (simple)
+
+Exemple basique avec CoinCap WebSocket
+
+import websocket
+import json
+
+def on_message(ws, message):
+    data = json.loads(message)
+    print("Prix reçu :", data)
+
+ws = websocket.WebSocketApp(
+    "wss://ws.coincap.io/prices?assets=bitcoin,ethereum",
+    on_message=on_message
+)
+ws.run_forever()
+
+
+---
+
+Si tu veux, je peux te fournir une version Python complète qui combine :
+
+✔️ collecte de prix REST (CoinGecko)
+✔️ flux live WebSocket (Binance ou CoinCap)
+✔️ affichage sur une interface (terminal ou GUI)
+
+Dis‑moi juste ce que tu veux afficher exactement (prix, bougies, news) 📊🔥
