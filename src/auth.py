@@ -214,7 +214,14 @@ def save_user_settings(email, settings):
     users = load_users()
     if email in users:
         users[email]["settings"] = settings
-        save_users(users)
+    else:
+        # Create user entry if it doesn't exist (should normally exist after registration)
+        users[email] = {
+            "settings": settings,
+            "email": email,
+            "name": "User"
+        }
+    save_users(users)
 
 
 def migrate_users_normalize_emails(backup=True):
@@ -266,6 +273,16 @@ def init_session_state(st):
         st.session_state.user_name = None
     if "theme" not in st.session_state:
         st.session_state.theme = "light"
+    
+    # Load user settings if authenticated
+    if st.session_state.authenticated and st.session_state.user_email:
+        user_settings = get_user_settings(st.session_state.user_email)
+        if "alerts_enabled" not in st.session_state:
+            st.session_state.alerts_enabled = user_settings.get("alerts_enabled", True)
+        if "currency" not in st.session_state:
+            st.session_state.currency = user_settings.get("currency", "USD")
+        if "candle_style" not in st.session_state:
+            st.session_state.candle_style = user_settings.get("candle_style", "classic")
 
 def logout(st):
     st.session_state.authenticated = False

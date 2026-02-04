@@ -1,1 +1,11 @@
-{}
+{
+  "test@example.com": {
+    "settings": {
+      "alerts_enabled": false,
+      "currency": "EUR",
+      "candle_style": "thin"
+    },
+    "email": "test@example.com",
+    "name": "User"
+  }
+}

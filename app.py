@@ -12,6 +12,7 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 from datetime import datetime, timedelta
 import requests
+import time
 
 from src.auth import register_user, login_user, verify_user_email, get_user_settings, save_user_settings, logout, resend_verification_code, init_session_state
 from src.alerts import check_alerts, get_alert_history
@@ -220,9 +221,26 @@ def display_live_price_with_animation(ticker):
     price = price_info.get('price', 0)
     change_24h = price_info.get('change_24h', 0)
     
+    # Get currency preference from session
+    currency = st.session_state.get("currency", "USD")
+    exchange_rate = {
+        "USD": 1.0,
+        "EUR": 0.92,
+        "GBP": 0.82
+    }.get(currency, 1.0)
+    
+    currency_symbol = {
+        "USD": "$",
+        "EUR": "€",
+        "GBP": "£"
+    }.get(currency, "$")
+    
+    # Convert price to selected currency
+    converted_price = price * exchange_rate
+    
     # Format price with animation effect
     if price > 0:
-        price_str = f"${price:,.2f}"
+        price_str = f"{currency_symbol}{converted_price:,.2f}"
         change_str = f"{change_24h:+.2f}%" if change_24h != 0 else "→"
         
         # Color and emoji based on change with animations
@@ -699,7 +717,7 @@ def page_dashboard():
         for ticker in selected_tickers:
             st.subheader(f"📈 {ticker} - Analyse Technique Complète")
             
-            hist_data = get_historical_data(ticker, days=10)
+            hist_data = get_historical_data(ticker, days=60)  # CHANGED: 10→60 pour plus de bougies
             
             # Sécuriser les données pour le candlestick
             if hist_data.empty:
@@ -730,8 +748,8 @@ def page_dashboard():
             c_style = st.session_state.get("candle_style", "classic")
             # Unified premium model style that works consistently for all tickers including GOLD
             # Green for bullish (up), red for bearish (down)
-            inc = dict(fillcolor='#17957b', line=dict(color='#17957b', width=4))
-            dec = dict(fillcolor='#e83a4a', line=dict(color='#e83a4a', width=4))
+            inc = dict(fillcolor='#17957b', line=dict(color='#17957b', width=2))  # CHANGED: width 4→2
+            dec = dict(fillcolor='#e83a4a', line=dict(color='#e83a4a', width=2))  # CHANGED: width 4→2
             
             # Force reset Plotly template to prevent style override for GOLD
             template_name = "plotly_dark"
@@ -830,7 +848,7 @@ def page_dashboard():
                 ), row=1, col=1)
 
             fig.update_layout(
-                title=f"<b>{ticker} - Analyse Candlestick (30J)</b>",
+                title=f"<b>{ticker} - Analyse Candlestick (60J)</b>",  # CHANGED: 30J→60J
                 height=900,  # Increased height for better visibility
                 xaxis_rangeslider_visible=False,
                 template=template_name,  # Use the template variable to ensure consistency
@@ -1346,7 +1364,10 @@ def page_settings():
             st.session_state.alerts_enabled = alerts_enabled
             st.session_state.currency = currency
             st.session_state.candle_style = candle_style
-            st.success("✅ Paramètres enregistrés!")
+            st.success("✅ Paramètres enregistrés et appliqués instantanément!")
+            # Force full rerun with new settings
+            st.session_state.settings_changed = True
+            time.sleep(0.5)
             st.rerun()
     
     with col2:

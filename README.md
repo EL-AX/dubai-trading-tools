@@ -11,35 +11,46 @@ Statut: ✅ **Déploiement complet**
 
 ### ✨ **Améliorations v5.0:**
 
-1. **📰 Actualités IA en Temps Réel** (Cache 2h)
+1. **⚙️ Menu Paramètres Complet** ✅
+   - **Activer/Désactiver alertes**
+   - **Sélectionner devise préférée** (USD, EUR, GBP)
+   - **Choisir style des bougies** (classic, boxy, thin)
+   - Paramètres sauvegardés dans profil utilisateur
+   - **Application immédiate** sans recharge
+
+2. **📰 Actualités IA en Temps Réel** (Cache 2h)
    - OpenAI GPT-5 insights trading
    - DeepMind RL pour options
    - Anthropic Claude 4 fraude detection
    - Solana AI agents
    - MIT market prediction
    - Moltbook.com community news
+   - **HTML tags nettoyés** (pas d'artefacts)
 
-2. **💰 Animation Prix Temps Réel** (Comme montre de sport)
-   - Mise à jour fluide des cryptos
+3. **💰 Animation Prix Temps Réel** (Comme montre de sport)
+   - Mise à jour fluide des cryptos (BTC, ETH, SOL, ADA, XRP, DOT)
    - Change 24h visible (vert ↑/rouge ↓)
+   - **Conversion devise** appliquée (€, £, $)
    - Timestamp HH:MM:SS
    - Refresh automatique
 
-3. **🔐 Authentification Améliorée**
+4. **🔐 Authentification Améliorée**
    - Inscription → Email de vérification → Code validation
    - Accès au dashboard après vérification
    - Streamlit SMTP configuré natif
 
-4. **📊 Données Réelles Synchronisées**
-   - CoinGecko API (Bitcoin, Ethereum, Solana, etc.)
+5. **📊 Données Réelles Synchronisées**
+   - CoinGecko API (Bitcoin, Ethereum, Solana, Cardano, Ripple, Polkadot)
    - ExchangeRate API (EUR, GBP, JPY)
    - Or (XAU) en temps réel
-   - Cache cohérent 2-5min
+   - **Cache cohérent** avec fallback prices
+   - **Données historiques** 60 jours
 
-5. **🎨 Thème Automatique**
-   - Système détecte mode clair/sombre OS
-   - Plus de toggle manuel
-   - Candlesticks vert/rouge classiques
+6. **🎨 Candlesticks Optimisés**
+   - **60 jours** d'historique (vs 10 avant)
+   - **Épaisseur réduite** (width=2, vs 4)
+   - Meilleure lisibilité et précision
+   - Tous les actifs synchronisés
 
 ---
 
@@ -66,38 +77,48 @@ Dubai Trading Tools est un assistant de trading **PROFESSIONNEL** pour analyser 
 
 ### 1️⃣ **Dashboard - Analyse Technique**
 - **Graphique Candlestick** professionnel (vert/rouge)
+- **60 jours d'historique** (données riches)
 - **Indicateurs superposés** :
   - 📊 **RSI (14)** - Momentum (Overbought >70 / Oversold <30)
   - 📈 **MACD** - Changements de tendance
   - 🔼 **Bollinger Bands** - Volatilité
   - 💰 **Volume bars** - Pression acheteur/vendeur
-- **Support multi-actifs** : BTC, ETH, SOL, EUR, GBP, JPY, AUD, XAU
+- **Support multi-actifs** : BTC, ETH, SOL, ADA, XRP, DOT, EUR, GBP, JPY, AUD, XAU
 
 ### 2️⃣ **Prix en Temps Réel** 🔄
-- 💰 Mise à jour fluide comme montre de sport
+- 💰 Mise à jour fluide avec conversion devise (USD/EUR/GBP)
 - 📊 Change 24h visible
 - ⏱️ Timestamp HH:MM:SS
 - 🔘 Bouton rafraîchissement manuel
+- 🔄 **Fallback prices** si API rate-limited
 
 ### 3️⃣ **Actualités IA** 📰 (Cache 2h)
 - 🤖 OpenAI, DeepMind, Anthropic, Moltbook
 - 💡 Impact direct sur marchés (BTC +5%, ETH +8%)
 - 🔗 Liens sources authentiques
+- ✨ **HTML nettoyé** (pas d'artefacts)
 - 🌍 Bilingue FR/EN
 
-### 4️⃣ **Alertes Intelligentes** 🚨
+### 4️⃣ **Paramètres Utilisateur** ⚙️ ✅
+- **Activer/désactiver les alertes**
+- **Devise préférée** : USD, EUR, GBP
+- **Style des bougies** : classic, boxy, thin
+- Sauvegardés dans profil utilisateur
+- Application immédiate
+
+### 5️⃣ **Alertes Intelligentes** 🚨
 - RSI Overbought (>70) / Oversold (<30)
 - Volatilité 24h (>5%)
 - Affichage temps réel dashboard
 - Historique complet
 
-### 5️⃣ **Authentification** 🔐
+### 6️⃣ **Authentification** 🔐
 - Inscription avec email
 - Code de vérification (6 chiffres)
 - Expiration 1h
 - Dashboard accès sécurisé
 
-### 6️⃣ **Signaux Trading** 🎯
+### 7️⃣ **Signaux Trading** 🎯
 - Composite 4 indicateurs
 - STRONG_BUY (80-100) → BUY → NEUTRAL → SELL → STRONG_SELL (0-20)
 - Risk/Reward ratio calculé
@@ -180,10 +201,11 @@ Sans .env, les codes sont sauvegardés localement dans `data/outbox/`
 - **Or**: goldprice.org API (XAU)
 - **Actualités**: OpenAI, DeepMind, Anthropic, Moltbook.com, MIT, CoinTelegraph
 
-**Cache:**
-- Cryptos & Forex: 5 minutes
+**Cache & Fallback:**
+- Cryptos & Forex: 5 minutes (fallback prices si API rate-limited)
 - Actualités IA: 2 heures
-- Données historiques: 10 minutes
+- Données historiques: 60 jours de candlesticks
+- **Graceful degradation**: Affiche toujours les prix même en cas d'outage API
 
 ---
 

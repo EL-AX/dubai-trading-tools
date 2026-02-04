@@ -20,8 +20,32 @@ import feedparser
 from datetime import datetime, timedelta
 from src.cache import CacheManager
 import re
+from html.parser import HTMLParser
 
 cache = CacheManager()
+
+class MLStripper(HTMLParser):
+    """Remove HTML tags from text"""
+    def __init__(self):
+        super().__init__()
+        self.reset()
+        self.fed = []
+    def handle_data(self, d):
+        self.fed.append(d)
+    def get_data(self):
+        return ''.join(self.fed)
+
+def strip_html_tags(html):
+    """Remove HTML tags from string"""
+    if not html:
+        return ""
+    try:
+        s = MLStripper()
+        s.feed(html)
+        return s.get_data().strip()[:200]
+    except:
+        # Fallback to regex if parser fails
+        return re.sub('<[^<]+?>', '', html).strip()[:200]
 
 def get_free_crypto_news_api(limit=10):
     """Fetch crypto news from Free Crypto News API (source primaire)
@@ -40,10 +64,14 @@ def get_free_crypto_news_api(limit=10):
             news = []
             for item in news_list[:limit]:
                 try:
+                    # CLEAN HTML from description
+                    description = item.get('description', '')
+                    description = strip_html_tags(description) if description else ""
+                    
                     # Structure: titre, description, lien, source, image
                     news.append({
                         "titre": item.get('title', '')[:100],
-                        "resume": item.get('description', '')[:200],
+                        "resume": description,
                         "source": item.get('source', 'Free Crypto News API'),
                         "url": item.get('link', '') or item.get('url', ''),
                         "image": item.get('image', ''),
@@ -76,9 +104,13 @@ def get_newsapi_crypto_news(limit=10):
             news = []
             for article in articles[:limit]:
                 try:
+                    # CLEAN HTML from description
+                    description = article.get('description', '')
+                    description = strip_html_tags(description) if description else ""
+                    
                     news.append({
                         "titre": article.get('title', '')[:100],
-                        "resume": article.get('description', '')[:200],
+                        "resume": description,
                         "source": article.get('source', {}).get('name', 'NewsAPI'),
                         "url": article.get('url', ''),
                         "image": article.get('urlToImage', ''),
@@ -127,13 +159,15 @@ def get_rss_crypto_news(limit=10):
                     try:
                         title = entry.get('title', '')
                         summary = entry.get('summary', '') or entry.get('description', '')
+                        # CLEAN HTML from summary
+                        summary = strip_html_tags(summary) if summary else ""
                         link = entry.get('link', '')
                         
                         # Vérifier que les données sont valides
                         if title and link:
                             news.append({
                                 "titre": title[:100],
-                                "resume": summary[:200] if summary else f"Lire l'article complet sur {source_name}",
+                                "resume": summary if summary else f"Lire l'article complet sur {source_name}",
                                 "source": source_name,
                                 "url": link,
                                 "image": extract_image_from_entry(entry),
