@@ -1,3 +1,5 @@
+"""© 2025-2026 ELOADXFAMILY - Tous droits réservés
+Candlestick Image Analysis - Visual pattern recognition"""
 from PIL import Image
 from collections import Counter
 import json

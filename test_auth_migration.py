@@ -1,3 +1,5 @@
+"""© 2025-2026 ELOADXFAMILY - Tous droits réservés
+Authentication Migration Tests - Email normalization and user migration"""
 import sys
 from pathlib import Path
 import json

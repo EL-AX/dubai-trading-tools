@@ -1,3 +1,5 @@
+"""© 2025-2026 ELOADXFAMILY - Tous droits réservés
+Trading Rules & Risk Management - Core trading logic"""
 import numpy as np
 from src.indicators import calculate_rsi, calculate_macd, calculate_bollinger_bands, calculate_trend
 

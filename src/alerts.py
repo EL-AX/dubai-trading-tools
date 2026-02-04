@@ -1,3 +1,5 @@
+"""© 2025-2026 ELOADXFAMILY - Tous droits réservés
+Alerts Management - Real-time trading alerts and notifications"""
 import json
 import os
 from datetime import datetime

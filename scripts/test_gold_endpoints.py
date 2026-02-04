@@ -1,3 +1,5 @@
+"""© 2025-2026 ELOADXFAMILY - Tous droits réservés
+Gold Endpoints Test - Validate metals.live and forex APIs"""
 import requests
 urls = [
     'https://data-asg.goldprice.org/dbXau/USD',

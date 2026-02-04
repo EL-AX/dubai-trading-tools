@@ -1,3 +1,5 @@
+"""© 2025-2026 ELOADXFAMILY - Tous droits réservés
+Authentication module - User registration, login, email verification"""
 import json
 import hashlib
 import os

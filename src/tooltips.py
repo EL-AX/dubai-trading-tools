@@ -1,3 +1,6 @@
+"""© 2025-2026 ELOADXFAMILY - Tous droits réservés
+Tooltips - Contextual in-app help and guidance"""
+
 TOOLTIPS = {
     "RSI": {
         "title": "RSI - Relative Strength Index",

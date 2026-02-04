@@ -1,3 +1,5 @@
+"""© 2025-2026 ELOADXFAMILY - Tous droits réservés
+Appendix Module - Data utilities"""
 import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go

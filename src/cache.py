@@ -1,3 +1,5 @@
+"""© 2025-2026 ELOADXFAMILY - Tous droits réservés
+Cache Management - Efficient data caching with TTL support"""
 import json
 import os
 import time

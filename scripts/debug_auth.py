@@ -1,3 +1,5 @@
+"""© 2025-2026 ELOADXFAMILY - Tous droits réservés
+Debug Auth Script - Authentication troubleshooting"""
 from pathlib import Path
 import src.auth as auth
 from tempfile import TemporaryDirectory

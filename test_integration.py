@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """
+© 2025-2026 ELOADXFAMILY - Tous droits réservés
 Test et validation de l'intégration complète des PDFs éducatifs
 - Patterns Candlestick
 - Stratégies de Trading

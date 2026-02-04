@@ -1,3 +1,5 @@
+"""© 2025-2026 ELOADXFAMILY - Tous droits réservés
+Backtesting Engine - Historical strategy performance analysis"""
 import pandas as pd
 
 class BacktestEngine:

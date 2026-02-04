@@ -1,3 +1,5 @@
+"""© 2025-2026 ELOADXFAMILY - Tous droits réservés
+Technical Indicators - RSI, MACD, Bollinger Bands, and more"""
 import numpy as np
 import pandas as pd
 
