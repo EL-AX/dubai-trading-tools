@@ -105,9 +105,14 @@ def get_ai_news(force_refresh=False):
     cache_key = f"ai_news_{user_language}"
     
     if not force_refresh:
-        cached_news = cache.get(cache_key)
-        if cached_news:
-            return cached_news
+        try:
+            cached_news = cache.get(cache_key)
+            if cached_news and isinstance(cached_news, list) and len(cached_news) > 0:
+                # Validate cache has correct format
+                if all('titre' in item for item in cached_news):
+                    return cached_news
+        except:
+            pass
     
     # Actualités Trading VRAIMENT utiles - basées sur les PDFs éducatifs
     trading_news_data = [
@@ -779,7 +784,7 @@ def page_dashboard():
                         fillcolor=dec['fillcolor'],
                         line=dict(color=dec['line']['color'], width=dec['line']['width'])
                     ),
-                    opacity=0.95,
+                    opacity=1.0,  # Full opacity for clarity
                     showlegend=False,
                     hovertemplate='<b>%{x|%d-%m-%Y}</b><br>Open: %{open:.2f}<br>High: %{high:.2f}<br>Low: %{low:.2f}<br>Close: %{close:.2f}<extra></extra>'
                 ), row=1, col=1)
@@ -824,7 +829,7 @@ def page_dashboard():
 
             fig.update_layout(
                 title=f"<b>{ticker} - Analyse Candlestick (30J)</b>",
-                height=750,
+                height=900,  # Increased height for better visibility
                 xaxis_rangeslider_visible=False,
                 template=template_name,  # Use the template variable to ensure consistency
                 hovermode='x unified',
@@ -1049,11 +1054,6 @@ def page_patterns():
     
     st.markdown("# 📚 Patterns Candlestick & Stratégies de Trading")
     st.markdown("*Basé sur les PDFs éducatifs: '19 Chandeliers Japonais', 'Stratégie de Trading', etc.*")
-    
-    if st.button("← Retour au tableau de bord", key="btn_back_patterns", use_container_width=True):
-        st.session_state.current_page = "dashboard"
-        st.session_state.page_selector = "📊 Tableau de Bord"
-        st.rerun()
     
     st.divider()
     
@@ -1323,14 +1323,6 @@ def page_patterns():
 def page_settings():
     st.markdown("## ⚙️ Paramètres")
     
-    col1, col2 = st.columns([4, 1])
-    with col1:
-        if st.button("← Retour au tableau de bord", key="btn_back_settings", use_container_width=True):
-            st.session_state.current_page = "dashboard"
-            st.rerun()
-    with col2:
-        pass
-    
     st.divider()
     
     settings = get_user_settings(st.session_state.user_email)
@@ -1435,6 +1427,16 @@ def main():
             page_news_ai()
         elif st.session_state.current_page == "settings":
             page_settings()
+        
+        # Footer with copyright
+        st.divider()
+        st.markdown("""
+        <div style='text-align: center; color: #888; font-size: 0.85rem; margin-top: 40px; padding: 20px;'>
+        <p>© 2025-2026 <strong>ELOADXFAMILY</strong> - Tous droits réservés</p>
+        <p><em>Dubai Trading Tools - Professional Trading Dashboard</em></p>
+        <p>Réalisé avec perfection absolue</p>
+        </div>
+        """, unsafe_allow_html=True)
 
 if __name__ == "__main__":
     main()
