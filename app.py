@@ -595,8 +595,8 @@ def page_login_register():
                 st.warning("⚠️ Remplissez tous les champs")
 
 def page_news_ai():
-    """Section actualités IA en temps réel - Vraies sources (Reddit, RSS, CoinGecko)"""
-    st.title("📰 Actualités Temps Réel - Intelligence du Marché")
+    """Section actualités IA PREMIUM - Intelligence artificielle du marché en temps réel"""
+    st.title("📰 Actualités Marché - IA Intelligence Platform")
     
     # Refresh button with status
     col_refresh, col_info = st.columns([1, 4])
@@ -607,7 +607,7 @@ def page_news_ai():
             cache.delete("real_news_all")
             st.rerun()
     with col_info:
-        st.info("✅ Cache 10min | 4 Sources réelles | Analyse IA sentiment | Live 24/7")
+        st.info("🤖 IA SENTIMENT ANALYSIS | ✅ Cache 10min | 4 SOURCES RÉELLES | 📊 ANALYSE TEMPS RÉEL | 🚀 POWERED BY ML")
     
     # Get REAL news from real sources
     from src.real_news import get_all_real_news
@@ -620,144 +620,298 @@ def page_news_ai():
         neutral_count = sentiments.count('neutral')
         total_count = len(news_items)
         
-        # Sentiment Summary - Professional Dashboard Style
-        st.subheader("📊 Sentiment du Marché - Vue Globale")
-        col1, col2, col3, col4, col5 = st.columns(5)
-        with col1:
-            st.metric("🟢 Bullish", bullish_count, f"+{round(bullish_count/total_count*100)}%", delta_color="normal")
-        with col2:
-            st.metric("🔴 Bearish", bearish_count, f"-{round(bearish_count/total_count*100)}%", delta_color="inverse")
-        with col3:
-            st.metric("⚪ Neutre", neutral_count, f"{round(neutral_count/total_count*100)}%")
-        with col4:
-            st.metric("📰 Total", total_count, "news")
-        with col5:
-            # Calculate market momentum
-            momentum = ((bullish_count - bearish_count) / total_count * 100)
-            st.metric("📈 Momentum", f"{momentum:+.0f}%", "Market")
+        # === TAB 1: MARKET INTELLIGENCE DASHBOARD ===
+        tab1, tab2, tab3, tab4 = st.tabs(["📊 Dashboard", "🔥 Trending", "📈 Analytics", "📚 All News"])
         
-        # Create sentiment gauge
-        sentiment_balance = ((bullish_count - bearish_count) / total_count * 100) if total_count > 0 else 0
-        st.divider()
-        
-        # Sentiment indicator - Improved
-        col_gauge_label, col_gauge_value, col_gauge_bar = st.columns([1, 2, 2])
-        with col_gauge_label:
-            st.markdown("**État du Marché:**")
-        with col_gauge_value:
-            if sentiment_balance > 40:
-                st.success(f"🟢 TRÈS HAUSSIER ({sentiment_balance:+.0f}%)")
-            elif sentiment_balance > 15:
-                st.success(f"🟢 HAUSSIER ({sentiment_balance:+.0f}%)")
-            elif sentiment_balance > -15:
-                st.info(f"⚪ NEUTRE ({sentiment_balance:+.0f}%)")
-            elif sentiment_balance > -40:
-                st.error(f"🔴 BAISSIER ({sentiment_balance:+.0f}%)")
-            else:
-                st.error(f"🔴 TRÈS BAISSIER ({sentiment_balance:+.0f}%)")
-        with col_gauge_bar:
-            # Show progress bar for sentiment
-            gauge_value = (sentiment_balance + 100) / 200  # Normalize from -100 to +100
-            st.progress(min(max(gauge_value, 0), 1), text=f"Force: {abs(sentiment_balance):.0f}%")
-        
-        st.divider()
-        
-        # Advanced Filters
-        st.subheader("🔍 Analyse Personnalisée - Filtres Avancés")
-        col_filter1, col_filter2, col_filter3 = st.columns(3)
-        
-        with col_filter1:
-            sentiment_filter = st.multiselect(
-                "📊 Filtre Sentiment",
-                ["🟢 Haussier", "🔴 Baissier", "⚪ Neutre"],
-                default=["🟢 Haussier", "🔴 Baissier", "⚪ Neutre"],
-                key="sentiment_filter"
-            )
-        
-        with col_filter2:
-            sources = sorted(list(set([n.get('source', 'Unknown') for n in news_items])))
-            source_filter = st.multiselect(
-                "🌐 Source d'Information",
-                sources,
-                default=sources,
-                key="source_filter"
-            )
-        
-        with col_filter3:
-            # Extract unique symbols mentioned
-            all_symbols = set()
+        with tab1:
+            st.subheader("🎯 Intelligence Dashboard - Vue Globale du Marché")
+            
+            # Professional metrics with impact scores
+            col1, col2, col3, col4, col5 = st.columns(5)
+            
+            with col1:
+                bullish_pct = round(bullish_count/total_count*100)
+                st.metric("🟢 BULLISH", bullish_count, f"+{bullish_pct}%", delta_color="normal")
+                
+            with col2:
+                bearish_pct = round(bearish_count/total_count*100)
+                st.metric("🔴 BEARISH", bearish_count, f"-{bearish_pct}%", delta_color="inverse")
+                
+            with col3:
+                neutral_pct = round(neutral_count/total_count*100)
+                st.metric("⚪ NEUTRE", neutral_count, f"{neutral_pct}%")
+                
+            with col4:
+                st.metric("📰 TOTAL", total_count, "articles")
+                
+            with col5:
+                momentum = ((bullish_count - bearish_count) / total_count * 100)
+                st.metric("📈 MOMENTUM", f"{momentum:+.1f}%", "Market Force")
+            
+            st.divider()
+            
+            # === SENTIMENT GAUGE & MARKET STATE ===
+            st.markdown("### 🎬 État du Marché - IA Analysis")
+            
+            sentiment_balance = ((bullish_count - bearish_count) / total_count * 100) if total_count > 0 else 0
+            
+            # 3-column layout for gauge
+            col_gauge1, col_gauge2, col_gauge3 = st.columns([1, 2, 2])
+            
+            with col_gauge1:
+                st.markdown("**Sentiment Score:**")
+                
+            with col_gauge2:
+                if sentiment_balance > 50:
+                    badge = "🚀 EXTRÊMEMENT HAUSSIER"
+                    color = "green"
+                elif sentiment_balance > 30:
+                    badge = "🟢 TRÈS HAUSSIER"
+                    color = "green"
+                elif sentiment_balance > 10:
+                    badge = "📈 HAUSSIER"
+                    color = "lightgreen"
+                elif sentiment_balance > -10:
+                    badge = "⚪ NEUTRE"
+                    color = "gray"
+                elif sentiment_balance > -30:
+                    badge = "📉 BAISSIER"
+                    color = "lightcoral"
+                elif sentiment_balance > -50:
+                    badge = "🔴 TRÈS BAISSIER"
+                    color = "red"
+                else:
+                    badge = "💥 EXTRÊMEMENT BAISSIER"
+                    color = "darkred"
+                
+                st.markdown(f"<h3 style='color:{color}'>{badge}</h3>", unsafe_allow_html=True)
+                
+            with col_gauge3:
+                gauge_value = (sentiment_balance + 100) / 200
+                st.progress(min(max(gauge_value, 0), 1), text=f"Force Sentiment: {abs(sentiment_balance):.1f}%")
+            
+            st.divider()
+            
+            # === SOURCE ANALYSIS ===
+            st.markdown("### 📊 Analyse par Source")
+            source_stats = {}
+            for n in news_items:
+                src = n.get('source', 'Unknown')
+                if src not in source_stats:
+                    source_stats[src] = {'bullish': 0, 'bearish': 0, 'neutral': 0, 'total': 0}
+                source_stats[src][n.get('sentiment', 'neutral')] += 1
+                source_stats[src]['total'] += 1
+            
+            source_cols = st.columns(len(source_stats))
+            for col_idx, (source, stats) in enumerate(source_stats.items()):
+                with source_cols[col_idx]:
+                    source_sentiment = ((stats['bullish'] - stats['bearish']) / stats['total'] * 100) if stats['total'] > 0 else 0
+                    st.metric(
+                        source,
+                        f"{stats['total']} news",
+                        f"{source_sentiment:+.0f}%",
+                        delta_color="normal" if source_sentiment > 0 else "inverse"
+                    )
+            
+            st.divider()
+            
+            # === TOP ASSETS ===
+            st.markdown("### 💰 Actifs les Plus Mentionnés")
+            asset_count = {}
+            asset_sentiment = {}
             for n in news_items:
                 sym = n.get('symbol', '')
                 if sym:
-                    all_symbols.add(sym)
-            symbols = sorted(list(all_symbols))
-            if symbols:
-                symbol_filter = st.multiselect(
-                    "💰 Actifs Mentionnés",
-                    symbols,
-                    default=symbols[:3] if len(symbols) > 3 else symbols,
-                    key="symbol_filter"
+                    if sym not in asset_count:
+                        asset_count[sym] = 0
+                        asset_sentiment[sym] = []
+                    asset_count[sym] += 1
+                    asset_sentiment[sym].append(n.get('sentiment', 'neutral'))
+            
+            if asset_count:
+                top_assets = sorted(asset_count.items(), key=lambda x: x[1], reverse=True)[:5]
+                asset_cols = st.columns(min(5, len(top_assets)))
+                for col_idx, (asset, count) in enumerate(top_assets):
+                    with asset_cols[col_idx]:
+                        sentiments_for_asset = asset_sentiment[asset]
+                        bullish_asset = sentiments_for_asset.count('bullish')
+                        bearish_asset = sentiments_for_asset.count('bearish')
+                        asset_momentum = ((bullish_asset - bearish_asset) / len(sentiments_for_asset) * 100)
+                        
+                        st.metric(
+                            f"💎 {asset}",
+                            f"{count} mentions",
+                            f"{asset_momentum:+.0f}%",
+                            delta_color="normal" if asset_momentum > 0 else "inverse"
+                        )
+        
+        with tab2:
+            st.subheader("🔥 Trending - Actualités CRITIQUES")
+            
+            # Get highest impact news
+            st.markdown("### ⭐ HOT TOPICS - Sujets les Plus Chauds")
+            
+            # Separate by sentiment
+            bullish_news = [n for n in news_items if n.get('sentiment') == 'bullish']
+            bearish_news = [n for n in news_items if n.get('sentiment') == 'bearish']
+            
+            col_bull, col_bear = st.columns(2)
+            
+            with col_bull:
+                st.markdown("#### 🟢 TOP BULLISH")
+                if bullish_news:
+                    for i, news in enumerate(bullish_news[:3], 1):
+                        with st.container(border=True):
+                            st.markdown(f"**#{i}. {news.get('titre', 'N/A')}**")
+                            st.caption(f"{news.get('source', 'Unknown')} • `{news.get('symbol', 'N/A')}`")
+                            st.markdown(f"_{news.get('resume', 'N/A')}_")
+                            st.markdown(f"🎯 Impact: **POSITIF**")
+                else:
+                    st.info("Aucune news bullish pour le moment")
+                    
+            with col_bear:
+                st.markdown("#### 🔴 TOP BEARISH")
+                if bearish_news:
+                    for i, news in enumerate(bearish_news[:3], 1):
+                        with st.container(border=True):
+                            st.markdown(f"**#{i}. {news.get('titre', 'N/A')}**")
+                            st.caption(f"{news.get('source', 'Unknown')} • `{news.get('symbol', 'N/A')}`")
+                            st.markdown(f"_{news.get('resume', 'N/A')}_")
+                            st.markdown(f"⚠️ Impact: **NÉGATIF**")
+                else:
+                    st.info("Aucune news bearish pour le moment")
+        
+        with tab3:
+            st.subheader("📈 Advanced Analytics")
+            
+            col_anal1, col_anal2 = st.columns(2)
+            
+            with col_anal1:
+                st.markdown("#### 📊 Distribution Sentiment")
+                # Create pie chart data
+                chart_data = {
+                    'Sentiment': ['Bullish', 'Bearish', 'Neutre'],
+                    'Count': [bullish_count, bearish_count, neutral_count]
+                }
+                chart_df = pd.DataFrame(chart_data)
+                
+                fig_pie = px.pie(
+                    chart_df,
+                    values='Count',
+                    names='Sentiment',
+                    color_discrete_map={'Bullish': '#1bc47d', 'Bearish': '#ff3d3d', 'Neutre': '#888888'},
+                    title='Répartition du Sentiment'
                 )
+                fig_pie.update_layout(height=400, showlegend=True)
+                st.plotly_chart(fig_pie, use_container_width=True)
+            
+            with col_anal2:
+                st.markdown("#### 📰 Distribution par Source")
+                source_chart_data = {
+                    'Source': list(source_stats.keys()),
+                    'Articles': [stats['total'] for stats in source_stats.values()]
+                }
+                source_chart_df = pd.DataFrame(source_chart_data)
+                
+                fig_bar = px.bar(
+                    source_chart_df,
+                    x='Source',
+                    y='Articles',
+                    color='Articles',
+                    color_continuous_scale='Viridis',
+                    title='Articles par Source'
+                )
+                fig_bar.update_layout(height=400, showlegend=False)
+                st.plotly_chart(fig_bar, use_container_width=True)
+        
+        with tab4:
+            st.subheader("📚 Toutes les Actualités - Recherche Complète")
+            
+            # Advanced Filters
+            st.markdown("### 🔍 Filtres Avancés")
+            filter_cols = st.columns(3)
+            
+            with filter_cols[0]:
+                sentiment_filter = st.multiselect(
+                    "📊 Sentiment",
+                    ["🟢 Haussier", "🔴 Baissier", "⚪ Neutre"],
+                    default=["🟢 Haussier", "🔴 Baissier", "⚪ Neutre"],
+                    key="all_sentiment_filter"
+                )
+            
+            with filter_cols[1]:
+                sources = sorted(list(set([n.get('source', 'Unknown') for n in news_items])))
+                source_filter = st.multiselect(
+                    "🌐 Source",
+                    sources,
+                    default=sources,
+                    key="all_source_filter"
+                )
+            
+            with filter_cols[2]:
+                all_symbols = set()
+                for n in news_items:
+                    sym = n.get('symbol', '')
+                    if sym:
+                        all_symbols.add(sym)
+                symbols = sorted(list(all_symbols))
+                if symbols:
+                    symbol_filter = st.multiselect(
+                        "💰 Actif",
+                        symbols,
+                        default=symbols[:3] if len(symbols) > 3 else symbols,
+                        key="all_symbol_filter"
+                    )
+                else:
+                    symbol_filter = []
+            
+            # Apply filters
+            sentiment_map = {"🟢 Haussier": "bullish", "🔴 Baissier": "bearish", "⚪ Neutre": "neutral"}
+            selected_sentiments = [sentiment_map.get(s, s) for s in sentiment_filter]
+            
+            filtered_news = [
+                n for n in news_items 
+                if n.get('sentiment', 'neutral') in selected_sentiments 
+                and n.get('source', 'Unknown') in source_filter
+                and (not symbol_filter or n.get('symbol', '') in symbol_filter)
+            ]
+            
+            st.divider()
+            st.markdown(f"### 📰 Résultats ({len(filtered_news)}/{total_count})")
+            
+            # Display all filtered news with better cards
+            if filtered_news:
+                for idx, news in enumerate(filtered_news, 1):
+                    with st.container(border=True):
+                        col_info, col_action = st.columns([4, 1])
+                        
+                        with col_info:
+                            # Title with sentiment
+                            sentiment_emoji = "🟢" if news.get('sentiment') == 'bullish' else "🔴" if news.get('sentiment') == 'bearish' else "⚪"
+                            st.markdown(f"### {sentiment_emoji} {news.get('titre', 'N/A')}")
+                            
+                            # Content
+                            st.markdown(f"{news.get('resume', 'N/A')}")
+                            
+                            # Metadata
+                            col_meta1, col_meta2, col_meta3 = st.columns(3)
+                            with col_meta1:
+                                st.caption(f"📌 **Source:** {news.get('source', 'Unknown')}")
+                            with col_meta2:
+                                if news.get('symbol'):
+                                    st.caption(f"💰 **Actif:** `{news.get('symbol')}`")
+                                else:
+                                    st.caption("💰 **Actif:** Global")
+                            with col_meta3:
+                                sentiment_text = "HAUSSIER 📈" if news.get('sentiment') == 'bullish' else "BAISSIER 📉" if news.get('sentiment') == 'bearish' else "NEUTRE ➡️"
+                                st.caption(f"📊 **Sentiment:** {sentiment_text}")
+                        
+                        with col_action:
+                            url = news.get('url', '')
+                            if url:
+                                st.markdown(f"[🔗 **Lire**]({url})")
             else:
-                symbol_filter = []
-        
-        # Map filter names to sentiment values
-        sentiment_map = {"🟢 Haussier": "bullish", "🔴 Baissier": "bearish", "⚪ Neutre": "neutral"}
-        selected_sentiments = [sentiment_map.get(s, s) for s in sentiment_filter]
-        
-        # Apply filters
-        filtered_news = [
-            n for n in news_items 
-            if n.get('sentiment', 'neutral') in selected_sentiments 
-            and n.get('source', 'Unknown') in source_filter
-            and (not symbol_filter or n.get('symbol', '') in symbol_filter)
-        ]
-        
-        st.divider()
-        st.subheader(f"📰 Actualités Filtrées ({len(filtered_news)}/{total_count})")
-        
-
-        # Display filtered news
-        if filtered_news:
-            for idx, news in enumerate(filtered_news, 1):
-                with st.container():
-                    # Header with sentiment badge
-                    col_num, col_title, col_sentiment = st.columns([0.5, 3, 1])
-                    with col_num:
-                        st.markdown(f"**#{idx}**")
-                    with col_title:
-                        st.markdown(f"**{news.get('titre', 'N/A')}**")
-                    with col_sentiment:
-                        if news.get('sentiment') == 'bullish':
-                            st.success("🟢 HAUSSIER")
-                        elif news.get('sentiment') == 'bearish':
-                            st.error("🔴 BAISSIER")
-                        else:
-                            st.info("⚪ NEUTRE")
-                    
-                    # Content
-                    resume = news.get('resume', 'N/A')
-                    st.markdown(f"{resume}")
-                    
-                    # Metadata row
-                    col1, col2, col3 = st.columns([2, 1, 1])
-                    with col1:
-                        symbol = news.get('symbol', '')
-                        source = news.get('source', 'Unknown')
-                        if symbol:
-                            st.markdown(f"📌 **{source}** — `{symbol}`")
-                        else:
-                            st.markdown(f"📌 **{source}**")
-                    with col2:
-                        pass
-                    with col3:
-                        url = news.get('url', '')
-                        if url:
-                            st.markdown(f"[🔗 Lire l'article]({url})")
-                    
-                    st.divider()
-        else:
-            st.info("❌ Aucune news pour les filtres sélectionnés.")
+                st.info("❌ Aucune actualité correspondant aux filtres")
     else:
         st.warning("❌ Aucune news disponible pour le moment. Les APIs peuvent être momentanément indisponibles.")
 
