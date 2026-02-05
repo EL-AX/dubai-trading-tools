@@ -2286,7 +2286,13 @@ def main():
     
     apply_custom_theme()
     
-    # === PROFESSIONAL HEADER ===
+    # === PAGE ROUTING - Check authentication first ===
+    if not st.session_state.get("logged_in", False):
+        # Show login/register ONLY (no header, no sidebar)
+        page_login_register()
+        return
+    
+    # === PROFESSIONAL HEADER (only for authenticated users) ===
     col_logo, col_title, col_version = st.columns([1, 3, 1])
     with col_logo:
         st.markdown("### 📊")
@@ -2297,7 +2303,7 @@ def main():
     
     st.divider()
     
-    # === SIDEBAR NAVIGATION ===
+    # === SIDEBAR NAVIGATION (only for authenticated users) ===
     with st.sidebar:
         st.markdown("### 🗺️ **NAVIGATION**")
         st.markdown("Select your destination:")
@@ -2351,11 +2357,8 @@ def main():
         if st.button("📖 GitHub Repo", use_container_width=True):
             st.markdown("[EL-AX/dubai-trading-tools](https://github.com/EL-AX/dubai-trading-tools)")
     
-    # === PAGE ROUTING ===
-    if not st.session_state.get("logged_in", False):
-        # Show login/register before any page
-        page_login_register()
-    elif page == "📈 Dashboard":
+    # === PAGE ROUTING (only for authenticated users) ===
+    if page == "📈 Dashboard":
         page_dashboard()
     elif page == "📰 News AI":
         page_news_ai()
