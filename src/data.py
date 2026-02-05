@@ -427,7 +427,8 @@ def generate_and_sync_mock_data(ticker, days):
 
 
 def get_historical_data(ticker, days=90):
-    """Fetch real data for all assets: crypto from CoinGecko, forex from exchangerate.host, gold from goldprice"""
+    """Fetch real data for all assets: crypto from CoinGecko, forex from exchangerate.host, gold from goldprice
+    Returns hourly candles (24 per day)"""
     cached = cache.get(f"history_{ticker}_{days}")
     if cached is not None:
         return cached
@@ -447,6 +448,12 @@ def get_historical_data(ticker, days=90):
         try:
             forex_data = fetch_forex_historical(ticker, days)
             if not forex_data.empty:
+                # Limit to only the last (days * 24) hours
+                hours_to_keep = days * 24
+                if len(forex_data) > hours_to_keep:
+                    forex_data = forex_data.tail(hours_to_keep)
+                # Cleanup columns - keep only lowercase OHLCV
+                forex_data = forex_data[['timestamp', 'open', 'high', 'low', 'close', 'volume']].copy()
                 cache.set(f"history_{ticker}_{days}", forex_data, ttl=3600)
                 return forex_data
         except Exception as e:
@@ -457,6 +464,12 @@ def get_historical_data(ticker, days=90):
         try:
             gold_data = fetch_gold_historical(days)
             if not gold_data.empty:
+                # Limit to only the last (days * 24) hours
+                hours_to_keep = days * 24
+                if len(gold_data) > hours_to_keep:
+                    gold_data = gold_data.tail(hours_to_keep)
+                # Cleanup columns - keep only lowercase OHLCV
+                gold_data = gold_data[['timestamp', 'open', 'high', 'low', 'close', 'volume']].copy()
                 cache.set(f"history_{ticker}_{days}", gold_data, ttl=3600)
                 return gold_data
         except Exception as e:
@@ -464,6 +477,8 @@ def get_historical_data(ticker, days=90):
     
     # Fallback to realistic mock data if API fails
     data = generate_mock_data(ticker, days)
+    # Cleanup columns - keep only lowercase OHLCV
+    data = data[['timestamp', 'open', 'high', 'low', 'close', 'volume']].copy()
     cache.set(f"history_{ticker}_{days}", data, ttl=600)
     return data
 
@@ -519,7 +534,8 @@ def fetch_coingecko_ohlc(ticker, days):
 
 def fetch_forex_historical(ticker, days):
     """Fetch forex historical data SYNCHRONIZED with live prices
-    Falls back to synchronized mock data if API unavailable"""
+    Falls back to synchronized mock data if API unavailable
+    Returns HOURLY candles (24 candles per day) for proper graphing"""
     try:
         # Get current rate (live price)
         url = f"https://api.exchangerate.host/latest?base=USD&symbols={ticker}"
@@ -530,27 +546,29 @@ def fetch_forex_historical(ticker, days):
             current_rate = data.get('rates', {}).get(ticker)
             
             if current_rate:
-                # Create realistic historical data based on current rate with small variations
-                # CRITICAL: Historical data ENDS at current live rate
-                dates = pd.date_range(end=datetime.now(), periods=days, freq='D')
+                # Create HOURLY candles for last N days (24 per day)
+                # For 1 day = 24 hourly candles
+                hours = days * 24
+                dates = pd.date_range(end=datetime.now(), periods=hours, freq='H')
                 
-                # Generate realistic OHLC with ±2% variation per day
+                # Generate realistic OHLC with small ±0.3% variation per hour
                 base_price = float(current_rate) * 0.99  # Start slightly below current
                 prices = []
                 
                 # Calculate the gradient to reach current_rate at the end
                 price_diff = float(current_rate) - base_price
                 
-                for i in range(days):
-                    # Gradient: slowly move to current_rate over all days
-                    trend = (price_diff / days) if days > 0 else 0
+                for i in range(hours):
+                    # Gradient: slowly move to current_rate over all hours
+                    trend = (price_diff / hours) if hours > 0 else 0
                     
-                    daily_var = np.random.uniform(-0.02, 0.02)
-                    o = base_price + trend + daily_var * np.random.uniform(-0.5, 0.5) * base_price * 0.001
-                    h = o * (1 + abs(np.random.uniform(0, 0.015)))
-                    l = o * (1 - abs(np.random.uniform(0, 0.015)))
-                    c = o * (1 + daily_var * np.random.uniform(-0.5, 0.5) * 0.001)
-                    base_price = c  # Next day starts from current close
+                    # Much smaller variation per hour (±0.3% instead of ±2%)
+                    hourly_var = np.random.uniform(-0.003, 0.003)
+                    o = base_price + trend + hourly_var * base_price
+                    h = o * (1 + abs(np.random.uniform(0, 0.002)))
+                    l = o * (1 - abs(np.random.uniform(0, 0.002)))
+                    c = o * (1 + hourly_var * np.random.uniform(-0.5, 0.5) * 0.0001)
+                    base_price = c  # Next hour starts from current close
                     
                     prices.append({
                         'timestamp': dates[i],
@@ -558,7 +576,7 @@ def fetch_forex_historical(ticker, days):
                         'high': max(h, c), 
                         'low': min(l, c), 
                         'close': c, 
-                        'volume': 1e9
+                        'volume': 1e8
                     })
                 
                 ohlc_df = pd.DataFrame(prices)
@@ -575,13 +593,19 @@ def fetch_forex_historical(ticker, days):
     except Exception as e:
         pass
     
-    # Fallback: Return synchronized mock data
-    return generate_and_sync_mock_data(ticker, days)
+    # Fallback: Return synchronized mock data with hourly candles
+    hours = days * 24
+    df = generate_mock_data(ticker, hours)
+    # Make sure it's hourly-like
+    if len(df) > 0:
+        df['timestamp'] = pd.date_range(end=datetime.now(), periods=len(df), freq='H')
+    return df
 
 
 
 def fetch_gold_historical(days=90):
     """Fetch historical gold price data with proper sync to live price
+    Returns HOURLY candles (24 per day) for proper graphing
     
     SYNCHRONISATION: Le dernier prix historique = prix actuel!
     """
@@ -590,33 +614,36 @@ def fetch_gold_historical(days=90):
     current_price = current_price_data.get('price', 2350)
     
     try:
-        # Generate realistic historical OHLC data that ENDS at current price
+        # Generate HOURLY candles (24 per day) instead of daily
         df_data = []
+        
+        # Total hours to generate
+        hours = days * 24
         
         # Start price: slightly lower than current (realistic 5% variance)
         base_price = current_price * 0.95
         simulation_price = base_price
         
-        for i in range(days, 0, -1):
-            # Realistic daily movement ±0.5%
-            daily_change = np.random.randn() * 0.005 * simulation_price
+        for i in range(hours, 0, -1):
+            # Realistic hourly movement ±0.15% (much smaller than daily)
+            hourly_change = np.random.randn() * 0.0015 * simulation_price
             
-            # Gradient: slowly move from start price to current price over the days
-            price_gradient = (current_price - base_price) * (1 - i / days)
-            trend = price_gradient / days
+            # Gradient: slowly move from start price to current price over the hours
+            price_gradient = (current_price - base_price) * (1 - i / hours)
+            trend = price_gradient / hours
             
-            open_price = simulation_price + daily_change * 0.3 + trend
-            close_price = simulation_price + daily_change + trend
-            high_price = max(open_price, close_price) + abs(np.random.randn()) * 0.002 * simulation_price
-            low_price = min(open_price, close_price) - abs(np.random.randn()) * 0.002 * simulation_price
+            open_price = simulation_price + hourly_change * 0.3 + trend
+            close_price = simulation_price + hourly_change + trend
+            high_price = max(open_price, close_price) + abs(np.random.randn()) * 0.0005 * simulation_price
+            low_price = min(open_price, close_price) - abs(np.random.randn()) * 0.0005 * simulation_price
             
             df_data.append({
-                'timestamp': pd.Timestamp.now(tz='UTC') - pd.Timedelta(days=i),
+                'timestamp': pd.Timestamp.now(tz='UTC') - pd.Timedelta(hours=i),
                 'open': open_price,
                 'high': high_price,
                 'low': low_price,
                 'close': close_price,
-                'volume': np.random.randint(100000000, 500000000)
+                'volume': np.random.randint(10000000, 50000000)
             })
             
             simulation_price = close_price
@@ -638,8 +665,10 @@ def fetch_gold_historical(days=90):
         
         return df.sort_values('timestamp')
     except Exception as e:
-        # Ultimate fallback with proper sync
-        df = generate_mock_data("XAU", days)
+        # Ultimate fallback with hourly candles
+        hours = days * 24
+        df = generate_mock_data("XAU", hours)
+        df['timestamp'] = pd.date_range(end=datetime.now(), periods=len(df), freq='H')
         if len(df) > 0:
             price_diff = current_price - df.iloc[-1]['close']
             df['close'] = df['close'] + price_diff
