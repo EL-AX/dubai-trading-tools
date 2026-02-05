@@ -2377,7 +2377,8 @@ def main():
             - Thème: Sombre (Professionnel)
             - Langue: Français
             - Devise: EUR
-            - Période: 1J par défaut
+            - Période: 1 Jour (24h) - Affichage Uniforme
+            - Granularité: Bougies Horaires pour tous les actifs
             """)
         
         with settings_tabs[3]:
