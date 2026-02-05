@@ -922,6 +922,20 @@ def page_tutorial():
 
 def page_login_register():
     """Flux de connexion/inscription redessiné avec vérification email intégrée"""
+    
+    # Professional auth page header with logo
+    col_logo, col_title = st.columns([1, 3])
+    with col_logo:
+        try:
+            st.image("logo/IMG-20250824-WA0020.jpg", width=80)
+        except:
+            st.markdown("**ELOADXFAMILY**")
+    
+    with col_title:
+        st.markdown("<h2 style='margin-top: 10px;'>Dubai Trading Tools - Accès Sécurisé</h2>", unsafe_allow_html=True)
+        st.markdown("*Plateforme d'analyse et de trading professionnel*")
+    
+    st.divider()
     st.markdown("## Connexion / Inscription")
     
     # Check if user just registered (for showing verification code entry on login)
@@ -1026,21 +1040,47 @@ def page_login_register():
                         st.error(f" Erreur: {result['message']}")
             else:
                 st.warning("️ Remplissez tous les champs")
+    
+    # Professional footer
+    st.divider()
+    st.markdown("""
+    <div style='text-align: center; color: #888; font-size: 12px; margin-top: 40px;'>
+        <p>🔐 <strong>Connexion Sécurisée</strong> | Vos données sont chiffrées</p>
+        <p style='margin-top: 20px;'>© 2025-2026 <strong>ELOADXFAMILY</strong> - Tous droits réservés</p>
+        <p style='font-size: 10px; margin-top: 10px;'>Dubai Trading Tools • Plateforme d'Analyse Professionnelle</p>
+    </div>
+    """, unsafe_allow_html=True)
 
 def page_news_ai():
     """Section actualités IA PREMIUM - Intelligence artificielle du marché en temps réel"""
-    st.title(" Actualités Marché - IA Intelligence Platform")
+    st.title(" Actualités Marché - Plateforme IA Avancée")
     
-    # Refresh button with status
-    col_refresh, col_info = st.columns([1, 4])
+    # Professional header with key metrics
+    st.markdown("### Intelligence Artificielle du Marché | Analyse Temps Réel | 4 Sources Certifiées")
+    
+    # Controls bar
+    col_refresh, col_filter, col_mode = st.columns([1, 2, 2])
     with col_refresh:
-        if st.button(" Actualiser", use_container_width=True):
+        if st.button(" Actualiser", use_container_width=True, key="news_refresh"):
             from src.cache import CacheManager
             cache = CacheManager()
             cache.delete("real_news_all")
             st.rerun()
-    with col_info:
-        st.info(" IA SENTIMENT ANALYSIS | Cache 10min | 4 SOURCES RÉELLES | ANALYSE TEMPS RÉEL | POWERED BY ML")
+    with col_filter:
+        sentiment_filter = st.selectbox(
+            "Filtrer par sentiment:",
+            ["Tous", "Haussier", "Baissier", "Neutre"],
+            key="sentiment_filter"
+        )
+    with col_mode:
+        view_mode = st.radio(
+            "Mode d'affichage:",
+            ["Complet", "Résumé"],
+            horizontal=True,
+            key="news_view_mode"
+        )
+    
+    st.divider()
     
     # Get REAL news from real sources
     from src.real_news import get_all_real_news
@@ -1052,6 +1092,72 @@ def page_news_ai():
         bearish_count = sentiments.count('bearish')
         neutral_count = sentiments.count('neutral')
         total_count = len(news_items)
+        
+        # Sentiment analysis dashboard
+        col_stat1, col_stat2, col_stat3, col_stat4 = st.columns(4)
+        with col_stat1:
+            st.metric("📈 Haussier", bullish_count, f"{(bullish_count/total_count*100):.0f}%")
+        with col_stat2:
+            st.metric("📉 Baissier", bearish_count, f"{(bearish_count/total_count*100):.0f}%")
+        with col_stat3:
+            st.metric("⚪ Neutre", neutral_count, f"{(neutral_count/total_count*100):.0f}%")
+        with col_stat4:
+            st.metric("📰 Total", total_count, f"{len(set([n.get('symbol', 'N/A') for n in news_items]))} symboles")
+        
+        st.divider()
+        
+        # Display news with professional filtering
+        sentiment_map = {'bullish': '📈', 'bearish': '📉', 'neutral': '⚪'}
+        filtered_news = news_items
+        
+        if sentiment_filter != "Tous":
+            sentiment_key = sentiment_filter.lower() if sentiment_filter != "Neutre" else "neutral"
+            filtered_news = [n for n in news_items if n.get('sentiment', 'neutral') == sentiment_key]
+        
+        if filtered_news:
+            st.markdown(f"### {len(filtered_news)} Actualités Trouvées")
+            
+            for idx, news in enumerate(filtered_news[:20]):
+                sentiment_icon = sentiment_map.get(news.get('sentiment', 'neutral'), '⚪')
+                symbol = news.get('symbol', 'CRYPTO')
+                source = news.get('source', 'Source')
+                timestamp = news.get('timestamp', 'N/A')
+                
+                if view_mode == "Complet":
+                    with st.container(border=True):
+                        col_left, col_right = st.columns([4, 1])
+                        
+                        with col_left:
+                            st.markdown(f"### {sentiment_icon} {news.get('title', 'Sans titre')}")
+                            st.markdown(f"*{news.get('summary', news.get('description', 'N/A'))}*")
+                            
+                            col_info1, col_info2, col_info3 = st.columns([2, 2, 2])
+                            with col_info1:
+                                st.caption(f"📊 **{symbol}**")
+                            with col_info2:
+                                st.caption(f"📍 {source}")
+                            with col_info3:
+                                st.caption(f"🕐 {timestamp}")
+                        
+                        with col_right:
+                            sentiment_color = {'bullish': '🟢', 'bearish': '🔴', 'neutral': '⚪'}[news.get('sentiment', 'neutral')]
+                            st.markdown(f"<h3 style='text-align: center; color: #888;'>{sentiment_color}</h3>", unsafe_allow_html=True)
+                else:  # Résumé mode
+                    col1, col2, col3, col4 = st.columns([0.5, 3, 1.5, 1])
+                    with col1:
+                        st.markdown(sentiment_icon)
+                    with col2:
+                        st.markdown(f"**{news.get('title', 'Sans titre')[:80]}...**")
+                    with col3:
+                        st.caption(f"{source}")
+                    with col4:
+                        st.caption(f"{timestamp}")
+        else:
+            st.info("Aucune actualité ne correspond aux filtres sélectionnés.")
+        
+        # Keep the dashboard tabs for additional analysis
+        st.divider()
+        st.markdown("### 📊 Analyse Détaillée - Dashboard Intelligence")
         
         # === TAB 1: MARKET INTELLIGENCE DASHBOARD ===
         tab1, tab2, tab3, tab4 = st.tabs([" Dashboard", " Trending", " Analytics", " All News"])
