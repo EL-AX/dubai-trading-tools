@@ -2452,9 +2452,9 @@ def main():
         
         if st.session_state.get("logged_in", False):
             st.markdown(f"""
-            ** Utilisateur:** {st.session_state.get('user_name', 'Trader')}
+            **Utilisateur:** {st.session_state.get('user_name', 'Trader')}
             
-            ** Outils:**
+            **Outils:**
             - Prix en temps réel
             - 3 Indicateurs
             - Tableau de bord 4 onglets
@@ -2567,9 +2567,9 @@ def main():
     st.divider()
     st.markdown("""
     <div style='text-align: center; color: #888; font-size: 0.8rem; padding: 20px;'>
-    <p> <strong>Dubai Trading Tools v6.1</strong> | Professional Analysis Platform</p>
+    <p> <strong>Dubai Trading Tools v6.1</strong> | Plateforme d'Analyse Professionnelle</p>
     <p>© 2025-2026 <strong>ELOADXFAMILY</strong> - Tous droits réservés</p>
-    <p>️ <em>This is an analysis tool, not a trading platform. Conduct your own research before trading.</em></p>
+    <p>️ <em>Ceci est un outil d'analyse, pas une plateforme de trading. Menez vos propres recherches avant de trader.</em></p>
     </div>
     """, unsafe_allow_html=True)
 

@@ -67,14 +67,14 @@ def register_user(email, password, name):
     if sent:
         return {
             "success": True,
-            "message": f"Registration successful! Verification code sent to {email}",
+            "message": f"Inscription réussie! Code de vérification envoyé à {email}",
             "code_sent": True
         }
     else:
         # Still register but warn about email failure
         return {
             "success": True,
-            "message": f"Registration successful but email delivery failed: {info}. Contact support.",
+            "message": f"Inscription réussie mais la livraison de l'email a échoué: {info}. Contactez le support.",
             "code_sent": False,
             "info": info
         }
