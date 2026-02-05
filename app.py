@@ -277,7 +277,7 @@ def display_live_price_with_animation(ticker):
         }
 
 def page_tutorial():
-    """Tutorial and learning hub - Professional education platform"""
+    """Tutoriel et centre d'apprentissage - Plateforme d'éducation professionnelle"""
     st.title("🎓 CENTRE D'APPRENTISSAGE - Maîtriser le Trading Professionnel")
     
     st.markdown("*Complete trading education • Interactive learning • Quiz-based mastery*")
@@ -308,8 +308,8 @@ def page_tutorial():
     
     # === TAB 1: AUTHENTICATION ===
     with tab_auth:
-        st.markdown("### 🔐 Getting Started - Registration & Security")
-        st.markdown("Learn how to safely create an account and secure your data")
+        st.markdown("### 🔐 Démarrage - Inscription et Sécurité")
+        st.markdown("Apprenez à créer un compte en toute sécurité et protégez vos données")
         
         col1, col2 = st.columns(2)
         
@@ -333,32 +333,32 @@ def page_tutorial():
             """)
         
         with col2:
-            st.markdown("#### 🔒 Security Best Practices")
+            st.markdown("#### 🔒 Meilleures Pratiques de Sécurité")
             st.markdown("""
-            **Password Security:**
-            - ✅ Use 12+ characters for accounts with money
-            - ✅ Mix upper/lowercase, numbers, symbols
-            - ✅ Don't reuse across multiple sites
-            - ❌ Never share your password
+            **Sécurité du Mot de Passe:**
+            - ✅ Utilisez 12+ caractères pour les comptes avec argent
+            - ✅ Mélangez majuscules, minuscules, chiffres, symboles
+            - ✅ Ne réutilisez pas sur d'autres sites
+            - ❌ Ne partagez jamais votre mot de passe
             
-            **2FA & Verification:**
-            - ✅ Verify your email (required)
-            - ✅ Enable 2FA if available
-            - ✅ Save recovery codes securely
-            - ❌ Don't share verification codes
+            **2FA et Vérification:**
+            - ✅ Vérifiez votre email (obligatoire)
+            - ✅ Activez 2FA si disponible
+            - ✅ Sauvegardez les codes de récupération en sécurité
+            - ❌ Ne partagez pas les codes de vérification
             
-            **Data Privacy:**
-            - Your data is encrypted at rest
-            - Passwords are hashed (cannot be recovered)
-            - Sessions expire after inactivity
+            **Confidentialité des Données:**
+            - Vos données sont chiffrées au repos
+            - Les mots de passe sont hashés (impossible à récupérer)
+            - Les sessions expirent après inactivité
             """)
         
         st.divider()
-        st.success("✅ Account secured? Let's move to the Dashboard!")
+        st.success("✅ Compte s\u00e9curis\u00e9? Passons au Tableau de Bord!")
     
     # === TAB 2: DASHBOARD GUIDE ===
     with tab_dashboard:
-        st.markdown("### 📊 Dashboard Master - Real-Time Analysis Hub")
+        st.markdown("### 📊 Maître du Tableau de Bord - Centre d'Analyse en Temps Réel")
         st.markdown("Votre centre de commande pour surveiller 11 actifs avec des outils professionnels")
         
         # 4 sub-sections
@@ -420,7 +420,7 @@ def page_tutorial():
         with col_a:
             with st.expander("📈 **Live Price Display**"):
                 st.markdown("""
-                **Real-Time Updates**
+                **Mises à Jour en Temps Réel**
                 - Current price in USD
                 - 24h change (%+$)
                 - 🟢 Green = Positive
@@ -432,7 +432,7 @@ def page_tutorial():
         with col_b:
             with st.expander("📊 **Candlestick Chart**"):
                 st.markdown("""
-                **Professional Styling**
+                **Style Professionnel**
                 - XM-aligned colors
                 - 🟢 Green (#1bc47d) = Bullish
                 - 🔴 Red (#ff3d3d) = Bearish
@@ -778,21 +778,21 @@ def page_tutorial():
             **📊 4 News Sources**
             
             🟠 **Reddit**
-            - Community discussions
-            - Retail sentiment
-            - Real-time reactions
-            - May have hype
+            - Discussions communautaires
+            - Sentiment retail
+            - Réactions en temps réel
+            - Peut avoir du hype
             
             🔵 **CoinDesk**
-            - Professional news
-            - Institutional focus
-            - Regulated reporting
-            - Most reliable
+            - Actualités professionnelles
+            - Focus institutionnel
+            - Rapports régulés
+            - Plus fiable
             
             🟡 **CoinTelegraph**
-            - Detailed analyses
-            - Technical breakdowns
-            - Good for learning
+            - Analyses détaillées
+            - Décompositions techniques
+            - Bon pour l'apprentissage
             - Sometimes sensational
             
             🟢 **CoinGecko**
@@ -904,12 +904,12 @@ def page_tutorial():
                 "a": "No. Trade when setup is perfect. Crypto: 24/7 possible. Forex: Focus US/EU sessions for liquidity. Rest > overtrading."
             },
             {
-                "q": "How many patterns should I learn?",
-                "a": "Master 2-3 completely before learning more. Quality > Quantity. Most pros use same 5 patterns repeatedly."
+                "q": "Combien de patterns dois-je apprendre?",
+                "a": "Maîtrisez 2-3 complètement avant d'en apprendre d'autres. Qualité > Quantité. La plupart des pros utilisent les mêmes 5 patterns à répétition."
             },
             {
-                "q": "What's the biggest mistake beginners make?",
-                "a": "Not using stop losses. This single mistake destroys 90% of accounts. Always set stops BEFORE entering."
+                "q": "Quelle est la plus grosse erreur des débutants?",
+                "a": "Ne pas utiliser de stop losses. Cette seule erreur détruit 90% des comptes. Placez toujours les stops AVANT d'entrer."
             }
         ]
         
@@ -2302,9 +2302,12 @@ def main():
     # === PROFESSIONAL HEADER (only for authenticated users) ===
     col_logo, col_title, col_version = st.columns([1, 3, 1])
     with col_logo:
-        st.markdown("### 📊")
+        try:
+            st.image("logo/IMG-20250824-WA0020.jpg", width=100)
+        except:
+            st.markdown("### 📊")
     with col_title:
-        st.markdown("# **DUBAI TRADING TOOLS** - Professional Platform")
+        st.markdown("# **DUBAI TRADING TOOLS** - Plateforme Professionnelle")
     with col_version:
         st.caption("v6.1 ✨")
     
@@ -2343,15 +2346,15 @@ def main():
         
         if st.session_state.get("logged_in", False):
             st.markdown(f"""
-            **👤 User:** {st.session_state.get('user_name', 'Trader')}
+            **👤 Utilisateur:** {st.session_state.get('user_name', 'Trader')}
             
-            **📊 Tools:**
-            - ✅ Real-time prices
-            - ✅ 3 Indicators
-            - ✅ 4 Tabs Dashboard
-            - ✅ AI News Analysis
+            **📊 Outils:**
+            - ✅ Prix en temps réel
+            - ✅ 3 Indicateurs
+            - ✅ Tableau de bord 4 onglets
+            - ✅ Analyse IA des Actualités
             - ✅ 19 Patterns
-            - ✅ Interactive Quiz
+            - ✅ Quiz Interactif
             """)
         
         st.divider()
@@ -2380,67 +2383,67 @@ def main():
         # Profile information
         col_prof1, col_prof2, col_prof3 = st.columns(3)
         with col_prof1:
-            st.metric("👤 Username", st.session_state.get("user_name", "N/A"))
+            st.metric("👤 Nom d'utilisateur", st.session_state.get("user_name", "N/A"))
         with col_prof2:
             st.metric("✉️ Email", st.session_state.get("user_email", "N/A"))
         with col_prof3:
-            st.metric("📅 Member Since", "2025")
+            st.metric("📅 Membre depuis", "2025")
         
         st.divider()
         
         # Settings tabs
-        settings_tabs = st.tabs(["👤 Account", "🔒 Security", "⚙️ Preferences", "📊 Data"])
+        settings_tabs = st.tabs(["👤 Compte", "🔒 Sécurité", "⚙️ Préférences", "📊 Données"])
         
         with settings_tabs[0]:
-            st.markdown("### Account Management")
-            st.info("✅ Account verified and active")
+            st.markdown("### Gestion du Compte")
+            st.info("✅ Compte vérifié et actif")
             st.markdown("""
-            **Account Details:**
-            - Status: Verified ✅
-            - Member since: 2025
-            - Last login: Today
+            **Détails du Compte:**
+            - Statut: Vérifié ✅
+            - Membre depuis: 2025
+            - Dernière connexion: Aujourd'hui
             - Sessions: 1 active
             """)
         
         with settings_tabs[1]:
-            st.markdown("### Security Settings")
-            st.warning("🔒 Keep your account safe")
+            st.markdown("### Paramètres de Sécurité")
+            st.warning("🔒 Gardez votre compte en sécurité")
             st.markdown("""
-            **Security Checklist:**
-            - ✅ Strong password enabled
-            - ✅ Email verified
-            - ⭕ 2FA: Not enabled
-            - ⭕ Recovery codes: Not set
+            **Liste de Vérification de Sécurité:**
+            - ✅ Mot de passe fort activé
+            - ✅ Email vérifié
+            - ⭕ 2FA: Non activé
+            - ⭕ Codes de récupération: Non définis
             
-            **Recommendations:**
-            - Change password every 90 days
-            - Never share verification codes
-            - Use unique passwords
-            - Log out after each session
+            **Recommandations:**
+            - Changez le mot de passe tous les 90 jours
+            - Ne partagez jamais les codes de vérification
+            - Utilisez des mots de passe uniques
+            - Déconnectez-vous après chaque session
             """)
         
         with settings_tabs[2]:
-            st.markdown("### User Preferences")
+            st.markdown("### Préférences Utilisateur")
             st.markdown("""
-            **Display Settings:**
-            - Theme: Dark (Professional)
-            - Language: English
-            - Currency: USD
-            - Timeframe: Default 1D
+            **Paramètres d'Affichage:**
+            - Thème: Sombre (Professionnel)
+            - Langue: Français
+            - Devise: EUR
+            - Période: 1J par défaut
             """)
         
         with settings_tabs[3]:
-            st.markdown("### Data Management")
+            st.markdown("### Gestion des Données")
             st.markdown("""
-            **Your Data:**
-            - Journal entries: Tracked locally
-            - Quiz scores: Stored in session
-            - Preferences: Saved
+            **Vos Données:**
+            - Entrées du journal: Suivies localement
+            - Scores des quiz: Stockés en session
+            - Préférences: Sauvegardées
             
-            **Privacy:**
-            - Your data is encrypted
-            - No third-party sharing
-            - Can request export anytime
+            **Confidentialité:**
+            - Vos données sont chiffrées
+            - Aucun partage tiers
+            - Exportation possible à tout moment
             """)
         
         st.divider()
@@ -2448,11 +2451,11 @@ def main():
         # Logout button
         col_logout, col_delete = st.columns(2)
         with col_logout:
-            if st.button("🚪 Logout", use_container_width=True, key="logout_main"):
+            if st.button("🚪 Déconnexion", use_container_width=True, key="logout_main"):
                 logout(st)
                 st.rerun()
         with col_delete:
-            st.button("❌ Delete Account", use_container_width=True, key="delete_account", disabled=True)
+            st.button("❌ Supprimer le Compte", use_container_width=True, key="delete_account", disabled=True)
     
     # === FOOTER ===
     st.divider()

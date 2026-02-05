@@ -316,13 +316,48 @@ IMPACTFUL_NEWS_TEMPLATES = [
 # 5. PRINCIPES DE PSYCHOLOGIE DU TRADER
 # ============================================================================
 PSYCHOLOGY_RULES = {
-    "Discipline": "La discipline > La prédiction. Respecter les règles à 100%.",
-    "Gestion_Émotions": "Peur et Avidité sont l'ennemi. Trader sans émotions.",
-    "Accepter_Pertes": "Les pertes sont normales. Max 2% par trade, c'est ok.",
-    "Capitalisation": "Objectif: Doubler le compte chaque 3-6 mois via discipline.",
-    "Journal_Trading": "Noter chaque trade: Entrée, sortie, raison. Analyser les erreurs.",
-    "Pas_de_Revenge_Trading": "Après une grosse perte, prendre une pause. Pas de vengeance.",
-    "Confiance_Système": "Faire confiance au système. Pas de modifications impulsives."
+    "Discipline": {
+        "titre": "Discipline Absolue",
+        "probleme": "Les traders inexpérimentés abandonent leur plan au premier doute",
+        "solution": "La discipline > La prédiction. Respecter les règles à 100%.",
+        "action": "Créer un plan écrit et le suivre sans exception"
+    },
+    "Gestion_Émotions": {
+        "titre": "Gérer les Émotions",
+        "probleme": "La peur et l'avidité contrôlent les décisions",
+        "solution": "Peur et Avidité sont l'ennemi. Trader sans émotions.",
+        "action": "Prendre des pauses après chaque trade gagnant"
+    },
+    "Accepter_Pertes": {
+        "titre": "Accepter les Petites Pertes",
+        "probleme": "Les traders refusent de perdre sur un trade et la perte grossit",
+        "solution": "Les pertes sont normales. Max 2% par trade, c'est ok.",
+        "action": "Accepter la perte et passer au trade suivant"
+    },
+    "Capitalisation": {
+        "titre": "Croissance Stable du Capital",
+        "probleme": "Vouloir devenir riche trop vite mène aux pertes",
+        "solution": "Objectif: Doubler le compte chaque 3-6 mois via discipline.",
+        "action": "Tracker la croissance mensuelle et ajuster la stratégie"
+    },
+    "Journal_Trading": {
+        "titre": "Tenir un Journal de Trading",
+        "probleme": "Sans tracking, on répète les mêmes erreurs",
+        "solution": "Noter chaque trade: Entrée, sortie, raison. Analyser les erreurs.",
+        "action": "Écrire un rapport après chaque session de trading"
+    },
+    "Pas_de_Revenge_Trading": {
+        "titre": "Éviter le Revenge Trading",
+        "probleme": "Après une grosse perte, on cherche à la récupérer immédiatement",
+        "solution": "Après une grosse perte, prendre une pause. Pas de vengeance.",
+        "action": "Si perte > 2% du compte, arrêter et analyser"
+    },
+    "Confiance_Système": {
+        "titre": "Confiance dans le Système",
+        "probleme": "Les modifications impulsives détruisent les stratégies rentables",
+        "solution": "Faire confiance au système. Pas de modifications impulsives.",
+        "action": "Tester le système 100 trades avant d'ajuster"
+    }
 }
 
 # ============================================================================
