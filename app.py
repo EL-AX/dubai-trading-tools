@@ -716,42 +716,35 @@ def page_dashboard():
         # Period selector like XM platform
         st.subheader("⏱️ Sélectionnez la Période")
         period_cols = st.columns(6)
-        period_map = {
-            "1H": 1,
-            "4H": 4,
-            "1D": 24,
-            "1W": 168,
-            "1M": 720,
-            "3M": 2160
-        }
         
-        selected_period = "1D"
+        selected_period = st.session_state.get("selected_period", "1D")
+        
         with period_cols[0]:
             if st.button("1H", use_container_width=True):
-                selected_period = "1H"
                 st.session_state.selected_period = "1H"
+                st.rerun()
         with period_cols[1]:
             if st.button("4H", use_container_width=True):
-                selected_period = "4H"
                 st.session_state.selected_period = "4H"
+                st.rerun()
         with period_cols[2]:
             if st.button("1D", use_container_width=True):
-                selected_period = "1D"
                 st.session_state.selected_period = "1D"
+                st.rerun()
         with period_cols[3]:
             if st.button("1W", use_container_width=True):
-                selected_period = "1W"
                 st.session_state.selected_period = "1W"
+                st.rerun()
         with period_cols[4]:
             if st.button("1M", use_container_width=True):
-                selected_period = "1M"
                 st.session_state.selected_period = "1M"
+                st.rerun()
         with period_cols[5]:
             if st.button("3M", use_container_width=True):
-                selected_period = "3M"
                 st.session_state.selected_period = "3M"
+                st.rerun()
         
-        # Get period from session if set
+        # Get period from session state
         selected_period = st.session_state.get("selected_period", "1D")
         days_to_fetch = {
             "1H": 1,
