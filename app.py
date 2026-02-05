@@ -2237,7 +2237,7 @@ def page_patterns():
         # Psychology rules
         st.markdown("#### 📖 Règles de Psychologie du Trading")
         
-        for idx, rule in enumerate(PSYCHOLOGY_RULES, 1):
+        for idx, rule in enumerate(PSYCHOLOGY_RULES.values(), 1):
             with st.expander(f"🧠 **Règle {idx}: {rule.get('titre', 'N/A')}**"):
                 st.markdown(f"**Problème:** {rule.get('probleme', 'N/A')}")
                 st.markdown(f"**Solution:** {rule.get('solution', 'N/A')}")
