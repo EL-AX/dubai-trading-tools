@@ -311,6 +311,8 @@ def get_all_real_news(max_items=25):
     
     Garantie: Au moins 20 items retournés même avec indisponibilité partielle
     """
+    from src.sentiment_analyzer import analyze_news_sentiment
+    
     cache_key = "real_news_all_perfect"
     
     # Check cache first (10 min pour actualités)
@@ -383,7 +385,8 @@ def get_all_real_news(max_items=25):
     unique_news = []
     
     for item in all_news:
-        title = item.get('titre', '').strip()
+        title = item.get('titre', '') or item.get('title', '')
+        title = title.strip()
         url = item.get('url', '').strip()
         
         # Vérifier pas de doublon ET URL valide
@@ -391,6 +394,12 @@ def get_all_real_news(max_items=25):
             # Vérifier que c'est une URL valide (commence par http)
             if url.startswith('http://') or url.startswith('https://'):
                 seen.add(title)
+                
+                # ============================================================
+                # SENTIMENT ANALYSIS RÉELLE
+                # ============================================================
+                item['sentiment'] = analyze_news_sentiment(item)
+                
                 unique_news.append(item)
     
     # ============================================================
