@@ -930,6 +930,25 @@ def page_dashboard():
             else:
                 hist_data['timestamp'] = pd.to_datetime(hist_data['timestamp'], errors='coerce')
             
+            # IMPORTANT: Limit display data based on period
+            # Keep all data for indicator calculations, but display only relevant range
+            display_data = hist_data.copy()
+            
+            # Determine how many candles to display based on period
+            display_candles = {
+                "1H": 2,      # Show last 2 hours worth of 1H candles
+                "4H": 2,      # Show last 8 hours worth of 4H candles (2 x 4h)
+                "1D": 30,     # Show last 30 days
+                "1W": 12,     # Show last 12 weeks
+                "1M": 12,     # Show last 12 months
+                "3M": 12      # Show last 12 months
+            }.get(selected_period, 30)
+            
+            # Limit display data to show only relevant timeframe
+            if len(display_data) > display_candles:
+                display_data = display_data.tail(display_candles)
+            
+            # Recalculate indicators on FULL data for accuracy
             prices = hist_data['close'].values
             
             rsi = calculate_rsi(prices)
@@ -960,8 +979,8 @@ def page_dashboard():
             )
 
             # Candlestick with improved hover and width (with robust validation)
-            # Make a safe copy and coerce types
-            df_candle = hist_data.copy()
+            # Make a safe copy and coerce types - USE DISPLAY_DATA to show only relevant period
+            df_candle = display_data.copy()
             required_cols = ['timestamp', 'open', 'high', 'low', 'close']
             missing = [c for c in required_cols if c not in df_candle.columns]
             if missing:
@@ -1009,12 +1028,12 @@ def page_dashboard():
                 continue
 
             # Volume bars - synchronized with candle colors
-            if 'volume' in hist_data.columns:
+            if 'volume' in display_data.columns:
                 fig.add_trace(go.Bar(
-                    x=hist_data['timestamp'],
-                    y=hist_data['volume'],
+                    x=display_data['timestamp'],
+                    y=display_data['volume'],
                     marker=dict(
-                        color=[inc['fillcolor'] if c >= o else dec['fillcolor'] for c, o in zip(hist_data['close'], hist_data['open'])],
+                        color=[inc['fillcolor'] if c >= o else dec['fillcolor'] for c, o in zip(display_data['close'], display_data['open'])],
                         opacity=0.8,
                         line=dict(width=0)
                     ),
@@ -1028,7 +1047,7 @@ def page_dashboard():
                 # After showing preview once, clear flag
                 st.session_state.preview_candle_style = False
 
-            # Bollinger and other indicator overlays
+            # Bollinger and other indicator overlays - Use FULL data for indicators
             if show_bollinger and bb_mid is not None:
                 fig.add_trace(go.Scatter(
                     x=hist_data['timestamp'], y=bb_mid,
@@ -1043,8 +1062,12 @@ def page_dashboard():
                     name='Bollinger Lower', line=dict(color='rgba(81,207,102,0.7)', width=1, dash='dot')
                 ), row=1, col=1)
 
+            # Create title with period info
+            period_names = {"1H": "1 Heure", "4H": "4 Heures", "1D": "1 Jour", "1W": "1 Semaine", "1M": "1 Mois", "3M": "3 Mois"}
+            period_name = period_names.get(selected_period, "1 Jour")
+            
             fig.update_layout(
-                title=f"<b>{ticker} - Analyse Technique (60J)</b>",
+                title=f"<b>{ticker} - {period_name} (Affichage: {len(df_candle)} candles)</b>",
                 height=600,  # Professional height for mobile-friendly viewing
                 xaxis_rangeslider_visible=False,
                 template=template_name,
