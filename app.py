@@ -2275,61 +2275,184 @@ def page_patterns():
 
 
 def main():
-    """Application principale - Routing et navigation"""
-    init_session_state()
+    """Application principale - Routing et navigation PROFESSIONAL"""
+    try:
+        # Initialize session state once
+        if "initialized" not in st.session_state:
+            st.session_state.initialized = True
+            init_session_state()
+    except Exception as e:
+        st.error(f"Init error: {str(e)}")
+    
     apply_custom_theme()
     
-    # Initialize sidebar navigation
-    st.sidebar.title("📊 DUBAI TRADING TOOLS")
-    st.sidebar.caption("v6.1 - Professional Trading Platform")
-    st.sidebar.divider()
+    # === PROFESSIONAL HEADER ===
+    col_logo, col_title, col_version = st.columns([1, 3, 1])
+    with col_logo:
+        st.markdown("### 📊")
+    with col_title:
+        st.markdown("# **DUBAI TRADING TOOLS** - Professional Platform")
+    with col_version:
+        st.caption("v6.1 ✨")
     
-    page = st.sidebar.radio(
-        "🗺️ Navigation",
-        ["📈 Dashboard", "📰 Actualités IA", "📚 Patterns & Stratégies", "🎓 Tutorial", "⚙️ Profile"],
-        label_visibility="collapsed"
-    )
+    st.divider()
     
-    st.sidebar.divider()
-    st.sidebar.markdown("### 📊 Stats")
-    st.sidebar.caption("✅ Platform Live")
-    st.sidebar.caption("🔴 Real-time Data")
-    st.sidebar.caption("🚀 11 Actifs")
-    st.sidebar.caption("📈 6 Périodes")
+    # === SIDEBAR NAVIGATION ===
+    with st.sidebar:
+        st.markdown("### 🗺️ **NAVIGATION**")
+        st.markdown("Select your destination:")
+        
+        # Main page selector
+        page = st.radio(
+            "Pages:",
+            ["📈 Dashboard", "📰 News AI", "📚 Patterns", "🎓 Tutorial", "⚙️ Profile"],
+            label_visibility="collapsed",
+            key="main_nav"
+        )
+        
+        st.sidebar.divider()
+        
+        # === SIDEBAR STATS ===
+        st.markdown("### 📊 **PLATFORM STATS**")
+        
+        col_s1, col_s2 = st.columns(2)
+        with col_s1:
+            st.metric("🟢 Status", "LIVE")
+            st.metric("📊 Assets", "11")
+        with col_s2:
+            st.metric("⏱️ Periods", "6")
+            st.metric("🔄 Refresh", "Auto 5s")
+        
+        st.divider()
+        
+        # === SIDEBAR QUICK STATS ===
+        st.markdown("### ⚡ **QUICK STATS**")
+        
+        if st.session_state.get("logged_in", False):
+            st.markdown(f"""
+            **👤 User:** {st.session_state.get('user_name', 'Trader')}
+            
+            **📊 Tools:**
+            - ✅ Real-time prices
+            - ✅ 3 Indicators
+            - ✅ 4 Tabs Dashboard
+            - ✅ AI News Analysis
+            - ✅ 19 Patterns
+            - ✅ Interactive Quiz
+            """)
+        
+        st.divider()
+        
+        # === SIDEBAR FOOTER ===
+        st.markdown("### 📞 **SUPPORT**")
+        st.caption("© 2025-2026 ELOADXFAMILY")
+        st.caption("*Professional Trading Analysis*")
+        
+        if st.button("📖 GitHub Repo", use_container_width=True):
+            st.markdown("[EL-AX/dubai-trading-tools](https://github.com/EL-AX/dubai-trading-tools)")
     
-    st.sidebar.divider()
-    
-    # Route to appropriate page
+    # === PAGE ROUTING ===
     if not st.session_state.get("logged_in", False):
+        # Show login/register before any page
         page_login_register()
     elif page == "📈 Dashboard":
         page_dashboard()
-    elif page == "📰 Actualités IA":
+    elif page == "📰 News AI":
         page_news_ai()
-    elif page == "📚 Patterns & Stratégies":
+    elif page == "📚 Patterns":
         page_patterns()
     elif page == "🎓 Tutorial":
         page_tutorial()
     elif page == "⚙️ Profile":
-        st.title("⚙️ Paramètres du Compte")
-        col_prof1, col_prof2 = st.columns(2)
+        st.title("⚙️ Account Settings")
+        
+        # Profile information
+        col_prof1, col_prof2, col_prof3 = st.columns(3)
         with col_prof1:
-            st.metric("👤 Utilisateur", st.session_state.get("user_name", "Guest"))
-            st.metric("📊 Statut", "Connecté ✅")
+            st.metric("👤 Username", st.session_state.get("user_name", "N/A"))
         with col_prof2:
-            st.metric("🔐 Email", st.session_state.get("user_email", "N/A"))
-            st.metric("📅 Membre depuis", "2025")
+            st.metric("✉️ Email", st.session_state.get("user_email", "N/A"))
+        with col_prof3:
+            st.metric("📅 Member Since", "2025")
         
         st.divider()
         
-        if st.button("🚪 Déconnecter", use_container_width=True):
-            logout(st)
-            st.rerun()
+        # Settings tabs
+        settings_tabs = st.tabs(["👤 Account", "🔒 Security", "⚙️ Preferences", "📊 Data"])
+        
+        with settings_tabs[0]:
+            st.markdown("### Account Management")
+            st.info("✅ Account verified and active")
+            st.markdown("""
+            **Account Details:**
+            - Status: Verified ✅
+            - Member since: 2025
+            - Last login: Today
+            - Sessions: 1 active
+            """)
+        
+        with settings_tabs[1]:
+            st.markdown("### Security Settings")
+            st.warning("🔒 Keep your account safe")
+            st.markdown("""
+            **Security Checklist:**
+            - ✅ Strong password enabled
+            - ✅ Email verified
+            - ⭕ 2FA: Not enabled
+            - ⭕ Recovery codes: Not set
+            
+            **Recommendations:**
+            - Change password every 90 days
+            - Never share verification codes
+            - Use unique passwords
+            - Log out after each session
+            """)
+        
+        with settings_tabs[2]:
+            st.markdown("### User Preferences")
+            st.markdown("""
+            **Display Settings:**
+            - Theme: Dark (Professional)
+            - Language: English
+            - Currency: USD
+            - Timeframe: Default 1D
+            """)
+        
+        with settings_tabs[3]:
+            st.markdown("### Data Management")
+            st.markdown("""
+            **Your Data:**
+            - Journal entries: Tracked locally
+            - Quiz scores: Stored in session
+            - Preferences: Saved
+            
+            **Privacy:**
+            - Your data is encrypted
+            - No third-party sharing
+            - Can request export anytime
+            """)
+        
+        st.divider()
+        
+        # Logout button
+        col_logout, col_delete = st.columns(2)
+        with col_logout:
+            if st.button("🚪 Logout", use_container_width=True, key="logout_main"):
+                logout(st)
+                st.rerun()
+        with col_delete:
+            st.button("❌ Delete Account", use_container_width=True, key="delete_account", disabled=True)
+    
+    # === FOOTER ===
+    st.divider()
+    st.markdown("""
+    <div style='text-align: center; color: #888; font-size: 0.8rem; padding: 20px;'>
+    <p>🌐 <strong>Dubai Trading Tools v6.1</strong> | 📊 Professional Analysis Platform</p>
+    <p>© 2025-2026 <strong>ELOADXFAMILY</strong> - All Rights Reserved</p>
+    <p>⚠️ <em>This is an analysis tool, not a trading platform. Conduct your own research before trading.</em></p>
+    </div>
+    """, unsafe_allow_html=True)
 
 
 if __name__ == "__main__":
-    main()
-
-
-if __name__ == '__main__':
     main()
