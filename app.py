@@ -1932,24 +1932,86 @@ def page_dashboard():
                 st.warning(f"Erreur lors du calcul des risques pour {ticker}: {str(e)}")
         
         st.markdown("---")
+        st.markdown("---")
         st.subheader("📜 Historique des Alertes")
         
         alert_history = get_alert_history()
-        if alert_history:
+        if alert_history and len(alert_history) > 0:
+            # Display recent alerts
             st.dataframe(
                 pd.DataFrame(alert_history[-10:]).sort_values('timestamp', ascending=False),
                 use_container_width=True
             )
         else:
-            st.info("Aucune alerte pour le moment")
+            # Generate and display automatic alerts based on current market conditions
+            st.info("📊 Alertes automatiques basées sur les conditions actuelles du marché")
+            
+            auto_alerts = []
+            for ticker in selected_tickers[:3]:  # Show alerts for first 3 tickers
+                try:
+                    hist_data = get_historical_data(ticker, days=30)
+                    if hist_data is not None and len(hist_data) > 0:
+                        prices = hist_data['close'].values
+                        prices = np.nan_to_num(prices, nan=np.nanmean(prices))
+                        
+                        # Calculate signals
+                        smart_signals = SmartSignals(prices)
+                        signal_text = smart_signals.get_signal_text()
+                        
+                        # Determine alert type
+                        if "BUY" in signal_text:
+                            alert_type = "🟢 ACHAT"
+                            alert_color = "#2ecc71"
+                        elif "SELL" in signal_text:
+                            alert_type = "🔴 VENTE"
+                            alert_color = "#e74c3c"
+                        else:
+                            alert_type = "🟡 NEUTRE"
+                            alert_color = "#f39c12"
+                        
+                        auto_alerts.append({
+                            "Ticker": ticker,
+                            "Signal": signal_text,
+                            "Type": alert_type,
+                            "Timestamp": datetime.now().strftime("%H:%M:%S")
+                        })
+                except Exception:
+                    pass
+            
+            if auto_alerts:
+                alerts_df = pd.DataFrame(auto_alerts)
+                st.dataframe(alerts_df, use_container_width=True)
+            else:
+                st.write("Aucune alerte à afficher pour le moment")
         
+        st.markdown("---")
         st.markdown("---")
         st.subheader("📚 Ressources Éducatives")
         
-        concept = st.selectbox("Sélectionnez un concept:", ["RSI", "MACD", "Bollinger", "Trend", "Support", "Resistance", "Volatilite", "Momentum", "Signal", "Ratio_Risque_Rendement"])
+        concept = st.selectbox(
+            "Sélectionnez un concept:",
+            ["RSI", "MACD", "Bollinger", "Trend", "Support", "Resistance", "Volatilite", "Momentum", "Signal", "Ratio_Risque_Rendement"],
+            index=0  # RSI sélectionné par défaut
+        )
         
+        # Afficher le contenu du concept sélectionné
         if concept:
             st.markdown(format_tooltip_markdown(concept))
+        
+        # Afficher des concepts recommandés si aucun n'est sélectionné
+        st.markdown("---")
+        st.markdown("### 💡 Concepts Recommandés pour Débuter")
+        
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            if st.button("📊 RSI (Momentum)", key="btn_rsi"):
+                st.session_state.selected_concept = "RSI"
+        with col2:
+            if st.button("📈 MACD (Tendance)", key="btn_macd"):
+                st.session_state.selected_concept = "MACD"
+        with col3:
+            if st.button("⚖️ Support/Résistance", key="btn_sup_res"):
+                st.session_state.selected_concept = "Support"
 
 def page_patterns():
     """Page Patterns & Stratégies - Intégration complète avec tabs professionnels"""

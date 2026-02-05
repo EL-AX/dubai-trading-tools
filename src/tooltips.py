@@ -205,7 +205,16 @@ TOOLTIPS = {
 }
 
 def get_tooltip(key):
-    return TOOLTIPS.get(key, {})
+    # Handle aliases
+    key_mapping = {
+        "Trend": "Tendance",
+        "Volatilite": "Volatilite",
+        "Momentum": "Momentum",
+        "Signal": "Signal",
+        "Ratio_Risque_Rendement": "Ratio_Risque_Rendement"
+    }
+    actual_key = key_mapping.get(key, key)
+    return TOOLTIPS.get(actual_key, {})
 
 def format_tooltip_markdown(key):
     tooltip = get_tooltip(key)
