@@ -20,117 +20,193 @@ et respectent les standards professionnels de trading.
 CANDLESTICK_PATTERNS = {
     "Doji": {
         "description": "Ouverture = Fermeture, avec longues mèches",
-        "signal": "Indécision du marché, possible retournement",
+        "signification": "Indécision du marché, possible retournement",
         "traduction_fr": "Doji",
-        "usage": "Point d'entrée/sortie potentiel, à confirmer par volume"
+        "identification": "Chercher une bougie avec un corps minuscule et des mèches hautes/basses similaires",
+        "trading_tip": "Point d'entrée/sortie potentiel, à confirmer par volume et pattern précédent",
+        "reliability": 65,
+        "frequency": "Modérée",
+        "best_timeframe": "4H-1D"
     },
     "Harami": {
         "description": "Petite bougie à l'intérieur de la grande précédente",
-        "signal": "Inversion de tendance, perte d'élan",
+        "signification": "Inversion de tendance, perte d'élan",
         "traduction_fr": "Harami",
-        "usage": "Stratégie de retournement court terme"
+        "identification": "La petite bougie doit être complètement à l'intérieur du range de la bougie précédente",
+        "trading_tip": "Utiliser en stratégie de retournement court terme après confirmation du marché",
+        "reliability": 60,
+        "frequency": "Régulière",
+        "best_timeframe": "1H-4H"
     },
     "Engulfing_Haussier": {
         "description": "Grande bougie verte englobeant la bougie noire précédente",
-        "signal": "Signal d'achat fort, retournement haussier",
+        "signification": "Signal d'achat fort, retournement haussier",
         "traduction_fr": "Avalement Haussier",
-        "usage": "Entrée longue après confirmation volume"
+        "identification": "Bougie verte plus grande qu'elle doit complètement contenir la bougie noire précédente",
+        "trading_tip": "Entrée longue après confirmation volume, stop loss sous le low du pattern",
+        "reliability": 85,
+        "frequency": "Modérée",
+        "best_timeframe": "1D-1W"
     },
     "Engulfing_Baissier": {
         "description": "Grande bougie noire englobeant la bougie verte précédente",
-        "signal": "Signal de vente fort, retournement baissier",
+        "signification": "Signal de vente fort, retournement baissier",
         "traduction_fr": "Avalement Baissier",
-        "usage": "Entrée courte après confirmation volume"
+        "identification": "Bougie noire plus grande doit complètement contenir la bougie verte précédente",
+        "trading_tip": "Entrée courte après confirmation volume, stop loss au-dessus du high du pattern",
+        "reliability": 85,
+        "frequency": "Modérée",
+        "best_timeframe": "1D-1W"
     },
     "Étoile_du_Matin": {
         "description": "3 bougies: baisse, doji/petite, hausse",
-        "signal": "Retournement haussier très fiable",
+        "signification": "Retournement haussier très fiable",
         "traduction_fr": "Étoile du Matin",
-        "usage": "Signal d'achat fiable après une tendance baissière"
+        "identification": "Première bougie baissière forte, deuxième petite/doji en gap down, troisième haussière fermant dans le premier tiers de la première",
+        "trading_tip": "Signal d'achat puissant après tendance baissière, confirmer avec volume",
+        "reliability": 90,
+        "frequency": "Modérée",
+        "best_timeframe": "1D-1W"
     },
     "Étoile_du_Soir": {
         "description": "3 bougies: hausse, doji/petite, baisse",
-        "signal": "Retournement baissier très fiable",
+        "signification": "Retournement baissier très fiable",
         "traduction_fr": "Étoile du Soir",
-        "usage": "Signal de vente fiable après une tendance haussière"
+        "identification": "Première bougie haussière forte, deuxième petite/doji en gap up, troisième baissière fermant dans le premier tiers de la première",
+        "trading_tip": "Signal de vente puissant après tendance haussière, confirmer avec volume",
+        "reliability": 90,
+        "frequency": "Modérée",
+        "best_timeframe": "1D-1W"
     },
     "Marteau": {
         "description": "Corps petit, longue mèche basse, peu/pas de mèche haute",
-        "signal": "Inversion baissière, support potentiel",
+        "signification": "Inversion baissière, support potentiel",
         "traduction_fr": "Marteau",
-        "usage": "Signal d'achat en tendance baissière"
+        "identification": "Bougie avec petit corps en haut, long shadow bas (au moins 2x le corps), peu de wick au-dessus",
+        "trading_tip": "Signal d'achat en tendance baissière, placer stop loss sous le low",
+        "reliability": 75,
+        "frequency": "Régulière",
+        "best_timeframe": "4H-1D"
     },
     "Pendu": {
         "description": "Idem marteau mais en tendance haussière",
-        "signal": "Inversion haussière potentielle",
+        "signification": "Inversion haussière potentielle",
         "traduction_fr": "Pendu",
-        "usage": "Signal de vente en tendance haussière"
+        "identification": "Même apparence que le marteau mais après tendance haussière",
+        "trading_tip": "Signal de vente en tendance haussière, placer stop loss au-dessus du high",
+        "reliability": 70,
+        "frequency": "Régulière",
+        "best_timeframe": "4H-1D"
     },
     "Trois_Soldats_Blancs": {
         "description": "3 bougies vertes consécutives avec corps croissants",
-        "signal": "Continuation haussière forte",
+        "signification": "Continuation haussière forte",
         "traduction_fr": "Trois Soldats Blancs",
-        "usage": "Entrée longue en tendance haussière établie"
+        "identification": "3 bougies vertes d'affilée, chacune plus grande que la précédente, ouvrant dans le corps de la précédente",
+        "trading_tip": "Entrée longue en tendance haussière établie, confirmer avec support et volume",
+        "reliability": 80,
+        "frequency": "Modérée",
+        "best_timeframe": "1D-1W"
     },
     "Trois_Corbeau_Noirs": {
         "description": "3 bougies noires consécutives avec corps décroissants",
-        "signal": "Continuation baissière forte",
+        "signification": "Continuation baissière forte",
         "traduction_fr": "Trois Corbeaux Noirs",
-        "usage": "Entrée courte en tendance baissière établie"
+        "identification": "3 bougies noires d'affilée, chacune plus grande que la précédente, ouvrant dans le corps de la précédente",
+        "trading_tip": "Entrée courte en tendance baissière établie, confirmer avec résistance et volume",
+        "reliability": 80,
+        "frequency": "Modérée",
+        "best_timeframe": "1D-1W"
     },
     "Piercing_Line": {
         "description": "Bougie baissière suivie d'une haussière qui perce 50%+ du précédent",
-        "signal": "Retournement haussier potentiel",
+        "signification": "Retournement haussier potentiel",
         "traduction_fr": "Ligne Pierçante",
-        "usage": "Signal d'achat après une baisse marquée"
+        "identification": "Première bougie noire forte, deuxième haussière ouvrant sous le low et fermant au-dessus du milieu de la première",
+        "trading_tip": "Signal d'achat après baisse marquée, surveiller la confirmation du jour suivant",
+        "reliability": 72,
+        "frequency": "Modérée",
+        "best_timeframe": "1D-1W"
     },
     "Nuage_Sombre": {
         "description": "Bougie haussière suivie d'une baissière qui perce 50%+ du précédent",
-        "signal": "Retournement baissier potentiel",
+        "signification": "Retournement baissier potentiel",
         "traduction_fr": "Nuage Sombre",
-        "usage": "Signal de vente après une hausse marquée"
+        "identification": "Première bougie verte forte, deuxième baissière ouvrant au-dessus du high et fermant au-dessous du milieu de la première",
+        "trading_tip": "Signal de vente après hausse marquée, surveiller la confirmation du jour suivant",
+        "reliability": 72,
+        "frequency": "Modérée",
+        "best_timeframe": "1D-1W"
     },
     "In_Neck_Line": {
         "description": "Bougie baissière + petite bougie haussière fermant dans la baissière",
-        "signal": "Consolidation de la baisse, potentiel inversion",
+        "signification": "Consolidation de la baisse, potentiel inversion",
         "traduction_fr": "In Neck Line",
-        "usage": "Signal d'attente, confirmation nécessaire"
+        "identification": "Bougie noire suivie d'une petite verte fermant juste au-dessous du close de la noire",
+        "trading_tip": "Signal faible, attendre confirmation avant d'agir",
+        "reliability": 55,
+        "frequency": "Rare",
+        "best_timeframe": "1D"
     },
     "On_Neck_Line": {
         "description": "Bougie baissière + petite bougie haussière fermant au même niveau",
-        "signal": "Consolidation sans direction claire",
+        "signification": "Consolidation sans direction claire",
         "traduction_fr": "On Neck Line",
-        "usage": "Attendre cassure pour signal"
+        "identification": "Bougie noire suivie d'une petite verte fermant au même niveau que le close de la noire",
+        "trading_tip": "Attendre cassure nette pour signal directionnel clair",
+        "reliability": 50,
+        "frequency": "Rare",
+        "best_timeframe": "1D"
     },
     "Thrusting_Line": {
         "description": "Bougie haussière + baissière fermant dans la haussière",
-        "signal": "Élan baissier mais résistance haussière",
+        "signification": "Élan baissier mais résistance haussière",
         "traduction_fr": "Thrusting Line",
-        "usage": "Potentiel rebond ou consolidation"
+        "identification": "Bougie verte suivie d'une noire fermant dans le body de la verte (haut que le low, bas que le close)",
+        "trading_tip": "Potentiel rebond ou consolidation, surveiller le prochain mouvement",
+        "reliability": 58,
+        "frequency": "Rare",
+        "best_timeframe": "4H-1D"
     },
     "High_Wave": {
         "description": "Bougies avec longues mèches hautes et basses, corps petit",
-        "signal": "Indécision extrême du marché",
+        "signification": "Indécision extrême du marché",
         "traduction_fr": "Vague Haute",
-        "usage": "Attendre cassure, volatilité extrême"
+        "identification": "Bougie(s) avec shadows hautes et basses de même longueur, corps minuscule au centre",
+        "trading_tip": "Attendre cassure claire, volatilité extrême à gérer avec prudence",
+        "reliability": 55,
+        "frequency": "Modérée",
+        "best_timeframe": "1H-4H"
     },
     "Unique_3LineStrike": {
         "description": "3 bougies de même couleur + 4ème opposée englobeant les 3",
-        "signal": "Retournement majeur de tendance",
+        "signification": "Retournement majeur de tendance",
         "traduction_fr": "Attaque de 3 Lignes",
-        "usage": "Signal de retournement puissant"
+        "identification": "3 bougies vertes/noires progressives puis 1 longue noire/verte englobeant complètement les 3",
+        "trading_tip": "Signal très puissant de retournement, entrée immédiate après la 4ème bougie",
+        "reliability": 88,
+        "frequency": "Rare",
+        "best_timeframe": "1D-1W"
     },
     "Harami_Cross": {
         "description": "Harami avec doji en 2ème position",
-        "signal": "Indécision totale, probable inversion",
+        "signification": "Indécision totale, probable inversion",
         "traduction_fr": "Harami en Croix",
-        "usage": "Signal très fiable d'inversion"
+        "identification": "Grande bougie suivie d'un doji (ouverture=fermeture) complètement à l'intérieur de la grande",
+        "trading_tip": "Signal très fiable d'inversion, attendre confirmation jour suivant",
+        "reliability": 82,
+        "frequency": "Rare",
+        "best_timeframe": "1D-1W"
     },
     "Continuation_Stick": {
         "description": "Bougies consécutives de même couleur sans engulfing, pile continue",
-        "signal": "Continuation forte de la tendance actuelle",
+        "signification": "Continuation forte de la tendance actuelle",
         "traduction_fr": "Bâton de Continuation",
-        "usage": "Confirmation de l'élan tendanciel établi"
+        "identification": "3+ bougies vertes/noires consécutives, chacune ayant une valeur confirmant la tendance",
+        "trading_tip": "Confirmation de l'élan tendanciel établi, entrer en pyramide progressivement",
+        "reliability": 78,
+        "frequency": "Très Régulière",
+        "best_timeframe": "1H-1D"
     }
 }
 
