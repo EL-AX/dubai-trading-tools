@@ -748,23 +748,23 @@ def page_tutorial():
               - Stop loss défini AVANT l'entrée?
               - Risque ≤ 2% du compte?
             
-             **Psychology**
-              - Emotionally calm?
-              - No revenge trading?
-              - Following the plan?
-              - Pas surtraité aujourd'hui?
+             **Psychologie**
+              - Calme \u00e9motionnel?
+              - Pas de revenge trading?
+              - Suivez le plan?
+              - Pas surtrait\u00e9 aujourd'hui?
             
-             **Execution**
-              - Order correct quantity?
-              - Entry price confirmed?
-              - Stop loss entered?
-              - Take profit entered?
-              - Recorded in journal?
+             **Ex\u00e9cution**
+              - Quantit\u00e9 d'ordre correcte?
+              - Prix d'entr\u00e9e confirm\u00e9?
+              - Stop loss entr\u00e9?
+              - Prise de profit entr\u00e9e?
+              - Enregistr\u00e9 dans le journal?
             
-            **If ANY checkbox is empty = SKIP THE TRADE**
+            **Si TOUTE case est vide = SAUTEZ LE TRADE**
             
-            An imperfect execution of perfect rules
-            beats perfect execution of imperfect rules.
+            Une ex\u00e9cution imparfaite de r\u00e8gles parfaites
+            bat une ex\u00e9cution parfaite de r\u00e8gles imparfaites.
             """)
     
     # === TAB 5: NEWS ANALYSIS ===
@@ -775,7 +775,7 @@ def page_tutorial():
         
         with col_news1:
             st.markdown("""
-            ** 4 News Sources**
+            **4 Sources d'Actualités**
             
              **Reddit**
             - Discussions communautaires
@@ -804,7 +804,7 @@ def page_tutorial():
         
         with col_news2:
             st.markdown("""
-            ** Comment Utiliser le Sentiment**
+            **Comment Utiliser le Sentiment**
             
              **Signaux HAUSSIERS**
             - >50% actualités haussières
@@ -824,10 +824,10 @@ def page_tutorial():
             - Attendez de la clarté
             - Trades à haut risque
             
-            **️ Important**
+            **⚠️ Important**
             - Les actualités confirment le technique, pas l'inverse
             - Ne tradez pas sur les actualités seules
-            - Vérifiez avant et après les grande actualités
+            - Vérifiez avant et après les grandes actualités
             - Mémorisez: "acheter la rumeur, vendre la nouvelle"
             """)
     
