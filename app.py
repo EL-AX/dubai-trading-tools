@@ -504,12 +504,12 @@ def page_tutorial():
                  **Buy Signals**
                 - RSI crosses above 30 (from oversold)
                 - RSI divergence at lows
-                - RSI < 30 on support
+                - RSI < 30 sur support
                 
                  **Sell Signals**
                 - RSI crosses below 70 (from overbought)
                 - RSI divergence at highs
-                - RSI > 70 on resistance
+                - RSI > 70 sur résistance
                 
                 **️ Warning**
                 - RSI seul n'est pas suffisant
@@ -560,19 +560,19 @@ def page_tutorial():
                 """)
         
         with ind_tabs[2]:
-            st.markdown("#### Bollinger Bands - Volatility & Support/Resistance")
+            st.markdown("#### Bandes de Bollinger - Volatilité & Support/Résistance")
             col_bb1, col_bb2 = st.columns(2)
             
             with col_bb1:
                 st.markdown("""
                 **What It Measures**
                 
-                Bollinger Bands track volatility
+                Les Bandes de Bollinger suivent la volatilité
                 - Middle Band = SMA(20)
                 - Upper Band = SMA + (2 × StdDev)
                 - Lower Band = SMA - (2 × StdDev)
                 - Shows ±2 standard deviations
-                - Expands/contracts with volatility
+                - S'élargit/rétrécit avec la volatilité
                 """)
             
             with col_bb2:
@@ -580,12 +580,12 @@ def page_tutorial():
                 **Trading Signals**
                 
                  **Band Touches**
-                - Touch upper = Potential resistance
-                - Touch lower = Potential support
+                - Toucher supérieur = Résistance potentielle
+                - Toucher inférieur = Support potentiel
                 - Price reverts ~95% of time
                 
                  **Expansion**
-                - Narrow bands = Low volatility
+                - Bandes étroites = Faible volatilité
                 - Wide bands = High volatility
                 - Squeeze = Breakout coming
                 
@@ -597,12 +597,12 @@ def page_tutorial():
     
     # === TAB 4: STRATEGIES ===
     with tab_strategy:
-        st.markdown("### Trading Strategies - From Beginner to Pro")
+        st.markdown("### Stratégies de Trading - Du Débutant au Pro")
         
         strat_tabs = st.tabs([" Simple", " Advanced", "️ Risk", " Psychology", " Checklist"])
         
         with strat_tabs[0]:
-            st.markdown("#### SIMPLE Strategy - Best for Beginners")
+            st.markdown("#### STRATéGIE SIMPLE - Meilleure pour les Débutants")
             st.markdown("""
             **Rules (Super Simple)**
             1. Select 1D (daily) timeframe
@@ -627,7 +627,7 @@ def page_tutorial():
             """)
         
         with strat_tabs[1]:
-            st.markdown("#### ADVANCED Strategy - For Experienced Traders")
+            st.markdown("#### STRATÉGIE AVANCÉE - Pour les Traders Expérimentés")
             st.markdown("""
             **Multi-Timeframe Analysis**
             1. Start with 1W (weekly) for trend
@@ -655,7 +655,7 @@ def page_tutorial():
             """)
         
         with strat_tabs[2]:
-            st.markdown("#### ️ Risk Management - THE KEY TO SURVIVAL")
+            st.markdown("#### Gestion du Risque - LA CLÉ DE LA SURVIE")
             st.markdown("""
             **Position Sizing Formula**
             ```
@@ -683,7 +683,7 @@ def page_tutorial():
             """)
         
         with strat_tabs[3]:
-            st.markdown("#### Psychology - Discipline > Analysis")
+            st.markdown("#### Psychologie - Discipline > Analyse")
             st.markdown("""
             **The 7 Rules of Trading Psychology**
             
@@ -727,7 +727,7 @@ def page_tutorial():
             """)
         
         with strat_tabs[4]:
-            st.markdown("#### Trading Checklist - Before Every Trade")
+            st.markdown("#### Liste de Vérification de Trading - Avant Chaque Trade")
             st.markdown("""
             **Pre-Trade Checklist (MANDATORY)**
             
@@ -769,7 +769,7 @@ def page_tutorial():
     
     # === TAB 5: NEWS ANALYSIS ===
     with tab_news:
-        st.markdown("### News Analysis - Understanding Market Sentiment")
+        st.markdown("### Analyse des Actualités - Comprendre le Sentiment du Marché")
         
         col_news1, col_news2 = st.columns(2)
         
