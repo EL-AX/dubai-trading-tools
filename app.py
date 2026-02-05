@@ -957,6 +957,7 @@ def page_login_register():
                         result = login_user(email, password, verification_code)
                         if result["success"]:
                             st.session_state.authenticated = True
+                            st.session_state.logged_in = True
                             st.session_state.user_email = email
                             st.session_state.user_name = result["name"]
                             # Show welcome on next run so it survives rerun
@@ -969,6 +970,7 @@ def page_login_register():
                     result = login_user(email, password)
                     if result["success"]:
                         st.session_state.authenticated = True
+                        st.session_state.logged_in = True
                         st.session_state.user_email = email
                         st.session_state.user_name = result["name"]
                         # Show welcome on next run so it survives rerun
