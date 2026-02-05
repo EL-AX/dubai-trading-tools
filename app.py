@@ -713,11 +713,60 @@ def page_dashboard():
         
         st.markdown("---")
         
-        # Afficher un graphe pour CHAQUE crypto sélectionnée
+        # Period selector like XM platform
+        st.subheader("⏱️ Sélectionnez la Période")
+        period_cols = st.columns(6)
+        period_map = {
+            "1H": 1,
+            "4H": 4,
+            "1D": 24,
+            "1W": 168,
+            "1M": 720,
+            "3M": 2160
+        }
+        
+        selected_period = "1D"
+        with period_cols[0]:
+            if st.button("1H", use_container_width=True):
+                selected_period = "1H"
+                st.session_state.selected_period = "1H"
+        with period_cols[1]:
+            if st.button("4H", use_container_width=True):
+                selected_period = "4H"
+                st.session_state.selected_period = "4H"
+        with period_cols[2]:
+            if st.button("1D", use_container_width=True):
+                selected_period = "1D"
+                st.session_state.selected_period = "1D"
+        with period_cols[3]:
+            if st.button("1W", use_container_width=True):
+                selected_period = "1W"
+                st.session_state.selected_period = "1W"
+        with period_cols[4]:
+            if st.button("1M", use_container_width=True):
+                selected_period = "1M"
+                st.session_state.selected_period = "1M"
+        with period_cols[5]:
+            if st.button("3M", use_container_width=True):
+                selected_period = "3M"
+                st.session_state.selected_period = "3M"
+        
+        # Get period from session if set
+        selected_period = st.session_state.get("selected_period", "1D")
+        days_to_fetch = {
+            "1H": 1,
+            "4H": 1,
+            "1D": 30,
+            "1W": 90,
+            "1M": 365,
+            "3M": 365
+        }.get(selected_period, 30)
+        
+        st.markdown("---")
         for ticker in selected_tickers:
-            st.subheader(f"📈 {ticker} - Analyse Technique Complète")
+            st.subheader(f"📈 {ticker} - Période: {selected_period}")
             
-            hist_data = get_historical_data(ticker, days=60)  # CHANGED: 10→60 pour plus de bougies
+            hist_data = get_historical_data(ticker, days=days_to_fetch)
             
             # Sécuriser les données pour le candlestick
             if hist_data.empty:
@@ -1358,47 +1407,6 @@ def page_patterns():
         else:
             st.warning("🚫 Ne pas trader encore: Complétez la checklist d'abord")
 
-def page_settings():
-    st.markdown("## ⚙️ Paramètres")
-    
-    st.divider()
-    
-    settings = get_user_settings(st.session_state.user_email)
-    
-    st.subheader("Préférences Utilisateur")
-    
-    alerts_enabled = st.checkbox("Activer les alertes", value=settings.get("alerts_enabled", True))
-    currency = st.selectbox("Devise préférée:", ["USD", "EUR", "GBP"], index=0 if settings.get("currency") == "USD" else (1 if settings.get("currency") == "EUR" else 2))
-    candle_style = st.selectbox("Style des bougies:", ["classic", "boxy", "thin", "Modèle"], index=0 if settings.get("candle_style", "classic") == "classic" else (1 if settings.get("candle_style") == "boxy" else (2 if settings.get("candle_style") == "thin" else 3)))
-    
-    col1, col2, col3 = st.columns([2, 1, 1])
-    with col1:
-        if st.button("💾 Enregistrer les paramètres", use_container_width=True):
-            settings["alerts_enabled"] = alerts_enabled
-            settings["currency"] = currency
-            settings["candle_style"] = candle_style
-            save_user_settings(st.session_state.user_email, settings)
-            # Apply to current session immediately
-            st.session_state.alerts_enabled = alerts_enabled
-            st.session_state.currency = currency
-            st.session_state.candle_style = candle_style
-            st.success("✅ Paramètres enregistrés et appliqués instantanément!")
-            # Force full rerun with new settings
-            st.session_state.settings_changed = True
-            time.sleep(0.5)
-            st.rerun()
-    
-    with col2:
-        if st.button("👁️ Aperçu", use_container_width=True):
-            st.session_state.preview_candle_style = True
-            st.session_state.candle_style = candle_style
-            st.info(f"Aperçu: {candle_style}")
-    
-    with col3:
-        if st.button("❌ Annuler", use_container_width=True):
-            st.session_state.current_page = "dashboard"
-            st.rerun()
-
 def main():
     # Initialize WebSocket feeds for real-time prices
     try:
@@ -1440,8 +1448,7 @@ def main():
                 "📊 Tableau de Bord",
                 "📚 Tutoriel",
                 "🕯️ Patterns",
-                "📰 Actualités IA",
-                "⚙️ Paramètres"
+                "📰 Actualités IA"
             ]
             current_index = 0
             if st.session_state.current_page == "tutorial":
@@ -1450,8 +1457,6 @@ def main():
                 current_index = 2
             elif st.session_state.current_page == "news":
                 current_index = 3
-            elif st.session_state.current_page == "settings":
-                current_index = 4
             
             page = st.radio("Menu:", menu_options, index=current_index, key="page_selector")
             
@@ -1460,8 +1465,7 @@ def main():
                 menu_options[0]: "dashboard",
                 menu_options[1]: "tutorial",
                 menu_options[2]: "patterns",
-                menu_options[3]: "news",
-                menu_options[4]: "settings"
+                menu_options[3]: "news"
             }
             
             if page in page_map:
@@ -1475,8 +1479,6 @@ def main():
             page_patterns()
         elif st.session_state.current_page == "news":
             page_news_ai()
-        elif st.session_state.current_page == "settings":
-            page_settings()
         
         # Footer with copyright
         st.divider()
