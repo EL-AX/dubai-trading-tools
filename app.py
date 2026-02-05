@@ -950,11 +950,11 @@ def page_dashboard():
             try:
                 # Add candlestick with unified styling that works for all tickers including GOLD
                 fig.add_trace(go.Candlestick(
-                    x=df_candle['timestamp'].tolist(),
-                    open=df_candle['open'].tolist(),
-                    high=df_candle['high'].tolist(),
-                    low=df_candle['low'].tolist(),
-                    close=df_candle['close'].tolist(),
+                    x=df_candle['timestamp'],
+                    open=df_candle['open'],
+                    high=df_candle['high'],
+                    low=df_candle['low'],
+                    close=df_candle['close'],
                     name='Prix',
                     increasing=dict(
                         fillcolor=inc['fillcolor'],
@@ -1019,9 +1019,7 @@ def page_dashboard():
                     gridcolor='rgba(255,255,255,0.05)',
                     showline=True, 
                     linewidth=1, 
-                    linecolor='rgba(255,255,255,0.2)',
-                    type='date',
-                    rangeslider=dict(visible=False)
+                    linecolor='rgba(255,255,255,0.2)'
                 ),
                 yaxis=dict(
                     showgrid=True, 
