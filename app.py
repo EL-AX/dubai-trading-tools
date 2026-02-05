@@ -9,6 +9,7 @@
 import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
+import plotly.express as px
 from plotly.subplots import make_subplots
 from datetime import datetime, timedelta
 import requests
@@ -290,33 +291,38 @@ def page_tutorial():
         - Utilisez un mot de passe fort (minimum 8 caractères)
         - Ne partagez jamais votre code de vérification
         - Déconnectez-vous toujours après chaque session
-        - Vérifiez régulièrement vos paramètres de compte
         """)
     
     with st.expander("📊 2. Tableau de Bord - Votre Centre de Contrôle"):
         st.markdown("""
         **🎯 Sélection des Actifs**
         - Choisissez jusqu'à 8 actifs à analyser simultanément
-        - **Crypto**: BTC (Bitcoin), ETH (Ethereum), SOL (Solana)
+        - **Crypto**: BTC (Bitcoin), ETH (Ethereum), SOL (Solana), ADA, XRP, DOT
         - **Forex**: EUR, GBP, JPY, AUD (parités de change)
         - **Matières**: XAU (Or / Gold)
         
+        **⏱️ Sélection de la Période** (NOUVEAU!)
+        - 6 boutons: **1H, 4H, 1D, 1W, 1M, 3M**
+        - Cliquez sur une période → le graphe s'actualise automatiquement
+        - Adapte la plage de données historiques
+        - Réajuste tous les indicateurs pour la période
+        
         **💹 Prix en Temps Réel**
         - Prix instantané avec changement 24h
-        - Volume 24h et capitalisation boursière
+        - Devise convertie selon vos préférences (USD, EUR, GBP)
         - Mise à jour automatique toutes les 5 minutes
         - Indicateurs visuels: 🟢 (hausse), 🔴 (baisse)
         
-        **📈 Graphiques Interactifs**
-        - Bougies (Candlestick) sur 30 jours
-        - Bandes de Bollinger pour la volatilité
-        - Volume d'échange synchronisé
-        - Styles personnalisables: Classic, Boxy, Thin, Model
+        **📈 Graphiques Professionnels (XM Style)**
+        - Bougies candlestick conformes aux standards professionnels
+        - Couleurs: Vert #1bc47d (hausse), Rouge #ff3d3d (baisse)
+        - Sélectionnez votre période pour adapter le graphe
+        - Volume synchronisé en bas
+        - Responsive et optimisé pour mobile
         
         **🚨 Signaux & Alertes**
         - Signaux composites automatiques (STRONG_BUY à STRONG_SELL)
         - Alertes pour RSI, volatilité, changements 24h
-        - Activez/désactivez les alertes dans les paramètres
         """)
     
     with st.expander("📈 3. Indicateurs Techniques - Comprendre les Signaux"):
@@ -351,12 +357,14 @@ def page_tutorial():
     with st.expander("🎯 4. Stratégies de Trading"):
         st.markdown("""
         **Stratégie Simple (Débutants)**
+        - Sélectionnez la période 1D pour tendances court-moyen terme
         - Attendez STRONG_BUY (>80) pour acheter
         - Attendez STRONG_SELL (<20) pour vendre
         - Combinez avec les bandes de Bollinger pour confirmation
         
         **Stratégie Avancée (Professionnels)**
         - Utilisez RSI + MACD + Bollinger ensemble
+        - Testez différentes périodes (1H pour scalping, 1W pour swing)
         - Cherchez les divergences (prix monte, RSI baisse = signal faible)
         - Identifiez les zones de support/résistance
         - Gérez votre risque avec stop-loss et take-profit
@@ -366,40 +374,15 @@ def page_tutorial():
         - Définissez un ratio risque/récompense minimum 1:2
         - Utilisez les alertes pour détecter les mouvements
         - Diversifiez sur plusieurs actifs
-        
-        **Utilisation des Alertes**
-        1. Activez les alertes dans Paramètres
-        2. L'app monitore RSI, volatilité, changements 24h
-        3. Revenez régulièrement pour vérifier les signaux
-        4. Combiné avec une stratégie pour plus de robustesse
         """)
     
-    with st.expander("⚙️ 5. Paramètres & Configuration"):
+    with st.expander("❓ 5. FAQ & Dépannage"):
         st.markdown("""
-        **Devise Préférée**
-        - Choisissez entre USD, EUR, GBP
-        - Tous les prix seront affichés dans cette devise
+        **Q: Comment fonctionne le sélecteur de période?**
+        A: Cliquez sur 1H, 4H, 1D, 1W, 1M ou 3M → le graphe s'actualise automatiquement avec les données de cette période.
         
-        **Style des Bougies**
-        - **Classic**: Apparence traditionnelle
-        - **Boxy**: Bougies plus carrées
-        - **Thin**: Bougies fines (pour beaucoup de données)
-        - **Model**: Style premium professionnel
-        
-        **Alertes**
-        - Activez/désactivez les notifications
-        - Consultez l'historique des alertes déclenchées
-        - Archivez les anciennes alertes
-        
-        **Sauvegarde**
-        - Les paramètres sont automatiquement sauvegardés
-        - Ils persistent entre les sessions
-        """)
-    
-    with st.expander("❓ 6. FAQ & Dépannage"):
-        st.markdown("""
         **Q: Pourquoi les prix ne se mettent pas à jour?**
-        A: L'app s'actualise toutes les 5 minutes. Attendez ou recharger la page.
+        A: L'app s'actualise toutes les 5 minutes. Attendez ou rechargez la page avec F5.
         
         **Q: Les bougies ne s'affichent pas?**
         A: Cela peut signifier qu'il n'y a pas assez de données. Attendez 24h pour plus de points.
@@ -408,7 +391,7 @@ def page_tutorial():
         A: Consultez la section "Indicateurs Techniques" ci-dessus pour chaque métrique.
         
         **Q: Puis-je trader en direct?**
-        A: Cette app est un **outil d'analyse**, pas une plateforme de trading. Utilisez une plateforme (Binance, Kraken, etc.)
+        A: Cette app est un **outil d'analyse**, pas une plateforme de trading. Utilisez une plateforme (Binance, Kraken, XM, etc.)
         
         **Q: Mes données sont-elles sécurisées?**
         A: Oui. Mot de passe hashé, emails vérifiés, données encryptées.
@@ -416,36 +399,6 @@ def page_tutorial():
     
     st.divider()
     st.info("💡 **Conseil Pro**: Testez vos stratégies avec les graphiques en papier avant d'investir de l'argent réel. Les performances passées n'indiquent pas les performances futures.")
-    
-    with st.expander("🎯 4. Signaux de Trading"):
-        st.markdown("""
-        L'app génère automatiquement des signaux basés sur 4 indicateurs:
-        
-        - 🔴 **STRONG_BUY**: Score 80-100 (forte opportunité d'achat)
-        - 🟢 **BUY**: Score 60-80 (opportunité d'achat)
-        - 🟡 **NEUTRAL**: Score 40-60 (pas de signal clair)
-        - 🟠 **SELL**: Score 20-40 (vendre potentiellement)
-        - 🔴 **STRONG_SELL**: Score 0-20 (forte vente recommandée)
-        """)
-    
-    with st.expander("⚠️ 5. Analyse des Risques"):
-        st.markdown("""
-        **Support & Résistance**
-        - Support: Niveau où le prix a du mal à descendre
-        - Résistance: Niveau où le prix a du mal à monter
-        
-        **Risk/Reward Ratio**
-        - Ratio = Profit potentiel / Risque potentiel
-        - Bon ratio ≥ 2:1
-        - Aide à planifier les entrées/sorties
-        """)
-    
-    with st.expander("⚙️ 6. Paramètres"):
-        st.markdown("""
-        **Thème**: Changez entre mode clair et sombre
-        **Devise**: Sélectionnez votre devise préférée
-        **Alertes**: Activez/désactivez les notifications
-        """)
     
     st.divider()
     st.info("💡 Astuce: L'app s'actualise toutes les 5 minutes pour des prix en temps réel.")
@@ -557,60 +510,139 @@ def page_login_register():
 
 def page_news_ai():
     """Section actualités IA en temps réel - Vraies sources (Reddit, RSS, CoinGecko)"""
-    st.title("📰 Actualités Temps Réel - Sources Réelles")
-    if st.button("🔄 Actualiser", use_container_width=True):
-        # Force clear cache and refresh
-        from src.cache import CacheManager
-        cache = CacheManager()
-        cache.delete("real_news_all")
-        st.rerun()
+    st.title("📰 Actualités Temps Réel - Intelligence du Marché")
+    
+    # Refresh button
+    col_refresh, col_info = st.columns([1, 4])
+    with col_refresh:
+        if st.button("🔄 Actualiser", use_container_width=True):
+            from src.cache import CacheManager
+            cache = CacheManager()
+            cache.delete("real_news_all")
+            st.rerun()
+    with col_info:
+        st.info("✅ Cache 10min | Sources: Reddit, CoinDesk, CoinTelegraph, CoinGecko")
     
     # Get REAL news from real sources
     from src.real_news import get_all_real_news
     news_items = get_all_real_news()
     
-    st.info("✅ Cache 10min | Sources réelles: Reddit, RSS (CoinDesk, CoinTelegraph), CoinGecko Trending")
     if news_items:
         sentiments = [n.get('sentiment', 'neutral') for n in news_items]
         bullish_count = sentiments.count('bullish')
         bearish_count = sentiments.count('bearish')
         neutral_count = sentiments.count('neutral')
+        total_count = len(news_items)
+        
+        # Sentiment Summary with Gauge
+        st.subheader("📊 Sentiment du Marché")
         col1, col2, col3, col4 = st.columns(4)
         with col1:
-            st.metric("📈 Bullish", f"{bullish_count}")
+            st.metric("🟢 Bullish", bullish_count, f"+{round(bullish_count/total_count*100)}%")
         with col2:
-            st.metric("📉 Bearish", f"{bearish_count}")
+            st.metric("🔴 Bearish", bearish_count, f"-{round(bearish_count/total_count*100)}%")
         with col3:
-            st.metric("➡️ Neutre", f"{neutral_count}")
+            st.metric("⚪ Neutre", neutral_count, f"{round(neutral_count/total_count*100)}%")
         with col4:
-            st.metric("📊 Total", f"{len(news_items)}")
+            st.metric("📰 Total", total_count)
+        
+        # Create sentiment gauge
+        sentiment_balance = ((bullish_count - bearish_count) / total_count * 100) if total_count > 0 else 0
         st.divider()
-        for idx, news in enumerate(news_items, 1):
-            with st.container():
-                col1, col2, col3 = st.columns([3, 1, 1])
-                with col1:
-                    st.markdown(f"**{idx}. {news.get('titre', 'N/A')}**")
-                with col2:
-                    symbol = news.get('symbol', '')
-                    if symbol:
-                        st.code(symbol, language="")
-                with col3:
-                    if news.get('sentiment') == 'bullish':
-                        st.success("📈 HAUSSIER")
-                    elif news.get('sentiment') == 'bearish':
-                        st.error("📉 BAISSIER")
-                    else:
-                        st.info("➡️ NEUTRE")
-                resume = news.get('resume', 'N/A')
-                st.markdown(f"{resume}")
-                col1, col2 = st.columns([3, 1])
-                with col1:
-                    st.markdown(f"📌 **Source:** {news.get('source', 'Unknown')}")
-                with col2:
-                    url = news.get('url', '')
-                    if url:
-                        st.markdown(f"[🔗 Lire]({url})")
-                st.divider()
+        
+        col_gauge_label, col_gauge = st.columns([1, 3])
+        with col_gauge_label:
+            st.markdown("**Sentiment Global:**")
+        with col_gauge:
+            if sentiment_balance > 30:
+                st.success(f"🟢 TRÈS HAUSSIER ({sentiment_balance:+.0f}%)")
+            elif sentiment_balance > 10:
+                st.success(f"🟢 HAUSSIER ({sentiment_balance:+.0f}%)")
+            elif sentiment_balance > -10:
+                st.info(f"⚪ NEUTRE ({sentiment_balance:+.0f}%)")
+            elif sentiment_balance > -30:
+                st.error(f"🔴 BAISSIER ({sentiment_balance:+.0f}%)")
+            else:
+                st.error(f"🔴 TRÈS BAISSIER ({sentiment_balance:+.0f}%)")
+        
+        st.divider()
+        
+        # Filters
+        st.subheader("🔍 Filtrer par:")
+        col_filter1, col_filter2 = st.columns(2)
+        
+        with col_filter1:
+            sentiment_filter = st.multiselect(
+                "Sentiment",
+                ["Haussier", "Baissier", "Neutre"],
+                default=["Haussier", "Baissier", "Neutre"],
+                key="sentiment_filter"
+            )
+        
+        with col_filter2:
+            sources = sorted(list(set([n.get('source', 'Unknown') for n in news_items])))
+            source_filter = st.multiselect(
+                "Source",
+                sources,
+                default=sources,
+                key="source_filter"
+            )
+        
+        # Map filter names to sentiment values
+        sentiment_map = {"Haussier": "bullish", "Baissier": "bearish", "Neutre": "neutral"}
+        selected_sentiments = [sentiment_map[s] for s in sentiment_filter]
+        
+        # Apply filters
+        filtered_news = [
+            n for n in news_items 
+            if n.get('sentiment', 'neutral') in selected_sentiments 
+            and n.get('source', 'Unknown') in source_filter
+        ]
+        
+        st.divider()
+        st.subheader(f"📰 Actualités ({len(filtered_news)})")
+        
+        # Display filtered news
+        if filtered_news:
+            for idx, news in enumerate(filtered_news, 1):
+                with st.container():
+                    # Header with sentiment badge
+                    col_num, col_title, col_sentiment = st.columns([0.5, 3, 1])
+                    with col_num:
+                        st.markdown(f"**#{idx}**")
+                    with col_title:
+                        st.markdown(f"**{news.get('titre', 'N/A')}**")
+                    with col_sentiment:
+                        if news.get('sentiment') == 'bullish':
+                            st.success("🟢 HAUSSIER")
+                        elif news.get('sentiment') == 'bearish':
+                            st.error("🔴 BAISSIER")
+                        else:
+                            st.info("⚪ NEUTRE")
+                    
+                    # Content
+                    resume = news.get('resume', 'N/A')
+                    st.markdown(f"{resume}")
+                    
+                    # Metadata row
+                    col1, col2, col3 = st.columns([2, 1, 1])
+                    with col1:
+                        symbol = news.get('symbol', '')
+                        source = news.get('source', 'Unknown')
+                        if symbol:
+                            st.markdown(f"📌 **{source}** — `{symbol}`")
+                        else:
+                            st.markdown(f"📌 **{source}**")
+                    with col2:
+                        pass
+                    with col3:
+                        url = news.get('url', '')
+                        if url:
+                            st.markdown(f"[🔗 Lire l'article]({url})")
+                    
+                    st.divider()
+        else:
+            st.info("❌ Aucune news pour les filtres sélectionnés.")
     else:
         st.warning("❌ Aucune news disponible pour le moment. Les APIs peuvent être momentanément indisponibles.")
 
@@ -1133,16 +1165,20 @@ def page_patterns():
     )
     
     st.markdown("# 📚 Patterns Candlestick & Stratégies de Trading")
-    st.markdown("*Basé sur les PDFs éducatifs: '19 Chandeliers Japonais', 'Stratégie de Trading', etc.*")
+    st.markdown("*Mastery du trading via 19 chandeliers japonais, 4 stratégies éprouvées, et règles de gestion du risque*")
     
     st.divider()
+    
+    # Initialize session state for pattern tracking
+    if "tracked_patterns" not in st.session_state:
+        st.session_state.tracked_patterns = []
     
     tabs = st.tabs([
         "🕯️ Patterns (19)",
         "📈 Stratégies (4)",
         "⚠️ Gestion Risque (5)",
         "🧠 Psychologie (7)",
-        "✅ Checklist"
+        "✅ Journal & Quiz"
     ])
     
     # ============================================================================
@@ -1165,6 +1201,15 @@ def page_patterns():
             with col2:
                 st.subheader(f"✨ {pattern_info.get('traduction_fr', pattern_selected)}")
             
+            # Reliability badge
+            reliability = pattern_info.get("fiabilite", "moyenne")
+            if reliability.lower() == "haute":
+                st.success("⭐⭐⭐ Fiabilité HAUTE")
+            elif reliability.lower() == "moyenne":
+                st.info("⭐⭐ Fiabilité MOYENNE")
+            else:
+                st.warning("⭐ Fiabilité BASSE")
+            
             col_info1, col_info2, col_info3 = st.columns(3)
             
             with col_info1:
@@ -1180,28 +1225,77 @@ def page_patterns():
                 st.write(pattern_info.get("usage", ""))
             
             st.divider()
-            st.markdown("### 💰 Conseil de Trading")
-            st.info(f"""
-            **Comment trader ce pattern:**
-            1. Identifiez-le sur le graphique (candlestick de 1h ou 4h pour plus de fiabilité)
-            2. Attendez une **confirmation du volume** (volume > moyenne 20j)
-            3. Entrez **au-delà du pattern** (+ 0.5% pour sécurité)
-            4. **Stop loss**: Sous le low du pattern (pour haussier) ou au-dessus du high (pour baissier)
-            5. **Objectif**: Ratio risque/bénéfice minimum 1:2
-            """)
+            
+            # Trading advice with best practices
+            st.markdown("### 💰 Comment Trader Ce Pattern")
+            col_advice1, col_advice2 = st.columns(2)
+            
+            with col_advice1:
+                st.info(f"""
+                **Checklist de Confirmation:**
+                ✅ Identifiez sur 1H ou 4H (plus de fiabilité)
+                ✅ Volume > moyenne 20 jours
+                ✅ Breakout du pattern confirmé
+                ✅ Support/Résistance alignés
+                ✅ Tendance générale favorable
+                """)
+            
+            with col_advice2:
+                st.warning(f"""
+                **Paramètres d'Entrée:**
+                🟢 Entrée: Au-delà du pattern (+0.5%)
+                🛑 Stop Loss: Sous le low (haussier)
+                📈 Take Profit: Ratio R:B min 1:2
+                ⏱️ Timeframe: 1H minimum
+                ⚠️ Risque: 1-2% du compte max
+                """)
+            
+            # Add to tracking
+            if st.button(f"📌 Ajouter '{pattern_selected}' au Journal", key=f"add_{pattern_selected}"):
+                st.session_state.tracked_patterns.append({
+                    "pattern": pattern_selected,
+                    "date": str(pd.Timestamp.now()),
+                    "status": "observé"
+                })
+                st.success(f"✅ '{pattern_selected}' ajouté au journal de suivi!")
+            
+            st.divider()
         
-        st.divider()
+        # Comparison table with reliability
         st.subheader("📊 Comparaison des 19 Patterns")
+        st.markdown("*Cliquez sur un pattern pour le comparer avec les autres*")
         
         comparison_data = []
+        reliability_map = {
+            "haute": "⭐⭐⭐ Haute",
+            "moyenne": "⭐⭐ Moyenne",
+            "basse": "⭐ Basse"
+        }
+        
         for name, info in CANDLESTICK_PATTERNS.items():
+            reliability_level = info.get("fiabilite", "moyenne").lower()
             comparison_data.append({
                 "Pattern": info.get("traduction_fr", name),
-                "Signal": info.get("signal", ""),
-                "Fiabilité": "Haute" if "Étoile" in name else "Moyenne" if "Engulfing" in name else "Bonne"
+                "Signal": info.get("signal", "")[:50] + "...",
+                "Fiabilité": reliability_map.get(reliability_level, "⭐⭐ Moyenne"),
+                "Type": "Haussier" if "haussier" in info.get("signal", "").lower() else "Baissier" if "baissier" in info.get("signal", "").lower() else "Mixte"
             })
         
-        st.dataframe(comparison_data, use_container_width=True)
+        df_comparison = pd.DataFrame(comparison_data)
+        st.dataframe(df_comparison, use_container_width=True)
+        
+        # Learning resources
+        st.divider()
+        st.subheader("📚 Conseils d'Apprentissage")
+        st.markdown("""
+        **Pour maîtriser les patterns:**
+        1. 📊 Pratiquez sur des **graphiques historiques** (TradingView, CoinMarketCap)
+        2. 📝 Notez chaque pattern observé dans votre **journal de trading**
+        3. 🎯 Testez avec **backtesting** avant d'trader en direct
+        4. ⏰ Focalisez-vous sur **1-2 patterns seulement** au début
+        5. 💪 Maîtrisez d'abord les **Double Top/Bottom** et **Hammer**
+        """)
+
     
     # ============================================================================
     # TAB 2: STRATÉGIES DE TRADING
@@ -1357,48 +1451,191 @@ def page_patterns():
                 st.warning("⚠️ **À AMÉLIORER**: Prenez du recul et travaillez votre mentalité avant de trader")
     
     # ============================================================================
-    # TAB 5: CHECKLIST PRÉ-TRADE
+    # TAB 5: JOURNAL & QUIZ AVANCÉ
     # ============================================================================
     with tabs[4]:
-        st.header("✅ Checklist Avant Chaque Trade")
+        st.header("📔 Journal de Patterns & Quiz de Maîtrise")
         
-        st.markdown("### Suivez cette checklist AVANT d'entrer en position:")
+        sub_tabs = st.tabs(["📝 Journal de Suivi", "🎯 Quiz Avancé", "📊 Statistiques"])
         
-        checklist_items = {
-            "📍 Support/Résistance": "Zone identifiée et confirmée (2-3 touches)",
-            "📈 Pattern Identifié": "Chandelier ou pattern reconnaissable",
-            "🎯 Signaux Confirmés": "STRONG_BUY ou au minimum BUY (RSI + MACD + Bollinger)",
-            "📊 Volume": "Volume > moyenne 20 jours (confirmation)",
-            "🛑 Stop Loss": "Défini AVANT l'entrée (sous support ou au-dessus high)",
-            "💰 Position Size": "Risque = 1-2% du compte maximum",
-            "📈 Ratio R:B": "Au minimum 1:2, mieux 1:3",
-            "📚 Tendance": "Confirmée (prix > MA20 > MA50 > MA200 pour haussier)",
-            "🔔 Alertes": "Configurées pour gérer la sortie",
-            "📝 Journal": "Raison du trade notée avant entrée"
-        }
+        # SUB-TAB 1: Journal de Patterns
+        with sub_tabs[0]:
+            st.subheader("📝 Patterns Observés dans le Marché")
+            
+            if st.session_state.tracked_patterns:
+                st.write(f"**Total observé**: {len(st.session_state.tracked_patterns)} patterns")
+                
+                # Display tracked patterns
+                for i, pattern_entry in enumerate(st.session_state.tracked_patterns):
+                    col_delete, col_pattern, col_date, col_status = st.columns([0.5, 1.5, 1.5, 1])
+                    
+                    with col_delete:
+                        if st.button("❌", key=f"del_{i}"):
+                            st.session_state.tracked_patterns.pop(i)
+                            st.rerun()
+                    
+                    with col_pattern:
+                        st.write(f"**{pattern_entry['pattern']}**")
+                    
+                    with col_date:
+                        st.write(f"📅 {pattern_entry['date'][:10]}")
+                    
+                    with col_status:
+                        new_status = st.selectbox(
+                            "Status",
+                            ["observé", "confirmé", "tradé", "validé", "invalidé"],
+                            index=["observé", "confirmé", "tradé", "validé", "invalidé"].index(pattern_entry.get("status", "observé")),
+                            key=f"status_{i}"
+                        )
+                        st.session_state.tracked_patterns[i]["status"] = new_status
+            else:
+                st.info("📭 Aucun pattern tracké pour le moment. Ajoutez-en depuis l'onglet Patterns!")
+            
+            st.divider()
+            
+            # Export option
+            if st.session_state.tracked_patterns:
+                if st.button("📥 Exporter Journal en CSV"):
+                    df_journal = pd.DataFrame(st.session_state.tracked_patterns)
+                    csv = df_journal.to_csv(index=False)
+                    st.download_button(
+                        label="Télécharger",
+                        data=csv,
+                        file_name=f"pattern_journal_{pd.Timestamp.now().strftime('%Y%m%d_%H%M%S')}.csv"
+                    )
         
-        checked_items = 0
-        for item, description in checklist_items.items():
-            col_check, col_text = st.columns([0.5, 2])
-            with col_check:
-                checked = st.checkbox("", key=f"check_{item}")
-            with col_text:
-                st.write(f"**{item}** - {description}")
-            if checked:
-                checked_items += 1
+        # SUB-TAB 2: Quiz Avancé
+        with sub_tabs[1]:
+            st.subheader("🎯 Quiz de Maîtrise des Patterns")
+            st.markdown("*Testez votre connaissance des chandeliers japonais*")
+            
+            quiz_data = [
+                {
+                    "question": "Quel pattern indique une possible inversion haussière après une baisse?",
+                    "options": ["Hammer", "Shooting Star", "Hanging Man", "Dark Cloud Cover"],
+                    "correct": "Hammer",
+                    "explication": "Le Hammer se forme après une baisse et suggère une reprise. Corps petit au-dessus, longue mèche basse."
+                },
+                {
+                    "question": "Double Top: signal de quel type?",
+                    "options": ["Haussier", "Baissier", "Neutre", "Indéterminé"],
+                    "correct": "Baissier",
+                    "explication": "Double Top = 2 sommets au même niveau = résistance confirmée = baisse probable"
+                },
+                {
+                    "question": "Engulfing haussier = quoi?",
+                    "options": ["Petit corpo enveloppe grand corpo", "Grand corpo enveloppe petit corpo", "Corps identiques", "Corps inversés"],
+                    "correct": "Grand corpo enveloppe petit corpo",
+                    "explication": "Engulfing haussier: jour 2 ouvre bas (jour 1 low) mais ferme haut (jour 1 high) = retournement"
+                },
+                {
+                    "question": "Quel est le meilleur timeframe pour trader les patterns?",
+                    "options": ["5M", "15M", "1H ou 4H", "1D ou plus"],
+                    "correct": "1H ou 4H",
+                    "explication": "1H/4H = sweet spot: assez de données, assez de mouvement, bruit faible"
+                },
+                {
+                    "question": "Morning Star: combien de bougies?",
+                    "options": ["2", "3", "4", "5"],
+                    "correct": "3",
+                    "explication": "Morning Star = 3 bougies: baisse (long), gapdown petit corpo, puis hausse (long) = retournement haussier"
+                }
+            ]
+            
+            quiz_score = 0
+            for i, q in enumerate(quiz_data):
+                st.markdown(f"### Question {i+1}: {q['question']}")
+                
+                answer = st.radio(
+                    "Réponse:",
+                    q['options'],
+                    key=f"quiz_q_{i}"
+                )
+                
+                if answer == q['correct']:
+                    st.success(f"✅ **CORRECT!** {q['explication']}")
+                    quiz_score += 1
+                elif answer:
+                    st.error(f"❌ Mauvais. Bonne réponse: **{q['correct']}**\n\n{q['explication']}")
+                
+                st.divider()
+            
+            # Quiz result
+            if st.button("📊 Calculer Score"):
+                percentage = (quiz_score / len(quiz_data)) * 100
+                st.markdown(f"## Votre Score: {quiz_score}/{len(quiz_data)} ({percentage:.0f}%)")
+                
+                if percentage == 100:
+                    st.balloons()
+                    st.success("🏆 **PARFAIT**: Vous maîtrisez les patterns!")
+                elif percentage >= 80:
+                    st.success("🎉 **EXCELLENT**: Très bonne connaissance!")
+                elif percentage >= 60:
+                    st.info("📚 **MOYEN**: Continuez vos études...")
+                else:
+                    st.warning("⚠️ **À TRAVAILLER**: Relisez les patterns!")
         
-        st.divider()
-        
-        completion_percent = (checked_items / len(checklist_items)) * 100
-        st.progress(completion_percent / 100)
-        st.markdown(f"### Complété: {checked_items}/{len(checklist_items)} items ({completion_percent:.0f}%)")
-        
-        if checked_items == len(checklist_items):
-            st.success("✅ **PRÊT À TRADER**: Tous les critères sont remplis!")
-        elif checked_items >= len(checklist_items) * 0.8:
-            st.info("⚠️ Presque prêt: Complétez les derniers points")
-        else:
-            st.warning("🚫 Ne pas trader encore: Complétez la checklist d'abord")
+        # SUB-TAB 3: Statistiques
+        with sub_tabs[2]:
+            st.subheader("📊 Statistiques de Votre Apprentissage")
+            
+            if st.session_state.tracked_patterns:
+                df_patterns = pd.DataFrame(st.session_state.tracked_patterns)
+                
+                # Count by status
+                status_counts = df_patterns['status'].value_counts()
+                
+                col_stats1, col_stats2 = st.columns(2)
+                
+                with col_stats1:
+                    st.metric("Total Observé", len(st.session_state.tracked_patterns))
+                    st.metric("Confirmés", status_counts.get('confirmé', 0))
+                
+                with col_stats2:
+                    st.metric("Tradés", status_counts.get('tradé', 0))
+                    st.metric("Validés", status_counts.get('validé', 0))
+                
+                st.divider()
+                
+                # Pie chart
+                st.subheader("Distribution des Status")
+                fig_pie = px.pie(
+                    values=status_counts.values,
+                    names=status_counts.index,
+                    title="Status des Patterns Observés",
+                    color_discrete_map={
+                        'observé': '#3498db',
+                        'confirmé': '#2ecc71',
+                        'tradé': '#f39c12',
+                        'validé': '#27ae60',
+                        'invalidé': '#e74c3c'
+                    }
+                )
+                st.plotly_chart(fig_pie, use_container_width=True)
+            else:
+                st.info("📭 Pas encore de données statistiques. Commencez à tracker des patterns!")
+            
+            st.divider()
+            
+            # Learning progress
+            st.subheader("🎓 Progression d'Apprentissage")
+            
+            progress_items = [
+                ("Patterns Basiques (Hammer, Engulfing)", 0.7),
+                ("Patterns Avancés (Morning Star, etc)", 0.5),
+                ("Gestion du Risque", 0.8),
+                ("Psychologie du Trading", 0.6),
+            ]
+            
+            for item, progress in progress_items:
+                st.write(f"**{item}**")
+                st.progress(progress)
+            
+            st.markdown("""
+            **💡 Conseil**: Progressez progressivement. Maîtrisez d'abord 2-3 patterns avant d'en apprendre d'autres.
+            La qualité >> la quantité en trading!
+            """)
+
 
 def main():
     # Initialize WebSocket feeds for real-time prices
