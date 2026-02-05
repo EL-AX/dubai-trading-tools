@@ -278,7 +278,7 @@ def display_live_price_with_animation(ticker):
 
 def page_tutorial():
     """Tutorial and learning hub - Professional education platform"""
-    st.title("🎓 LEARNING CENTER - Mastering Professional Trading")
+    st.title("🎓 CENTRE D'APPRENTISSAGE - Maîtriser le Trading Professionnel")
     
     st.markdown("*Complete trading education • Interactive learning • Quiz-based mastery*")
     
@@ -359,13 +359,13 @@ def page_tutorial():
     # === TAB 2: DASHBOARD GUIDE ===
     with tab_dashboard:
         st.markdown("### 📊 Dashboard Master - Real-Time Analysis Hub")
-        st.markdown("Your command center for monitoring 11 assets with professional tools")
+        st.markdown("Votre centre de commande pour surveiller 11 actifs avec des outils professionnels")
         
         # 4 sub-sections
         sub_col1, sub_col2 = st.columns(2)
         
         with sub_col1:
-            with st.expander("💰 **Asset Selection**", expanded=True):
+            with st.expander("💰 **Sélection d'Actifs**", expanded=True):
                 st.markdown("""
                 **Available Assets (11 Total)**
                 
@@ -390,7 +390,7 @@ def page_tutorial():
                 """)
         
         with sub_col2:
-            with st.expander("⏱️ **Period Selector (NEW)**", expanded=True):
+            with st.expander("⏱️ **Sélecteur de Période (NOUVEAU)**", expanded=True):
                 st.markdown("""
                 **6 Timeframes Available**
                 
@@ -1742,7 +1742,7 @@ def page_dashboard():
                 xaxis_rangeslider_visible=False,
                 template=template_name,
                 hovermode='x unified',
-                margin=dict(l=50, r=50, t=80, b=50),
+                margin=dict(l=50, r=70, t=80, b=70),
                 xaxis=dict(
                     showgrid=True, 
                     gridwidth=1, 
@@ -1775,7 +1775,6 @@ def page_dashboard():
                 plot_bgcolor='#0f1729',
                 paper_bgcolor='#0f1729',
                 font=dict(color='#e0e0e0', size=11, family="Arial, sans-serif"),
-                margin=dict(b=70, t=80, l=50, r=70),
                 title_font_size=16,
                 title_x=0.5,
                 showlegend=True,
@@ -2314,12 +2313,12 @@ def main():
     # === SIDEBAR NAVIGATION (only for authenticated users) ===
     with st.sidebar:
         st.markdown("### 🗺️ **NAVIGATION**")
-        st.markdown("Select your destination:")
+        st.markdown("Sélectionnez votre destination:")
         
         # Main page selector
         page = st.radio(
             "Pages:",
-            ["📈 Dashboard", "📰 News AI", "📚 Patterns", "🎓 Tutorial", "⚙️ Profile"],
+            ["📈 Tableau de Bord", "📰 Actualités IA", "📚 Patterns", "🎓 Formation", "⚙️ Profil"],
             label_visibility="collapsed",
             key="main_nav"
         )
@@ -2327,7 +2326,7 @@ def main():
         st.sidebar.divider()
         
         # === SIDEBAR STATS ===
-        st.markdown("### 📊 **PLATFORM STATS**")
+        st.markdown("### 📊 **STATISTIQUES DE LA PLATEFORME**")
         
         col_s1, col_s2 = st.columns(2)
         with col_s1:
@@ -2339,8 +2338,8 @@ def main():
         
         st.divider()
         
-        # === SIDEBAR QUICK STATS ===
-        st.markdown("### ⚡ **QUICK STATS**")
+        # === STATISTIQUES RAPIDES DE LA BARRE LATÉRALE ===
+        st.markdown("### ⚡ **STATISTIQUES RAPIDES**")
         
         if st.session_state.get("logged_in", False):
             st.markdown(f"""
@@ -2363,20 +2362,20 @@ def main():
         st.caption("*Professional Trading Analysis*")
         st.caption("📧 **Email:** eloadxfamily@gmail.com")
         
-        if st.button("📖 GitHub Repo", use_container_width=True):
+        if st.button("📖 Dépôt GitHub", use_container_width=True):
             st.markdown("[EL-AX/dubai-trading-tools](https://github.com/EL-AX/dubai-trading-tools)")
     
     # === PAGE ROUTING (only for authenticated users) ===
-    if page == "📈 Dashboard":
+    if page == "📈 Tableau de Bord":
         page_dashboard()
-    elif page == "📰 News AI":
+    elif page == "📰 Actualités IA":
         page_news_ai()
     elif page == "📚 Patterns":
         page_patterns()
-    elif page == "🎓 Tutorial":
+    elif page == "🎓 Formation":
         page_tutorial()
-    elif page == "⚙️ Profile":
-        st.title("⚙️ Account Settings")
+    elif page == "⚙️ Profil":
+        st.title("⚙️ Paramètres du Compte")
         
         # Profile information
         col_prof1, col_prof2, col_prof3 = st.columns(3)
