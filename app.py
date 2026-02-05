@@ -707,9 +707,9 @@ def page_dashboard():
         with col1:
             show_rsi = st.checkbox("RSI (14)", value=True)
         with col2:
-            show_macd = st.checkbox("MACD", value=True)
+            show_macd = st.checkbox("MACD", value=False)  # Disabled by default for clarity
         with col3:
-            show_bollinger = st.checkbox("Bollinger Bands", value=True)
+            show_bollinger = st.checkbox("Bollinger Bands", value=False)  # Disabled by default for clarity
         
         st.markdown("---")
         
@@ -746,10 +746,10 @@ def page_dashboard():
 
             # Determine style based on user selection - use consistent unified premium style for ALL tickers including GOLD
             c_style = st.session_state.get("candle_style", "classic")
-            # Unified premium model style that works consistently for all tickers including GOLD
+            # Professional XM-style colors
             # Green for bullish (up), red for bearish (down)
-            inc = dict(fillcolor='#17957b', line=dict(color='#17957b', width=2))  # CHANGED: width 4→2
-            dec = dict(fillcolor='#e83a4a', line=dict(color='#e83a4a', width=2))  # CHANGED: width 4→2
+            inc = dict(fillcolor='#00c853', line=dict(color='#00c853', width=1.5))  # Bright green
+            dec = dict(fillcolor='#ff1744', line=dict(color='#ff1744', width=1.5))  # Bright red
             
             # Force reset Plotly template to prevent style override for GOLD
             template_name = "plotly_dark"
@@ -848,45 +848,63 @@ def page_dashboard():
                 ), row=1, col=1)
 
             fig.update_layout(
-                title=f"<b>{ticker} - Analyse Candlestick (60J)</b>",  # CHANGED: 30J→60J
-                height=900,  # Increased height for better visibility
+                title=f"<b>{ticker} - Analyse Technique (60J)</b>",
+                height=600,  # Professional height for mobile-friendly viewing
                 xaxis_rangeslider_visible=False,
-                template=template_name,  # Use the template variable to ensure consistency
+                template=template_name,
                 hovermode='x unified',
                 xaxis=dict(
-                    showgrid=True, gridwidth=1, gridcolor='rgba(255,255,255,0.08)',
-                    showline=True, linewidth=1, linecolor='rgba(255,255,255,0.2)',
-                    type='date'
+                    showgrid=True, 
+                    gridwidth=1, 
+                    gridcolor='rgba(255,255,255,0.05)',
+                    showline=True, 
+                    linewidth=1, 
+                    linecolor='rgba(255,255,255,0.2)',
+                    type='date',
+                    rangeslider=dict(visible=False)
                 ),
                 yaxis=dict(
-                    showgrid=True, gridwidth=1, gridcolor='rgba(255,255,255,0.08)', 
-                    side='right', domain=[0.22, 1.0],
-                    showline=True, linewidth=1, linecolor='rgba(255,255,255,0.2)',
-                    automargin=True
+                    showgrid=True, 
+                    gridwidth=1, 
+                    gridcolor='rgba(255,255,255,0.05)', 
+                    side='right', 
+                    domain=[0.25, 1.0],
+                    showline=True, 
+                    linewidth=1, 
+                    linecolor='rgba(255,255,255,0.2)',
+                    automargin=True,
+                    title='Price'
                 ),
                 yaxis2=dict(
-                    showgrid=False, domain=[0.0, 0.18], 
+                    showgrid=False, 
+                    domain=[0.0, 0.22], 
                     title='Volume', 
-                    showline=True, linewidth=1, linecolor='rgba(255,255,255,0.2)'
+                    showline=True, 
+                    linewidth=1, 
+                    linecolor='rgba(255,255,255,0.2)',
+                    side='right'
                 ),
                 plot_bgcolor='#0f1419',
                 paper_bgcolor='#0f1419',
-                font=dict(color='#e0e0e0', size=12, family="Arial, Helvetica, sans-serif"),
-                margin=dict(b=80, t=100, l=60, r=80),
-                title_font_size=18,
+                font=dict(color='#e0e0e0', size=11, family="Arial, sans-serif"),
+                margin=dict(b=70, t=80, l=50, r=70),
+                title_font_size=16,
+                title_x=0.5,
                 showlegend=True,
                 legend=dict(
-                    x=0.01, y=0.97, 
-                    bgcolor='rgba(15, 20, 25, 0.95)', 
-                    bordercolor='#17957b', 
-                    borderwidth=2, 
-                    font=dict(size=10, color='#e0e0e0')
-                )
+                    x=0.01, 
+                    y=0.97, 
+                    bgcolor='rgba(15, 20, 25, 0.9)', 
+                    bordercolor='rgba(255,255,255,0.1)',
+                    borderwidth=1,
+                    font=dict(size=10)
+                ),
+                separators=",."
             )
 
             st.plotly_chart(fig, use_container_width=True)
             
-            # Afficher les indicateurs en sous-graphes
+            st.markdown("---")
             if show_rsi or show_macd:
                 col1, col2 = st.columns(2)
                 
