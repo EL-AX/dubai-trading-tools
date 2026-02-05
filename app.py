@@ -477,16 +477,16 @@ def page_tutorial():
         ind_tabs = st.tabs([" RSI", " MACD", " Bollinger Bands"])
         
         with ind_tabs[0]:
-            st.markdown("#### RSI (Relative Strength Index)")
+            st.markdown("#### RSI (Indice de Force Relative)")
             col_rsi1, col_rsi2 = st.columns(2)
             
             with col_rsi1:
                 st.markdown("""
-                **What It Measures**
+                **Ce qu'il Mesure**
                 
-                RSI compares average gains to average losses
-                - Range: 0 to 100
-                - Formula: 100 - (100 / (1 + RS))
+                RSI compare les gains moyens aux pertes moyennes
+                - Plage: 0 à 100
+                - Formule: 100 - (100 / (1 + RS))
                 - Période: 14 bougies (par défaut)
                 - Lissage: Méthode de Wilder
                 
@@ -499,43 +499,43 @@ def page_tutorial():
             
             with col_rsi2:
                 st.markdown("""
-                **Trading Signals**
+                **Signaux de Trading**
                 
-                 **Buy Signals**
-                - RSI crosses above 30 (from oversold)
-                - RSI divergence at lows
+                **Signaux d'Achat**
+                - RSI franchit au-dessus de 30 (de survente)
+                - Divergence RSI aux creux
                 - RSI < 30 sur support
                 
-                 **Sell Signals**
-                - RSI crosses below 70 (from overbought)
-                - RSI divergence at highs
+                **Signaux de Vente**
+                - RSI franchit en dessous de 70 (de surachat)
+                - Divergence RSI aux sommets
                 - RSI > 70 sur résistance
                 
-                **️ Warning**
+                **⚠️ Attention**
                 - RSI seul n'est pas suffisant
-                - Combine with other indicators
-                - Can stay overbought/oversold
+                - Combinez avec d'autres indicateurs
+                - Peut rester suracheté/survendu longtemps
                 - Utilisez confluence, pas l'isolement
                 """)
         
         with ind_tabs[1]:
-            st.markdown("#### MACD (Moving Average Convergence Divergence)")
+            st.markdown("#### MACD (Convergence-Divergence des Moyennes Mobiles)")
             col_macd1, col_macd2 = st.columns(2)
             
             with col_macd1:
                 st.markdown("""
-                **What It Measures**
+                **Ce qu'il Mesure**
                 
-                MACD detects momentum shifts
-                - Uses exponential moving averages
-                - Compares EMA12 and EMA26
-                - Signal line = EMA9 of MACD
-                - Histogram = MACD - Signal
+                MACD détecte les changements de momentum
+                - Utilise des moyennes mobiles exponentielles
+                - Compare EMA12 et EMA26
+                - Ligne Signal = EMA9 du MACD
+                - Histogramme = MACD - Signal
                 
-                **Components**
-                - **MACD Line** (blue): Fast component
-                - **Signal Line** (red): Slow component
-                - **Histogram** (bars): The difference
+                **Composants**
+                - **Ligne MACD** (bleu): Composant rapide
+                - **Ligne Signal** (rouge): Composant lent
+                - **Histogramme** (barres): La différence
                 """)
             
             with col_macd2:
@@ -565,34 +565,34 @@ def page_tutorial():
             
             with col_bb1:
                 st.markdown("""
-                **What It Measures**
+                **Ce qu'il Mesure**
                 
                 Les Bandes de Bollinger suivent la volatilité
-                - Middle Band = SMA(20)
-                - Upper Band = SMA + (2 × StdDev)
-                - Lower Band = SMA - (2 × StdDev)
-                - Shows ±2 standard deviations
+                - Bande Médiane = SMA(20)
+                - Bande Supérieure = SMA + (2 × EcartType)
+                - Bande Inférieure = SMA - (2 × EcartType)
+                - Affiche ±2 écarts-type
                 - S'élargit/rétrécit avec la volatilité
                 """)
             
             with col_bb2:
                 st.markdown("""
-                **Trading Signals**
+                **Signaux de Trading**
                 
-                 **Band Touches**
+                **Touches de Bandes**
                 - Toucher supérieur = Résistance potentielle
                 - Toucher inférieur = Support potentiel
-                - Price reverts ~95% of time
+                - Prix revient ~95% du temps
                 
-                 **Expansion**
+                **Expansion**
                 - Bandes étroites = Faible volatilité
-                - Wide bands = High volatility
-                - Squeeze = Breakout coming
+                - Bandes larges = Haute volatilité
+                - Compression = Cassure en approche
                 
-                **Combined Signal**
+                **Signal Combiné**
                 - Prix en bande + RSI extrême = Forte
-                - Use for mean reversion trades
-                - Works best in ranging markets
+                - Utilisez pour des trades de retour à la moyenne
+                - Fonctionne mieux sur les marchés latéralisés
                 """)
     
     # === TAB 4: STRATEGIES ===
@@ -604,149 +604,149 @@ def page_tutorial():
         with strat_tabs[0]:
             st.markdown("#### STRATéGIE SIMPLE - Meilleure pour les Débutants")
             st.markdown("""
-            **Rules (Super Simple)**
-            1. Select 1D (daily) timeframe
+            **Règles (Super Simples)**
+            1. Sélectionnez la période 1D (quotidienne)
             2. Attendez le signal ACHAT_FORT (>80)
-            3. Enter BUY trade with 1% risk
-            4. Stop loss at recent low
-            5. Take profit at 2:1 ratio
+            3. Entrez dans le trade ACHAT avec 1% de risque
+            4. Stop loss au creux récent
+            5. Prise de profit au ratio 2:1
             6. Attendez VENTE_FORTE (<20) pour sortir
             
-            **Why It Works**
-            - Based on composite signals
-            - RSI + MACD + Bollinger confirmation
-            - Filters noise on daily
-            - Clear entry/exit rules
+            **Pourquoi Ça Marche**
+            - Basé sur des signaux composites
+            - Confirmation RSI + MACD + Bollinger
+            - Filtre le bruit quotidien
+            - Règles d'entrée/sortie claires
             
-            **Example Trade**
-            - BTC at $45,000 on 1D
+            **Exemple de Trade**
+            - BTC à 45 000 USD sur 1D
             - Signal: ACHAT_FORT (85%)
-            - Account: $10,000
-            - Risk: 1% = $100
+            - Compte: 10 000 USD
+            - Risque: 1% = 100 USD
             - Entry: 45,000 → SL: 44,500 → TP: 46,000
             """)
         
         with strat_tabs[1]:
             st.markdown("#### STRATÉGIE AVANCÉE - Pour les Traders Expérimentés")
             st.markdown("""
-            **Multi-Timeframe Analysis**
-            1. Start with 1W (weekly) for trend
-            2. Filter into 1D for entries
-            3. Use 4H for momentum confirmation
-            4. Check 1H for precise entry
+            **Analyse Multi-Période**
+            1. Commencez par 1W (semaine) pour la tendance
+            2. Filtrez dans 1D pour les entrées
+            3. Utilisez 4H pour la confirmation du momentum
+            4. Vérifiez 1H pour l'entrée précise
             
-            **Indicator Confluence**
-            - RSI > 50 AND MACD > signal AND Price > BB-mid
+            **Confluence des Indicateurs**
+            - RSI > 50 ET MACD > signal ET Prix > BB-milieu
             - = Signal d'uptrend forte
-            - Risk/Reward minimum 1:2
+            - Risque/Récompense minimum 1:2
             
-            **Advanced Rules**
-            - Identify support/resistance zones
-            - Trade pullbacks to zones
-            - Look for divergences (power signals)
-            - Use volume confirmation
-            - Manage with trailing stops
+            **Règles Avancées**
+            - Identifiez les zones support/résistance
+            - Tradez les replis vers les zones
+            - Cherchez les divergences (signaux puissants)
+            - Utilisez la confirmation de volume
+            - Gérez avec des stops suiveurs
             
-            **Risk Management**
-            - Risk 1-2% max per trade
-            - Use position sizing formula
-            - Win rate target: 55%+
-            - Profit factor target: 2.0+
+            **Gestion du Risque**
+            - Risquez 1-2% maximum par trade
+            - Utilisez la formule de dimensionnement de position
+            - Cible de taux de gain: 55%+
+            - Cible de facteur de profit: 2.0+
             """)
         
         with strat_tabs[2]:
             st.markdown("#### Gestion du Risque - LA CLÉ DE LA SURVIE")
             st.markdown("""
-            **Position Sizing Formula**
+            **Formule de Dimensionnement de Position**
             ```
-            Risk Amount = Account × Risk%
-            Position Size = Risk Amount ÷ (Entry - StopLoss)
+            Montant du Risque = Compte × %Risque
+            Taille de Position = Montant du Risque ÷ (Entrée - StopLoss)
             ```
             
-            **The 2% Rule**
-            - Risk maximum 2% per trade
-            - If you lose 10 trades in a row: -20% drawdown
-            - Sustainable long-term
-            - Protects capital for recovery
+            **La Règle des 2%**
+            - Risquez maximum 2% par trade
+            - Si vous perdez 10 trades d'afilée: -20% tirage
+            - Durable à long terme
+            - Protège le capital pour la récupération
             
-            **Risk/Reward Ratio**
-            - Minimum 1:2 (risk $100 to make $200)
-            - Ideal 1:3 or better
-            - Means winners > losers
-            - Profitable with 50% win rate
+            **Ratio Risque/Récompense**
+            - Minimum 1:2 (risquez 100 USD pour faire 200 USD)
+            - Idéal 1:3 ou mieux
+            - Cela signifie que les gagnants > perdants
+            - Rentable avec 50% de taux de gain
             
-            **Stop Loss Placement**
-            - Always set before entry
-            - Below recent low (support)
-            - Based on volatility (ATR)
+            **Placement du Stop Loss**
+            - Toujours défini avant l'entrée
+            - Sous le creux récent (support)
+            - Basé sur la volatilité (ATR)
             - Pas « d'espoir » loin
             """)
         
         with strat_tabs[3]:
             st.markdown("#### Psychologie - Discipline > Analyse")
             st.markdown("""
-            **The 7 Rules of Trading Psychology**
+            **Les 7 Règles de la Psychologie du Trading**
             
-            1. **Accept Small Losses Quickly**
-                - Stops are part of the game
-                - Protect capital > pride
-                - Move to next opportunity
+            1. **Acceptez les Petites Pertes Rapidement**
+                - Les stops font partie du jeu
+                - Protégez le capital > l'orgueil
+                - Passez à la prochaine opportunité
             
-            2. **Follow Your Plan 100%**
-                - No exceptions, no "gut feelings"
-                - Mechanical execution
-                - Test, then trust
+            2. **Suivez Votre Plan 100%**
+                - Pas d'exceptions, pas de « pressentiments »
+                - Exécution mécanique
+                - Testez, puis faites confiance
             
-            3. **Never Add to Losing Positions**
-                - Revenge trading kills accounts
-                - If wrong, wrong = cut
-                - Double down = double loss
+            3. **Ne Rajoutez Jamais aux Positions Perdantes**
+                - Le revenge trading tue les comptes
+                - Si vous vous trompez, vous avez tort = coupez
+                - Doubler = double perte
             
-            4. **Take Profits When Planned**
-                - Don't get greedy
-                - Lock in wins
-                - Let small winners be small
+            4. **Prenez les Profits Comme Prévu**
+                - Ne soyez pas avide
+                - Verrouillez les gains
+                - Laissez les petits gagnants être petits
             
-            5. **Keep a Trading Journal**
-                - Record every trade (win/loss)
-                - Write why you entered/exited
-                - Review weekly
-                - Find patterns in failures
+            5. **Tenez un Journal de Trading**
+                - Enregistrez chaque trade (gain/perte)
+                - Écrivez pourquoi vous avez entré/sorti
+                - Examinez chaque semaine
+                - Trouvez des modèles dans les échecs
             
-            6. **Use Stop-Loss ALWAYS**
-                - Psychology tool more than price
-                - Forces discipline
-                - Removes "hope"
-                - Defines risk upfront
+            6. **Utilisez Stop-Loss TOUJOURS**
+                - Outil psychologique plus que prix
+                - Force la discipline
+                - Élimine l'« espoir »
+                - Définit le risque à l'avance
             
             7. **Tradez le Plan, Pas l'Actualité**
-                - News creates noise/emotions
-                - Stick to your strategy
+                - Les actualités créent du bruit/des émotions
+                - Tenez-vous à votre stratégie
                 - Réagissez aux signaux, pas aux gros titres
-                - Don't FOMO trade
+                - Ne tradez pas par FOMO
             """)
         
         with strat_tabs[4]:
             st.markdown("#### Liste de Vérification de Trading - Avant Chaque Trade")
             st.markdown("""
-            **Pre-Trade Checklist (MANDATORY)**
+            **Liste de Vérification Pré-Trade (OBLIGATOIRE)**
             
-             **Timeframe Analysis**
-              - Checked 1W/1D for trend?
-              - Price above/below key MA?
-              - Clear support/resistance identified?
+            **Analyse de la Période**
+              - Vérifié 1W/1D pour la tendance?
+              - Prix au-dessus/au-dessous de MA clé?
+              - Support/résistance clair identifié?
             
-             **Entry Signal**
-              - Signal strength > 70%?
-              - Multiple indicators aligned?
-              - Price at support/resistance?
-              - Volume confirming?
+            **Signal d'Entrée**
+              - Force du signal > 70%?
+              - Plusieurs indicateurs alignés?
+              - Prix au support/résistance?
+              - Volume confirmant?
             
-             **Risk Management**
-              - Position size calculated?
-              - Risk/Reward ≥ 1:2?
-              - Stop loss set BEFORE entry?
-              - Risk ≤ 2% account?
+            **Gestion du Risque**
+              - Taille de position calculée?
+              - Risque/Récompense ≥ 1:2?
+              - Stop loss défini AVANT l'entrée?
+              - Risque ≤ 2% du compte?
             
              **Psychology**
               - Emotionally calm?
