@@ -376,22 +376,97 @@ def page_tutorial():
         - Diversifiez sur plusieurs actifs
         """)
     
-    with st.expander("❓ 5. FAQ & Dépannage"):
+    with st.expander("📰 5. Actualités IA - Analyse du Marché"):
+        st.markdown("""
+        **📊 Sentiment du Marché**
+        - Jauge visuelle montrant si marché est haussier ou baissier
+        - Pourcentage de news bullish/bearish/neutres
+        - Badge global: "TRÈS HAUSSIER" → "NEUTRE" → "TRÈS BAISSIER"
+        
+        **🔍 Filtres Avancés**
+        - Filtrez par **sentiment** (Haussier, Baissier, Neutre)
+        - Filtrez par **source** (Reddit, CoinDesk, CoinTelegraph, CoinGecko)
+        - Combinez les filtres pour analyses précises
+        
+        **💹 Sources de News**
+        - **Reddit**: Discussions communauté crypto
+        - **CoinDesk**: News institutionnelles
+        - **CoinTelegraph**: Analyses détaillées
+        - **CoinGecko**: Trending et signaux
+        
+        **💡 Comment utiliser:**
+        1. Vérifiez le sentiment global (jauge)
+        2. Filtrez pour "Haussier" = opportunités achat
+        3. Filtrez pour "Baissier" = prudence/vente
+        4. Cliquez les articles intéressants
+        5. Combinez avec votre analyse technique
+        
+        **⚠️ Important**: Les actualités et sentiment ne remplacent PAS votre stratégie!
+        """)
+    
+    with st.expander("🕯️ 6. Patterns & Trading - Maîtrisez les Chandeliers"):
+        st.markdown("""
+        **📚 19 Chandeliers Japonais Essentiels**
+        - Base du trading technique
+        - Chaque pattern a un signal (haussier/baissier)
+        - Fiabilité notée: ⭐⭐⭐ Haute, ⭐⭐ Moyenne, ⭐ Basse
+        
+        **📔 Journal de Patterns - Tracker Votre Apprentissage**
+        - Ajouter des patterns observés dans le marché
+        - Statuts: observé → confirmé → tradé → validé
+        - Exportez en CSV pour analyse
+        
+        **🎯 Quiz Interactif - Testez Vos Connaissances**
+        - 5 questions sur les chandeliers
+        - Explications complètes pour chaque réponse
+        - Score avec conseil basé sur performance
+        - Objectif: 100% pour maîtrise complète
+        
+        **📊 Statistiques d'Apprentissage**
+        - Pie chart de vos patterns tracés
+        - Barre de progression par sujet
+        - Recommandations personnalisées
+        - Gestion du risque intégrée
+        
+        **💰 Calculateur de Position Sizing**
+        - Entrez solde du compte, risque %, prix d'entrée/stop
+        - Calcule la taille exacte de position
+        - Valide si conforme aux règles (max 2% risque)
+        
+        **⚙️ 5 Stratégies de Trading**
+        1. **Simple**: STRONG_BUY/SELL sur RSI
+        2. **Avancée**: RSI + MACD + Bollinger
+        3. **Gestion Risque**: Position sizing + stop loss
+        4. **Psychologie**: 7 règles mentales du pro
+        5. **Checklist**: 10 points avant chaque trade
+        
+        **📝 Comment Progresser**
+        1. Étudiez les 19 patterns (onglet Patterns)
+        2. Pratiquez le quiz jusqu'à 100%
+        3. Trackez les patterns observés
+        4. Validez vos observations
+        5. Maîtrisez d'abord 2-3 patterns avant d'en apprendre d'autres
+        """)
+    
+    with st.expander("❓ 7. FAQ & Dépannage"):
         st.markdown("""
         **Q: Comment fonctionne le sélecteur de période?**
         A: Cliquez sur 1H, 4H, 1D, 1W, 1M ou 3M → le graphe s'actualise automatiquement avec les données de cette période.
         
+        **Q: Comment interpréter le sentiment de news?**
+        A: Vert (bullish) = marché positif, Rouge (bearish) = marché négatif, Gris (neutre) = pas de direction. Utilisez comme confirmation avec vos signaux techniques.
+        
+        **Q: Puis-je exporter mon journal de patterns?**
+        A: Oui! Onglet Journal → bouton "Exporter en CSV" → télécharge automatiquement.
+        
+        **Q: Comment gagner au quiz?**
+        A: Étudiez les descriptions de patterns dans l'onglet "Patterns". Répondez aux 5 questions. Visez 100% pour maîtrise complète.
+        
         **Q: Pourquoi les prix ne se mettent pas à jour?**
         A: L'app s'actualise toutes les 5 minutes. Attendez ou rechargez la page avec F5.
         
-        **Q: Les bougies ne s'affichent pas?**
-        A: Cela peut signifier qu'il n'y a pas assez de données. Attendez 24h pour plus de points.
-        
-        **Q: Comment interpréter les signaux?**
-        A: Consultez la section "Indicateurs Techniques" ci-dessus pour chaque métrique.
-        
         **Q: Puis-je trader en direct?**
-        A: Cette app est un **outil d'analyse**, pas une plateforme de trading. Utilisez une plateforme (Binance, Kraken, XM, etc.)
+        A: Cette app est un **outil d'analyse**, pas une plateforme de trading. Utilisez Binance, Kraken, XM, etc. pour les vraies positions.
         
         **Q: Mes données sont-elles sécurisées?**
         A: Oui. Mot de passe hashé, emails vérifiés, données encryptées.
@@ -400,8 +475,19 @@ def page_tutorial():
     st.divider()
     st.info("💡 **Conseil Pro**: Testez vos stratégies avec les graphiques en papier avant d'investir de l'argent réel. Les performances passées n'indiquent pas les performances futures.")
     
-    st.divider()
-    st.info("💡 Astuce: L'app s'actualise toutes les 5 minutes pour des prix en temps réel.")
+    st.markdown("""
+    ---
+    ## 📌 Résumé des 4 Sections Principales
+    
+    | Section | Fonction | Objectif |
+    |---------|----------|----------|
+    | 📊 **Dashboard** | Graphiques + Indicateurs | Analyser les prix en temps réel |
+    | 📰 **Actualités** | Sentiment marché + filtres | Comprendre la psychologie du marché |
+    | 🕯️ **Patterns** | 19 chandeliers + Quiz | Apprendre le trading technique |
+    | 📚 **Tutoriel** | Documentation complète | Maîtriser tous les outils |
+    
+    **Bon trading! 🚀**
+    """)
 
 def page_login_register():
     """Redesigned login/register flow with email verification integrated"""

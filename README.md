@@ -1,70 +1,73 @@
-# 🚀 Dubai Trading Tools - Supernova Edition
+# 🚀 Dubai Trading Tools - Supernova Edition v6.0
 
-**Assistant de trading professionnel avec IA & données cryptos en temps réel**
+**Assistant de trading professionnel avec IA, patterns éducatifs & actualités en temps réel**
 
-Version: **5.0 (Supernova - Production Ready)**  
+Version: **6.0 (Supernova Evolution - Production Ready)**  
 Statut: ✅ **Déploiement complet**
 
 ---
 
-## 🌟 Nouvelle Version Supernova - Changements Majeurs
+## 🌟 Version Supernova 6.0 - Évolution Majeure
 
-### ✨ **Améliorations v5.0:**
+### ✨ **Nouvelle Version 6.0:**
 
-1. **⚙️ Menu Paramètres Complet** ✅
-   - **Activer/Désactiver alertes**
-   - **Sélectionner devise préférée** (USD, EUR, GBP)
-   - **Choisir style des bougies** (classic, boxy, thin)
-   - Paramètres sauvegardés dans profil utilisateur
-   - **Application immédiate** sans recharge
+1. **⏱️ Sélecteur de Période** ✅
+   - 6 boutons: **1H, 4H, 1D, 1W, 1M, 3M**
+   - Actualisation dynamique du graphe
+   - Adaptation automatique des indicateurs
+   - Plus de 365 jours de données historiques
 
-2. **📰 Actualités IA en Temps Réel** (Cache 2h)
-   - OpenAI GPT-5 insights trading
-   - DeepMind RL pour options
-   - Anthropic Claude 4 fraude detection
-   - Solana AI agents
-   - MIT market prediction
-   - Moltbook.com community news
-   - **HTML tags nettoyés** (pas d'artefacts)
+2. **📊 Graphiques Professionnels (XM Style)** ✅
+   - **Couleurs exactes**: Vert #1bc47d (hausse), Rouge #ff3d3d (baisse)
+   - **Fond XM**: #0f1729 (noir professionnel)
+   - Ligne fine 1.5px (look premium)
+   - Proportions: 75% candlesticks + 25% volume
+   - Mobile-optimisé (600px height)
 
-3. **💰 Animation Prix Temps Réel** (Comme montre de sport)
-   - Mise à jour fluide des cryptos (BTC, ETH, SOL, ADA, XRP, DOT)
-   - Change 24h visible (vert ↑/rouge ↓)
-   - **Conversion devise** appliquée (€, £, $)
-   - Timestamp HH:MM:SS
-   - Refresh automatique
+3. **📰 Actualités IA - UPGRADE MAJEUR** ✅
+   - **Sentiment Gauge** - Jauge visuelle du marché (Très Haussier → Très Baissier)
+   - **Multi-Filtres** - Filtrer par sentiment + source simultanément
+   - **4 Sources Réelles** - Reddit, CoinDesk, CoinTelegraph, CoinGecko
+   - **Sentiment Breakdown** - % Bullish/Bearish/Neutre
+   - **Meilleure UX** - Layout optimisé avec colonnes
 
-4. **🔐 Authentification Améliorée**
+4. **🕯️ Patterns & Trading - REFONTE COMPLÈTE** ✅
+   - **19 Chandeliers Japonais** avec fiabilité notée (⭐⭐⭐)
+   - **Journal de Patterns** - Track observé → confirmé → tradé → validé
+   - **Quiz Avancé** - 5 questions interactives avec explications
+   - **Statistiques** - Pie chart + barre de progression
+   - **CSV Export** - Télécharge ton journal de patterns
+   - **Calculateur Position** - Sizing automatique avec gestion risque
+   - **Stratégies Complètes** - Simple, Avancée, Gestion Risque, Psychologie
+
+5. **🔐 Authentification Sécurisée**
    - Inscription → Email de vérification → Code validation
-   - Accès au dashboard après vérification
-   - Streamlit SMTP configuré natif
+   - Accès sécurisé au dashboard
+   - Streamlit SMTP configuré
 
-5. **📊 Données Réelles Synchronisées**
-   - CoinGecko API (Bitcoin, Ethereum, Solana, Cardano, Ripple, Polkadot)
-   - ExchangeRate API (EUR, GBP, JPY)
-   - Or (XAU) en temps réel
-   - **Cache cohérent** avec fallback prices
-   - **Données historiques** 60 jours
-
-6. **🎨 Candlesticks Optimisés**
-   - **60 jours** d'historique (vs 10 avant)
-   - **Épaisseur réduite** (width=2, vs 4)
-   - Meilleure lisibilité et précision
-   - Tous les actifs synchronisés
+6. **💰 Animation Prix Temps Réel**
+   - BTC, ETH, SOL, ADA, XRP, DOT, EUR, GBP, JPY, AUD, XAU
+   - Conversion devise (USD/EUR/GBP) appliquée
+   - Change 24h visible
+   - Timestamp HH:MM:SS
+   - Refresh automatique 5min
 
 ---
 
 ## 📋 Vue d'ensemble
 
-Dubai Trading Tools est un assistant de trading **PROFESSIONNEL** pour analyser les marchés crypto, forex, et or. 
+Dubai Trading Tools est un assistant de trading **PROFESSIONNEL** pour analyser les marchés crypto, forex, et or avec **éducation complète** sur les patterns et stratégies.
 
 ### ✅ Ce que vous pouvez faire :
-- 📊 **Analyser** crypto/forex/or en temps réel
-- 🔔 **Alertes RSI** Overbought/Oversold
-- 📰 **Lire actualités IA** impactant les marchés
-- 💰 **Voir prix** mis à jour chaque 5min
+- 📊 **Analyser** crypto/forex/or avec 6 périodes (1H → 3M)
+- 🔔 **Alertes** RSI, volatilité, changements 24h
+- 📰 **Lire actualités** avec sentiment gauge + filtres
+- 💰 **Voir prix** mis à jour chaque 5min avec conversion devise
 - 📈 **Signaux trading** basés sur 4 indicateurs
-- 🎯 **Risk/Reward** calcul automatique
+- 🎯 **Risk/Reward** calcul automatique + position sizing
+- 🕯️ **Apprendre** 19 chandeliers japonais + quiz
+- 📔 **Tracker** patterns observés avec journal CSV
+- 📊 **Statistiques** de progression d'apprentissage
 
 ### ❌ Ce que vous NE pouvez PAS faire :
 - ❌ Exécuter des trades automatiquement
@@ -75,53 +78,101 @@ Dubai Trading Tools est un assistant de trading **PROFESSIONNEL** pour analyser 
 
 ## 🎯 Fonctionnalités principales
 
-### 1️⃣ **Dashboard - Analyse Technique**
-- **Graphique Candlestick** professionnel (vert/rouge)
-- **60 jours d'historique** (données riches)
+### 1️⃣ **Dashboard - Analyse Technique Professionnelle**
+- **⏱️ Sélecteur de Période**: 1H, 4H, 1D, 1W, 1M, 3M (actualisation dynamique)
+- **Graphique Candlestick** XM-style professionnel
+  - Couleurs exactes: Vert #1bc47d (hausse), Rouge #ff3d3d (baisse)
+  - Fond noir #0f1729 (premium look)
+  - Ligne fine 1.5px (profesionnel)
 - **Indicateurs superposés** :
   - 📊 **RSI (14)** - Momentum (Overbought >70 / Oversold <30)
   - 📈 **MACD** - Changements de tendance
   - 🔼 **Bollinger Bands** - Volatilité
   - 💰 **Volume bars** - Pression acheteur/vendeur
-- **Support multi-actifs** : BTC, ETH, SOL, ADA, XRP, DOT, EUR, GBP, JPY, AUD, XAU
+- **Support multi-actifs**: BTC, ETH, SOL, ADA, XRP, DOT, EUR, GBP, JPY, AUD, XAU
+- **Jusqu'à 365 jours** de données historiques
 
 ### 2️⃣ **Prix en Temps Réel** 🔄
 - 💰 Mise à jour fluide avec conversion devise (USD/EUR/GBP)
-- 📊 Change 24h visible
+- 📊 Change 24h visible (vert ↑/rouge ↓)
 - ⏱️ Timestamp HH:MM:SS
 - 🔘 Bouton rafraîchissement manuel
 - 🔄 **Fallback prices** si API rate-limited
+- **Refresh**: Tous les 5 minutes
 
-### 3️⃣ **Actualités IA** 📰 (Cache 2h)
-- 🤖 OpenAI, DeepMind, Anthropic, Moltbook
-- 💡 Impact direct sur marchés (BTC +5%, ETH +8%)
-- 🔗 Liens sources authentiques
-- ✨ **HTML nettoyé** (pas d'artefacts)
-- 🌍 Bilingue FR/EN
+### 3️⃣ **Actualités IA - Intelligence du Marché** 📰 ✨
+- **🎯 Sentiment Gauge** - Jauge visuelle du marché
+  - Très Haussier → Haussier → Neutre → Baissier → Très Baissier
+  - % Bullish/Bearish/Neutre breakdown
+- **🔍 Filtres Avancés**
+  - Filtrer par sentiment (Haussier/Baissier/Neutre)
+  - Filtrer par source (Reddit/CoinDesk/CoinTelegraph/CoinGecko)
+  - Combiner les filtres pour analyses précises
+- **📰 4 Sources Réelles**
+  - Reddit: Discussion communauté
+  - CoinDesk: News institutionnelles
+  - CoinTelegraph: Analyses détaillées
+  - CoinGecko: Trending & signaux
+- **✨ HTML nettoyé** (pas d'artefacts)
+- **Cache 10min** pour performance
 
-### 4️⃣ **Paramètres Utilisateur** ⚙️ ✅
-- **Activer/désactiver les alertes**
-- **Devise préférée** : USD, EUR, GBP
-- **Style des bougies** : classic, boxy, thin
-- Sauvegardés dans profil utilisateur
-- Application immédiate
+### 4️⃣ **Patterns & Stratégies de Trading** 🕯️ ⭐
+- **📚 19 Chandeliers Japonais**
+  - Description complète de chaque pattern
+  - Signal (haussier/baissier)
+  - Fiabilité: ⭐⭐⭐ Haute, ⭐⭐ Moyenne, ⭐ Basse
+  - Comparaison visuelle
+  
+- **📔 Journal de Patterns** ✅ NOUVEAU
+  - Track patterns observés
+  - Statuts: observé → confirmé → tradé → validé
+  - Export CSV pour analyses
+  - Suivi progression
+  
+- **🎯 Quiz Interactif** ✅ NOUVEAU
+  - 5 questions sur les chandeliers
+  - Explications complètes
+  - Score avec conseils personnalisés
+  - Objectif: 100% pour maîtrise
+  
+- **📊 Statistiques d'Apprentissage** ✅ NOUVEAU
+  - Pie chart des patterns tracés
+  - Barre de progression par sujet
+  - Gestion du risque intégrée
+  - Recommandations personnalisées
 
-### 5️⃣ **Alertes Intelligentes** 🚨
-- RSI Overbought (>70) / Oversold (<30)
-- Volatilité 24h (>5%)
-- Affichage temps réel dashboard
-- Historique complet
+- **💰 Calculateur de Position Sizing** ✅ NOUVEAU
+  - Entrée: Solde, risque %, prix d'entrée/stop
+  - Sortie: Taille position exacte
+  - Validation respect règles (max 2% risque)
 
-### 6️⃣ **Authentification** 🔐
+- **📈 4 Stratégies de Trading**
+  1. Simple (Débutants)
+  2. Avancée (Professionnels)
+  3. Gestion du Risque (5 règles)
+  4. Psychologie (7 règles mentales)
+
+### 5️⃣ **Authentification Sécurisée** 🔐
 - Inscription avec email
 - Code de vérification (6 chiffres)
 - Expiration 1h
 - Dashboard accès sécurisé
+- Profil utilisateur persistant
 
-### 7️⃣ **Signaux Trading** 🎯
+### 6️⃣ **Signaux Trading** 🎯
 - Composite 4 indicateurs
 - STRONG_BUY (80-100) → BUY → NEUTRAL → SELL → STRONG_SELL (0-20)
 - Risk/Reward ratio calculé
+- Alertes configurables
+
+### 7️⃣ **Tutoriel Complet** 📚
+- Authentification (sécurité)
+- Dashboard (comment analyser)
+- Indicateurs (RSI/MACD/Bollinger)
+- Stratégies (simple vs avancée)
+- Actualités (sentiment & filtres)
+- Patterns (19 chandeliers + quiz + journal)
+- FAQ (20+ réponses)
 
 ---
 
@@ -259,17 +310,47 @@ MIT License - Utilisation libre à des fins éducatives
 
 ---
 
-## 🎉 Supernova Features Highlights
+## 🎉 Supernova v6.0 Features Highlights
 
 ✨ **Ce qui rend cette version extraordinaire:**
 
-1. **Actualités IA en Temps Réel** - Des insights OpenAI, DeepMind, Anthropic
-2. **Animation Prix** - Mise à jour fluide comme une montre de sport
-3. **Authentification Pro** - Email vérification intégrée
-4. **Données Réelles** - CoinGecko + ExchangeRate APIs synchronisées
-5. **Thème Automatique** - Suit le système d'exploitation
-6. **Candlesticks Classiques** - Vert/rouge profesionnels visibles
-7. **Alertes Intelligentes** - RSI + volatilité en temps réel
+### 🚀 **Période Selector (NEW)**
+- 6 boutons: 1H, 4H, 1D, 1W, 1M, 3M
+- Actualisation dynamique du graphe
+- Adaptation automatique des indicateurs
+- Jusqu'à 365 jours de données
+
+### 🎨 **Graphiques XM-Style (UPGRADED)**
+- Couleurs exactes: Vert #1bc47d, Rouge #ff3d3d
+- Fond professionnel #0f1729
+- Ligne fine 1.5px (premium)
+- Mobile-optimisé
+
+### 📰 **Sentiment Intelligence (NEW)**
+- Sentiment Gauge visuelle
+- Filtres par sentiment + source
+- % Bullish/Bearish/Neutre
+- 4 sources réelles intégrées
+
+### 🕯️ **Pattern Mastery System (NEW)**
+- 19 Chandeliers japonais documentés
+- Journal pour tracker patterns
+- Quiz interactif (5 questions)
+- Statistiques d'apprentissage
+- CSV export
+
+### 💡 **Trading Education (NEW)**
+- Calculateur position sizing
+- 4 Stratégies complètes
+- 7 Règles psychologie
+- 10-item pre-trade checklist
+- Quiz de 100% maîtrise
+
+### 🔐 **Sécurité & Performance**
+- Authentification email sécurisée
+- Données persistantes (session state)
+- Cache 5-10min pour performance
+- Fallback prices pour résilience
 
 ---
 
