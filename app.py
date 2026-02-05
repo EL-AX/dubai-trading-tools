@@ -2280,7 +2280,7 @@ def main():
         # Initialize session state once
         if "initialized" not in st.session_state:
             st.session_state.initialized = True
-            init_session_state()
+            init_session_state(st)
     except Exception as e:
         st.error(f"Init error: {str(e)}")
     
