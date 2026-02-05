@@ -2,7 +2,7 @@
 
  DUBAI TRADING TOOLS v2.0 
  © 2025-2026 ELOADXFAMILY - Tous droits réservés 
- Outil d'analyse trading professionnel avec IA et éducation 
+ Analyseur de marché et centre d'éducation au trading
 
 """
 
@@ -933,7 +933,7 @@ def page_login_register():
     
     with col_title:
         st.markdown("<h2 style='margin-top: 10px;'>Dubai Trading Tools - Accès Sécurisé</h2>", unsafe_allow_html=True)
-        st.markdown("*Plateforme d'analyse et de trading professionnel*")
+        st.markdown("*Analyseur de marché et centre d'éducation au trading*")
     
     st.divider()
     st.markdown("## Connexion / Inscription")
