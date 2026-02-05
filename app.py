@@ -1742,6 +1742,7 @@ def page_dashboard():
                 xaxis_rangeslider_visible=False,
                 template=template_name,
                 hovermode='x unified',
+                margin=dict(l=50, r=50, t=80, b=50),
                 xaxis=dict(
                     showgrid=True, 
                     gridwidth=1, 
@@ -1817,6 +1818,7 @@ def page_dashboard():
                         fig_rsi.update_layout(
                             title=f"RSI(14) - {ticker}: {rsi_value:.2f}",
                             height=300,
+                            margin=dict(l=50, r=50, t=60, b=40),
                             xaxis=dict(showgrid=True, gridcolor='#2a2a3a'),
                             yaxis=dict(showgrid=True, gridcolor='#2a2a3a'),
                             template="plotly_dark",
@@ -1859,6 +1861,7 @@ def page_dashboard():
                         fig_macd.update_layout(
                             title=f"MACD - {ticker}",
                             height=300,
+                            margin=dict(l=50, r=50, t=60, b=40),
                             xaxis=dict(showgrid=True, gridcolor='#2a2a3a'),
                             yaxis=dict(showgrid=True, gridcolor='#2a2a3a'),
                             template="plotly_dark",
@@ -2205,11 +2208,14 @@ def page_patterns():
         # Risk rules display
         st.markdown("#### 📖 Règles Fondamentales de Risk Management")
         
-        for idx, rule in enumerate(RISK_MANAGEMENT_RULES, 1):
-            with st.expander(f"🔹 **Règle {idx}: {rule.get('titre', 'N/A')}**"):
-                st.markdown(f"**Description:** {rule.get('description', 'N/A')}")
-                st.markdown(f"**Points clés:** {rule.get('points_cles', 'N/A')}")
+        from src.educational_content import RISK_MANAGEMENT_RULES
+        for idx, (key, rule) in enumerate(RISK_MANAGEMENT_RULES.items(), 1):
+            titre = rule.get('titre', f'Règle {idx}')
+            with st.expander(f"🔹 **Règle {idx}: {titre}**"):
+                st.markdown(f"**Règle:** {rule.get('règle', 'N/A')}")
                 st.markdown(f"**Exemple:** {rule.get('exemple', 'N/A')}")
+                st.markdown(f"**Erreur à éviter:** {rule.get('erreur', 'N/A')}")
+                st.markdown(f"**Solution:** {rule.get('solution', 'N/A')}")
     
     # === TAB 4: PSYCHOLOGY ===
     with tab_psychology:
@@ -2355,6 +2361,7 @@ def main():
         st.markdown("### 📞 **SUPPORT**")
         st.caption("© 2025-2026 ELOADXFAMILY")
         st.caption("*Professional Trading Analysis*")
+        st.caption("📧 **Email:** eloadxfamily@gmail.com")
         
         if st.button("📖 GitHub Repo", use_container_width=True):
             st.markdown("[EL-AX/dubai-trading-tools](https://github.com/EL-AX/dubai-trading-tools)")
