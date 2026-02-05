@@ -598,7 +598,7 @@ def page_news_ai():
     """Section actualités IA en temps réel - Vraies sources (Reddit, RSS, CoinGecko)"""
     st.title("📰 Actualités Temps Réel - Intelligence du Marché")
     
-    # Refresh button
+    # Refresh button with status
     col_refresh, col_info = st.columns([1, 4])
     with col_refresh:
         if st.button("🔄 Actualiser", use_container_width=True):
@@ -607,7 +607,7 @@ def page_news_ai():
             cache.delete("real_news_all")
             st.rerun()
     with col_info:
-        st.info("✅ Cache 10min | Sources: Reddit, CoinDesk, CoinTelegraph, CoinGecko")
+        st.info("✅ Cache 10min | 4 Sources réelles | Analyse IA sentiment | Live 24/7")
     
     # Get REAL news from real sources
     from src.real_news import get_all_real_news
@@ -620,74 +620,103 @@ def page_news_ai():
         neutral_count = sentiments.count('neutral')
         total_count = len(news_items)
         
-        # Sentiment Summary with Gauge
-        st.subheader("📊 Sentiment du Marché")
-        col1, col2, col3, col4 = st.columns(4)
+        # Sentiment Summary - Professional Dashboard Style
+        st.subheader("📊 Sentiment du Marché - Vue Globale")
+        col1, col2, col3, col4, col5 = st.columns(5)
         with col1:
-            st.metric("🟢 Bullish", bullish_count, f"+{round(bullish_count/total_count*100)}%")
+            st.metric("🟢 Bullish", bullish_count, f"+{round(bullish_count/total_count*100)}%", delta_color="normal")
         with col2:
-            st.metric("🔴 Bearish", bearish_count, f"-{round(bearish_count/total_count*100)}%")
+            st.metric("🔴 Bearish", bearish_count, f"-{round(bearish_count/total_count*100)}%", delta_color="inverse")
         with col3:
             st.metric("⚪ Neutre", neutral_count, f"{round(neutral_count/total_count*100)}%")
         with col4:
-            st.metric("📰 Total", total_count)
+            st.metric("📰 Total", total_count, "news")
+        with col5:
+            # Calculate market momentum
+            momentum = ((bullish_count - bearish_count) / total_count * 100)
+            st.metric("📈 Momentum", f"{momentum:+.0f}%", "Market")
         
         # Create sentiment gauge
         sentiment_balance = ((bullish_count - bearish_count) / total_count * 100) if total_count > 0 else 0
         st.divider()
         
-        col_gauge_label, col_gauge = st.columns([1, 3])
+        # Sentiment indicator - Improved
+        col_gauge_label, col_gauge_value, col_gauge_bar = st.columns([1, 2, 2])
         with col_gauge_label:
-            st.markdown("**Sentiment Global:**")
-        with col_gauge:
-            if sentiment_balance > 30:
+            st.markdown("**État du Marché:**")
+        with col_gauge_value:
+            if sentiment_balance > 40:
                 st.success(f"🟢 TRÈS HAUSSIER ({sentiment_balance:+.0f}%)")
-            elif sentiment_balance > 10:
+            elif sentiment_balance > 15:
                 st.success(f"🟢 HAUSSIER ({sentiment_balance:+.0f}%)")
-            elif sentiment_balance > -10:
+            elif sentiment_balance > -15:
                 st.info(f"⚪ NEUTRE ({sentiment_balance:+.0f}%)")
-            elif sentiment_balance > -30:
+            elif sentiment_balance > -40:
                 st.error(f"🔴 BAISSIER ({sentiment_balance:+.0f}%)")
             else:
                 st.error(f"🔴 TRÈS BAISSIER ({sentiment_balance:+.0f}%)")
+        with col_gauge_bar:
+            # Show progress bar for sentiment
+            gauge_value = (sentiment_balance + 100) / 200  # Normalize from -100 to +100
+            st.progress(min(max(gauge_value, 0), 1), text=f"Force: {abs(sentiment_balance):.0f}%")
         
         st.divider()
         
-        # Filters
-        st.subheader("🔍 Filtrer par:")
-        col_filter1, col_filter2 = st.columns(2)
+        # Advanced Filters
+        st.subheader("🔍 Analyse Personnalisée - Filtres Avancés")
+        col_filter1, col_filter2, col_filter3 = st.columns(3)
         
         with col_filter1:
             sentiment_filter = st.multiselect(
-                "Sentiment",
-                ["Haussier", "Baissier", "Neutre"],
-                default=["Haussier", "Baissier", "Neutre"],
+                "📊 Filtre Sentiment",
+                ["🟢 Haussier", "🔴 Baissier", "⚪ Neutre"],
+                default=["🟢 Haussier", "🔴 Baissier", "⚪ Neutre"],
                 key="sentiment_filter"
             )
         
         with col_filter2:
             sources = sorted(list(set([n.get('source', 'Unknown') for n in news_items])))
             source_filter = st.multiselect(
-                "Source",
+                "🌐 Source d'Information",
                 sources,
                 default=sources,
                 key="source_filter"
             )
         
+        with col_filter3:
+            # Extract unique symbols mentioned
+            all_symbols = set()
+            for n in news_items:
+                sym = n.get('symbol', '')
+                if sym:
+                    all_symbols.add(sym)
+            symbols = sorted(list(all_symbols))
+            if symbols:
+                symbol_filter = st.multiselect(
+                    "💰 Actifs Mentionnés",
+                    symbols,
+                    default=symbols[:3] if len(symbols) > 3 else symbols,
+                    key="symbol_filter"
+                )
+            else:
+                symbol_filter = []
+        
         # Map filter names to sentiment values
-        sentiment_map = {"Haussier": "bullish", "Baissier": "bearish", "Neutre": "neutral"}
-        selected_sentiments = [sentiment_map[s] for s in sentiment_filter]
+        sentiment_map = {"🟢 Haussier": "bullish", "🔴 Baissier": "bearish", "⚪ Neutre": "neutral"}
+        selected_sentiments = [sentiment_map.get(s, s) for s in sentiment_filter]
         
         # Apply filters
         filtered_news = [
             n for n in news_items 
             if n.get('sentiment', 'neutral') in selected_sentiments 
             and n.get('source', 'Unknown') in source_filter
+            and (not symbol_filter or n.get('symbol', '') in symbol_filter)
         ]
         
         st.divider()
-        st.subheader(f"📰 Actualités ({len(filtered_news)})")
+        st.subheader(f"📰 Actualités Filtrées ({len(filtered_news)}/{total_count})")
         
+
         # Display filtered news
         if filtered_news:
             for idx, news in enumerate(filtered_news, 1):
@@ -771,10 +800,14 @@ def page_dashboard():
         st.session_state.show_welcome = False
         st.session_state.just_logged_in_user = None
     
-    st.write(f"**Utilisateur:** {st.session_state.user_name}")
+    col_user, col_stats = st.columns([2, 2])
+    with col_user:
+        st.write(f"**Utilisateur:** {st.session_state.user_name}")
+    with col_stats:
+        st.metric("📊 Actifs Disponibles", "11", "+3 depuis v5")
     
     st.markdown("---")
-    st.subheader("1️⃣ Sélection des Actifs")
+    st.subheader("1️⃣ Sélection des Actifs - Choisissez vos Pairs")
     
     # ALL supported tickers
     tickers = ["BTC", "ETH", "SOL", "ADA", "XRP", "DOT", "EUR", "GBP", "JPY", "AUD", "XAU"]
@@ -787,17 +820,12 @@ def page_dashboard():
         # Display last update time
         from datetime import datetime as dt
         now = dt.now().strftime("%H:%M:%S")
-        st.caption(f"🔄 Dernière mise à jour: {now} | Les prix s'actualisent automatiquement (comme une montre de sport)")
-        
-        # Add auto-refresh for live prices (like a sports watch)
-        if "price_refresh_counter" not in st.session_state:
-            st.session_state.price_refresh_counter = 0
-        
-        # Placeholder for refresh button
-        col_refresh = st.columns([5, 1])[1]
-        with col_refresh:
-            if st.button("🔄", key="refresh_prices", use_container_width=True):
-                st.session_state.price_refresh_counter += 1
+        col_info, col_btn = st.columns([5, 1])
+        with col_info:
+            st.caption(f"🔴 EN DIRECT | Mise à jour: {now} | Refresh auto toutes les 5min | {len(selected_tickers)} pairs monitorés")
+        with col_btn:
+            if st.button("🔄 Actualiser", key="refresh_prices", use_container_width=True):
+                st.session_state.price_refresh_counter = (st.session_state.get("price_refresh_counter", 0) + 1)
                 st.rerun()
         
         price_cols = st.columns(len(selected_tickers))
@@ -864,18 +892,26 @@ def page_dashboard():
         
         # Get period from session state
         selected_period = st.session_state.get("selected_period", "1D")
+        # For short periods, fetch more data to calculate indicators properly
         days_to_fetch = {
-            "1H": 1,
-            "4H": 1,
-            "1D": 30,
-            "1W": 90,
-            "1M": 365,
-            "3M": 365
+            "1H": 7,      # 7 days for 1H period (better indicators)
+            "4H": 7,      # 7 days for 4H period
+            "1D": 30,     # 30 days for daily
+            "1W": 90,     # 90 days for weekly
+            "1M": 180,    # 180 days for monthly
+            "3M": 365     # 365 days for quarterly
         }.get(selected_period, 30)
         
         st.markdown("---")
         for ticker in selected_tickers:
-            st.subheader(f"📈 {ticker} - Période: {selected_period}")
+            # Display with period badge
+            period_badge = {"1H": "⏱️ 1 Heure", "4H": "⏱️ 4 Heures", "1D": "📅 1 Jour", "1W": "📆 1 Semaine", "1M": "📊 1 Mois", "3M": "📈 3 Mois"}
+            badge = period_badge.get(selected_period, "1 Jour")
+            col_title, col_badge = st.columns([3, 1])
+            with col_title:
+                st.subheader(f"📈 {ticker}")
+            with col_badge:
+                st.info(badge)
             
             hist_data = get_historical_data(ticker, days=days_to_fetch)
             
@@ -1266,17 +1302,25 @@ def page_patterns():
     ])
     
     # ============================================================================
-    # TAB 1: PATTERNS CANDLESTICK
+    # TAB 1: PATTERNS CANDLESTICK - IMPROVED
     # ============================================================================
     with tabs[0]:
-        st.header("19 Chandeliers Japonais Essentiels")
+        st.header("🕯️ 19 Chandeliers Japonais Essentiels")
         
-        col1, col2 = st.columns([1, 2])
-        with col1:
+        col_select, col_search = st.columns([2, 2])
+        with col_select:
             pattern_selected = st.selectbox(
                 "🎯 Choisissez un pattern:",
                 list(CANDLESTICK_PATTERNS.keys()),
                 key="pattern_select"
+            )
+        
+        with col_search:
+            # Quick filter by type (bullish/bearish)
+            pattern_type_filter = st.radio(
+                "📈 Type de Pattern",
+                ["Tous", "Haussier", "Baissier"],
+                horizontal=True
             )
         
         if pattern_selected:
