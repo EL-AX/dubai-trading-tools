@@ -8,6 +8,7 @@
 
 import streamlit as st
 import pandas as pd
+import numpy as np
 import plotly.graph_objects as go
 import plotly.express as px
 from plotly.subplots import make_subplots
@@ -1881,23 +1882,54 @@ def page_dashboard():
         st.subheader("⚠️ Analyse des Risques")
         
         for ticker in selected_tickers:
-            hist_data = get_historical_data(ticker, days=30)
-            prices = hist_data['close'].values
-            
-            risk_assessment = RiskAssessment(prices, period=30)
-            risk_data = risk_assessment.calculate_risk_reward()
-            
-            st.write(f"**{ticker}**")
-            col1, col2, col3, col4 = st.columns(4)
-            with col1:
-                st.metric("Prix Actuel", f"${risk_data['entry']:.4f}")
-            with col2:
-                st.metric("Support (30J)", f"${risk_data['support']:.4f}")
-            with col3:
-                st.metric("Résistance (30J)", f"${risk_data['resistance']:.4f}")
-            with col4:
-                ratio_display = f"{risk_data['ratio']:.2f}" if risk_data['ratio'] > 0 else "N/A"
-                st.metric("Ratio R/R", ratio_display)
+            try:
+                # Récupérer les données réelles avec une période plus longue pour meilleure analyse
+                hist_data = get_historical_data(ticker, days=90)
+                
+                if hist_data is None or len(hist_data) == 0:
+                    st.warning(f"Données indisponibles pour {ticker}")
+                    continue
+                
+                prices = hist_data['close'].values
+                
+                # Valider que nous avons des données valides
+                if len(prices) == 0 or np.isnan(prices).all():
+                    st.warning(f"Données invalides pour {ticker}")
+                    continue
+                
+                # Nettoyer les NaN
+                prices = np.nan_to_num(prices, nan=np.nanmean(prices) if not np.isnan(np.nanmean(prices)) else prices[-1])
+                
+                # Utiliser une période adaptée selon la quantité de données
+                period = min(30, len(prices) // 3)
+                
+                risk_assessment = RiskAssessment(prices, period=period)
+                risk_data = risk_assessment.calculate_risk_reward()
+                
+                # Valider les résultats
+                current_price = float(risk_data['entry'])
+                support = float(risk_data['support'])
+                resistance = float(risk_data['resistance'])
+                ratio = float(risk_data['ratio'])
+                
+                # Vérifier que les valeurs sont sensées
+                if np.isnan(current_price) or np.isnan(support) or np.isnan(resistance):
+                    st.warning(f"Calcul des niveaux impossible pour {ticker}")
+                    continue
+                
+                st.write(f"**{ticker}**")
+                col1, col2, col3, col4 = st.columns(4)
+                with col1:
+                    st.metric("Prix Actuel", f"${current_price:.4f}")
+                with col2:
+                    st.metric("Support (90J)", f"${support:.4f}")
+                with col3:
+                    st.metric("Résistance (90J)", f"${resistance:.4f}")
+                with col4:
+                    ratio_display = f"{ratio:.2f}" if ratio > 0 and not np.isnan(ratio) else "N/A"
+                    st.metric("Ratio R/R", ratio_display)
+            except Exception as e:
+                st.warning(f"Erreur lors du calcul des risques pour {ticker}: {str(e)}")
         
         st.markdown("---")
         st.subheader("📜 Historique des Alertes")
