@@ -280,30 +280,30 @@ def page_tutorial():
     """Tutoriel et centre d'apprentissage - Plateforme d'éducation professionnelle"""
     st.title(" CENTRE D'APPRENTISSAGE - Maîtriser le Trading Professionnel")
     
-    st.markdown("*Complete trading education • Interactive learning • Quiz-based mastery*")
+    st.markdown("*Éducation complète au trading • Apprentissage interactif • Maîtrise basée sur des quiz*")
     
     # Overview metrics
     col_m1, col_m2, col_m3, col_m4 = st.columns(4)
     with col_m1:
-        st.metric(" Modules", "7", "Complete")
+        st.metric("- Modules", "7", "Complets")
     with col_m2:
-        st.metric(" Topics", "50+", "Covered")
+        st.metric("- Sujets", "50+", "Couverts")
     with col_m3:
-        st.metric(" Quiz", "15+", "Interactive")
+        st.metric("- Quiz", "15+", "Interactifs")
     with col_m4:
-        st.metric("️ Time", "2-3h", "To Master")
+        st.metric("- Temps", "2-3h", "Pour Maîtriser")
     
     st.divider()
     
     # === 7 LEARNING TABS ===
     tab_auth, tab_dashboard, tab_indicators, tab_strategy, tab_news, tab_patterns, tab_faq = st.tabs([
-        " Auth & Start",
-        " Dashboard Guide",
-        " Indicators",
-        " Strategies",
-        " News Analysis",
-        "️ Patterns Mastery",
-        " FAQ"
+        "- Démarrage",
+        "- Tableau de Bord",
+        "- Indicateurs",
+        "- Stratégies",
+        "- Analyse Actualités",
+        "- Patterns Mastery",
+        "- FAQ"
     ])
     
     # === TAB 1: AUTHENTICATION ===
@@ -314,22 +314,22 @@ def page_tutorial():
         col1, col2 = st.columns(2)
         
         with col1:
-            st.markdown("#### Registration Process")
+            st.markdown("#### Processus d'Inscription")
             st.markdown("""
-            **Step 1: Sign Up**
-            - Enter your email address
-            - Create a strong password (8+ chars, mixed case, numbers)
-            - Agree to terms
+            **Étape 1: S'inscrire**
+            - Entrez votre adresse email
+            - Créez un mot de passe fort (8+ caractères, majuscules/minuscules mélangées, chiffres)
+            - Acceptez les conditions
             
-            **Step 2: Email Verification**
-            - Check your inbox (within 2 min)
-            - Copy the 6-digit code
-            - Enter code to confirm
+            **Étape 2: Vérification Email**
+            - Consultez votre boîte de réception (dans les 2 min)
+            - Copiez le code à 6 chiffres
+            - Entrez le code pour confirmer
             
-            **Step 3: Login**
-            - Use your email and password
-            - Access your personalized dashboard
-            - Start analyzing!
+            **Étape 3: Connexion**
+            - Utilisez votre email et mot de passe
+            - Accédez à votre tableau de bord personnalisé
+            - Commencez l'analyse!
             """)
         
         with col2:
@@ -365,52 +365,52 @@ def page_tutorial():
         sub_col1, sub_col2 = st.columns(2)
         
         with sub_col1:
-            with st.expander(" **Sélection d'Actifs**", expanded=True):
+            with st.expander("- **Sélection d'Actifs**", expanded=True):
                 st.markdown("""
-                **Available Assets (11 Total)**
+                **Actifs Disponibles (11 Total)**
                 
-                🪙 **Cryptocurrencies (6)**
-                - BTC (Bitcoin) - Largest cap
-                - ETH (Ethereum) - Smart contracts
-                - SOL (Solana) - High speed
+                Cryptocurrencies (6)
+                - BTC (Bitcoin) - Plus grande capitalisation
+                - ETH (Ethereum) - Contrats intelligents
+                - SOL (Solana) - Haute vitesse
                 - ADA (Cardano) - Proof-of-stake
-                - XRP (Ripple) - Payments
-                - DOT (Polkadot) - Interoperability
+                - XRP (Ripple) - Paiements
+                - DOT (Polkadot) - Interopérabilité
                 
-                 **Forex Pairs (4)**
-                - EUR (Euro) - European
-                - GBP (British Pound)
-                - JPY (Japanese Yen)
-                - AUD (Australian Dollar)
+                Forex (4)
+                - EUR (Euro) - Européen
+                - GBP (Livre Sterling)
+                - JPY (Yen Japonais)
+                - AUD (Dollar Australien)
                 
-                 **Commodities (1)**
-                - XAU (Gold) - Safe haven
+                Matières Premières (1)
+                - XAU (Or) - Valeur refuge
                 
-                ** Tip**: Start with 2-3 assets, master them, then expand.
+                Conseil: Commencez avec 2-3 actifs, maîtrisez-les, puis élargissez.
                 """)
         
         with sub_col2:
-            with st.expander("️ **Sélecteur de Période (NOUVEAU)**", expanded=True):
+            with st.expander("- **Sélecteur de Période**", expanded=True):
                 st.markdown("""
-                **6 Timeframes Available**
+                **6 Périodes Disponibles**
                 
-                ️ **Short-Term Trading**
-                - 1H (1 Hour) - Scalping
-                - 4H (4 Hours) - Day trading
+                **Trading Court Terme**
+                - 1H (1 Heure) - Scalping
+                - 4H (4 Heures) - Trading intrajournalier
                 
-                 **Medium-Term**
-                - 1D (1 Day) - Swing trading
-                - 1W (1 Week) - Position trading
+                **Terme Moyen**
+                - 1D (1 Jour) - Swing trading
+                - 1W (1 Semaine) - Position trading
                 
-                 **Long-Term**
-                - 1M (1 Month) - Trend following
-                - 3M (3 Months) - Long-term investing
+                **Long Terme**
+                - 1M (1 Mois) - Suivi de tendance
+                - 3M (3 Mois) - Investissement long terme
                 
-                **Each period:**
-                - Fetches appropriate data range
-                - Recalculates all indicators
-                - Shows only relevant candles
-                - Updates title with period info
+                **Pour chaque période:**
+                - Récupère la plage de données appropriée
+                - Recalcule tous les indicateurs
+                - Affiche uniquement les bougies pertinentes
+                - Met à jour le titre avec les infos de période
                 """)
         
         st.divider()
@@ -418,60 +418,60 @@ def page_tutorial():
         col_a, col_b, col_c = st.columns(3)
         
         with col_a:
-            with st.expander(" **Live Price Display**"):
+            with st.expander("- **Affichage Prix en Temps Réel**"):
                 st.markdown("""
                 **Mises à Jour en Temps Réel**
-                - Current price in USD
-                - 24h change (%+$)
-                - Green = Positive
-                - Red = Negative
-                - Auto-refresh every 5 seconds
-                - Data from CoinGecko + IEX
+                - Prix actuel en USD
+                - Variation 24h (%+$)
+                - Vert = Positif
+                - Rouge = Négatif
+                - Mise à jour auto toutes les 5 secondes
+                - Données de CoinGecko + IEX
                 """)
         
         with col_b:
-            with st.expander(" **Candlestick Chart**"):
+            with st.expander("- **Graphique Chandeliers**"):
                 st.markdown("""
                 **Style Professionnel**
-                - XM-aligned colors
-                - Green (#1bc47d) = Bullish
-                - Red (#ff3d3d) = Bearish
-                - Volume bars synchronized
-                - Dark theme for eyes
-                - Mobile-friendly responsive
+                - Couleurs alignées XM
+                - Vert (#1bc47d) = Haussier
+                - Rouge (#ff3d3d) = Baissier
+                - Volumes synchronisés
+                - Théma sombre pour les yeux
+                - Réactif compatible mobile
                 
                 **Interactions:**
-                - Hover for OHLC details
-                - Pan with mouse
-                - Zoom in/out
-                - Ranged selection
+                - Survolez pour détails OHLC
+                - Panorama avec la souris
+                - Zoom avant/arrière
+                - Sélection de plage
                 """)
         
         with col_c:
-            with st.expander("️ **Indicator Toggle**"):
+            with st.expander("- **Basculement Indicateurs**"):
                 st.markdown("""
-                **Select Your Indicators**
+                **Sélectionnez Vos Indicateurs**
                 
-                 RSI (14)
-                - Momentum oscillator
-                - Default ON
+                **RSI (14)**
+                - Oscillateur de momentum
+                - Active par défaut
                 
-                ⬜ MACD
-                - Trend detector
-                - Default OFF
+                **MACD**
+                - Détecteur de tendance
+                - Désactivé par défaut
                 
-                ⬜ Bollinger Bands
-                - Volatility bands
-                - Default OFF
+                **Bandes de Bollinger**
+                - Bandes de volatilité
+                - Désactivé par défaut
                 
                 **Mix & Match:**
-                Enable the ones you use
-                Most traders start with RSI
+                Activez ceux que vous utilisez
+                La plupart des traders commencent avec RSI
                 """)
     
     # === TAB 3: INDICATORS ===
     with tab_indicators:
-        st.markdown("### Technical Indicators - Complete Guide")
+        st.markdown("### Indicateurs Techniques - Guide Complet")
         
         # 3 main indicators
         ind_tabs = st.tabs([" RSI", " MACD", " Bollinger Bands"])
@@ -512,10 +512,10 @@ def page_tutorial():
                 - RSI > 70 on resistance
                 
                 **️ Warning**
-                - RSI alone not enough
+                - RSI seul n'est pas suffisant
                 - Combine with other indicators
                 - Can stay overbought/oversold
-                - Use confluence, not isolation
+                - Utilisez confluence, pas l'isolement
                 """)
         
         with ind_tabs[1]:
@@ -590,7 +590,7 @@ def page_tutorial():
                 - Squeeze = Breakout coming
                 
                 **Combined Signal**
-                - Price at band + RSI extreme = Strong
+                - Prix en bande + RSI extrême = Forte
                 - Use for mean reversion trades
                 - Works best in ranging markets
                 """)
@@ -606,11 +606,11 @@ def page_tutorial():
             st.markdown("""
             **Rules (Super Simple)**
             1. Select 1D (daily) timeframe
-            2. Watch for STRONG_BUY signal (>80)
+            2. Attendez le signal ACHAT_FORT (>80)
             3. Enter BUY trade with 1% risk
             4. Stop loss at recent low
             5. Take profit at 2:1 ratio
-            6. Wait for STRONG_SELL (<20) to exit
+            6. Attendez VENTE_FORTE (<20) pour sortir
             
             **Why It Works**
             - Based on composite signals
@@ -620,7 +620,7 @@ def page_tutorial():
             
             **Example Trade**
             - BTC at $45,000 on 1D
-            - Signal: STRONG_BUY (85%)
+            - Signal: ACHAT_FORT (85%)
             - Account: $10,000
             - Risk: 1% = $100
             - Entry: 45,000 → SL: 44,500 → TP: 46,000
@@ -637,7 +637,7 @@ def page_tutorial():
             
             **Indicator Confluence**
             - RSI > 50 AND MACD > signal AND Price > BB-mid
-            - = Strong uptrend signal
+            - = Signal d'uptrend forte
             - Risk/Reward minimum 1:2
             
             **Advanced Rules**
@@ -679,7 +679,7 @@ def page_tutorial():
             - Always set before entry
             - Below recent low (support)
             - Based on volatility (ATR)
-            - Not "hoping" distance away
+            - Pas « d'espoir » loin
             """)
         
         with strat_tabs[3]:
@@ -719,10 +719,10 @@ def page_tutorial():
                 - Removes "hope"
                 - Defines risk upfront
             
-            7. **Trade the Plan, Not the News**
+            7. **Tradez le Plan, Pas l'Actualité**
                 - News creates noise/emotions
                 - Stick to your strategy
-                - React to signals, not headlines
+                - Réagissez aux signaux, pas aux gros titres
                 - Don't FOMO trade
             """)
         
@@ -752,7 +752,7 @@ def page_tutorial():
               - Emotionally calm?
               - No revenge trading?
               - Following the plan?
-              - Not overtraded today?
+              - Pas surtraité aujourd'hui?
             
              **Execution**
               - Order correct quantity?
@@ -2051,17 +2051,17 @@ def page_patterns():
                 col1, col2 = st.columns(2)
                 
                 with col1:
-                    with st.expander(" **Description**", expanded=True):
+                    with st.expander("- **Description**", expanded=True):
                         st.markdown(pattern_info.get('description', 'N/A'))
                     
-                    with st.expander(" **Signification**"):
+                    with st.expander("- **Signification**"):
                         st.markdown(pattern_info.get('signification', 'N/A'))
                 
                 with col2:
-                    with st.expander(" **Comment l'identifier**"):
+                    with st.expander("- **Comment l'identifier**"):
                         st.markdown(pattern_info.get('identification', 'N/A'))
                     
-                    with st.expander(" **Conseil de Trading**"):
+                    with st.expander("- **Conseil de Trading**"):
                         st.markdown(pattern_info.get('trading_tip', 'N/A'))
                 
                 st.divider()
@@ -2138,28 +2138,28 @@ def page_patterns():
                 
                 col_a, col_b = st.columns(2)
                 with col_a:
-                    with st.expander(" **Description**", expanded=True):
+                    with st.expander("- **Description**", expanded=True):
                         st.markdown(strategy_info.get('nom', 'N/A'))
                         st.markdown(strategy_info.get('description', 'N/A'))
                 
                 with col_b:
-                    with st.expander(" **Mise en Place**"):
+                    with st.expander("- **Mise en Place**"):
                         st.markdown(strategy_info.get('setup', 'N/A'))
                 
                 st.divider()
                 
                 col_x, col_y = st.columns(2)
                 with col_x:
-                    with st.expander(" **Signaux d'Entrée**"):
+                    with st.expander("- **Signaux d'Entrée**"):
                         st.markdown(strategy_info.get('entry_signals', 'N/A'))
                 
                 with col_y:
-                    with st.expander(" **Signaux de Sortie**"):
+                    with st.expander("- **Signaux de Sortie**"):
                         st.markdown(strategy_info.get('exit_signals', 'N/A'))
                 
                 st.divider()
                 
-                with st.expander(" **Tips et Conseils**"):
+                with st.expander("- **Tips et Conseils**"):
                     st.markdown(strategy_info.get('tips', 'N/A'))
     
     # === TAB 3: RISK MANAGEMENT ===
@@ -2400,7 +2400,7 @@ def main():
             st.markdown("""
             **Détails du Compte:**
             - Statut: Vérifié 
-            - Membre depuis: 2025
+            - Membre depuis: 2026
             - Dernière connexion: Aujourd'hui
             - Sessions: 1 active
             """)
@@ -2462,7 +2462,7 @@ def main():
     st.markdown("""
     <div style='text-align: center; color: #888; font-size: 0.8rem; padding: 20px;'>
     <p> <strong>Dubai Trading Tools v6.1</strong> | Professional Analysis Platform</p>
-    <p>© 2025-2026 <strong>ELOADXFAMILY</strong> - All Rights Reserved</p>
+    <p>© 2025-2026 <strong>ELOADXFAMILY</strong> - Tous droits réservés</p>
     <p>️ <em>This is an analysis tool, not a trading platform. Conduct your own research before trading.</em></p>
     </div>
     """, unsafe_allow_html=True)
