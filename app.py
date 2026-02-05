@@ -487,14 +487,14 @@ def page_tutorial():
                 RSI compares average gains to average losses
                 - Range: 0 to 100
                 - Formula: 100 - (100 / (1 + RS))
-                - Period: 14 candles (default)
-                - Smoothing: Wilder's method
+                - Période: 14 bougies (par défaut)
+                - Lissage: Méthode de Wilder
                 
-                **Interpretation**
-                - **>70**: Overbought (potential SELL)
-                - **30-70**: Normal range (NEUTRAL)
-                - **<30**: Oversold (potential BUY)
-                - **Divergence**: Price ↑ but RSI ↓ = Weak
+                **Interprétation**
+                - **>70**: Suracheté (VENDRE potentiel)
+                - **30-70**: Plage normale (NEUTRE)
+                - **<30**: Survendu (ACHETER potentiel)
+                - **Divergence**: Prix ↑ mais RSI ↓ = Faible
                 """)
             
             with col_rsi2:
@@ -540,23 +540,23 @@ def page_tutorial():
             
             with col_macd2:
                 st.markdown("""
-                **Trading Signals**
+                **Signaux de Trading**
                 
-                🟢 **Bullish Crossover**
-                - MACD crosses above Signal line
-                - Histogram turns positive
+                🟢 **Croisement Haussier**
+                - MACD croise au-dessus de la ligne Signal
+                - L'histogramme devient positif
                 - MACD > 0
                 
-                🔴 **Bearish Crossover**
-                - MACD crosses below Signal line
-                - Histogram turns negative
+                🔴 **Croisement Baissier**
+                - MACD croise au-dessous de la ligne Signal
+                - L'histogramme devient négatif
                 - MACD < 0
                 
-                **Strategy**
-                - Trade MACD crosses for momentum
-                - Confirm with price action
-                - Strongest on daily timeframes
-                - Good for trend-following
+                **Stratégie**
+                - Tradez les croisements MACD pour le momentum
+                - Confirmez avec l'action des prix
+                - Plus fort sur les timeframes quotidiens
+                - Bon pour le suivi de tendance
                 """)
         
         with ind_tabs[2]:
@@ -793,115 +793,115 @@ def page_tutorial():
             - Analyses détaillées
             - Décompositions techniques
             - Bon pour l'apprentissage
-            - Sometimes sensational
+            - Parfois sensationaliste
             
             🟢 **CoinGecko**
-            - Market trending
-            - Volume signals
-            - Trending cryptos
-            - Aggregated data
+            - Tendances du marché
+            - Signaux de volume
+            - Cryptos en tendance
+            - Données agrégées
             """)
         
         with col_news2:
             st.markdown("""
-            **🎯 How to Use Sentiment**
+            **🎯 Comment Utiliser le Sentiment**
             
-            🟢 **BULLISH Signals**
-            - >50% bullish news
-            - Positive sentiment gauge
-            - Institutions buying
-            - Opportunity to BUY
+            🟢 **Signaux HAUSSIERS**
+            - >50% actualités haussières
+            - Sentiment positif
+            - Institutions achètent
+            - Opportunité d'ACHETER
             
-            🔴 **BEARISH Signals**
-            - >50% bearish news
-            - Negative sentiment gauge
-            - Institutions selling
-            - Opportunity to SELL
+            🔴 **Signaux BAISSIERS**
+            - >50% actualités baissières
+            - Sentiment négatif
+            - Institutions vendent
+            - Opportunité de VENDRE
             
-            ⚪ **NEUTRAL Market**
-            - 40-50% bullish/bearish
-            - No clear direction
-            - Wait for clarity
-            - High risk trades
+            ⚪ **Marché NEUTRE**
+            - 40-50% haussier/baissier
+            - Pas de direction claire
+            - Attendez de la clarté
+            - Trades à haut risque
             
             **⚠️ Important**
-            - News confirms technical, not opposite
-            - Don't trade on news alone
-            - Check before and after major news
-            - Remember: "buy rumor, sell news"
+            - Les actualités confirment le technique, pas l'inverse
+            - Ne tradez pas sur les actualités seules
+            - Vérifiez avant et après les grande actualités
+            - Mémorisez: "acheter la rumeur, vendre la nouvelle"
             """)
     
     # === TAB 6: PATTERNS MASTERY ===
     with tab_patterns:
-        st.markdown("### 🕯️ Candlestick Patterns - Master 19 Essential Patterns")
+        st.markdown("### 🕯️ Patterns Candlestick - Maîtrisez les 19 Patterns Essentiels")
         
         st.markdown("""
-        **Why Candlestick Patterns Matter**
-        - 400+ years of trading history
-        - Millions of traders read the same patterns
-        - Self-fulfilling prophecy = patterns work
-        - Foundation of technical analysis
-        - Combines with indicators = powerful
+        **Pourquoi les Patterns Candlestick Comptent**
+        - 400+ années d'historique de trading
+        - Des millions de traders lisent les mêmes patterns
+        - Prophétie auto-réalisée = les patterns fonctionnent
+        - Fondation de l'analyse technique
+        - Combine avec les indicateurs = puissant
         
-        **Learning Path**
-        1. **Level 1 (Week 1-2)**: Master Hammer + Engulfing
-        2. **Level 2 (Week 3-4)**: Add Double Top/Bottom
-        3. **Level 3 (Month 2)**: Learn all 19 patterns
-        4. **Level 4 (Month 3)**: Trade with 80%+ accuracy
-        5. **Level 5 (Month 6)**: Combine with strategies
+        **Parcours d'Apprentissage**
+        1. **Niveau 1 (Semaine 1-2)**: Maîtrisez Marteau + Engulfing
+        2. **Niveau 2 (Semaine 3-4)**: Ajoutez Double Top/Bottom
+        3. **Niveau 3 (Mois 2)**: Apprenez tous les 19 patterns
+        4. **Niveau 4 (Mois 3)**: Tradez avec 80%+ de précision
+        5. **Niveau 5 (Mois 6)**: Combinez avec les stratégies
         
-        **Confidence Levels**
-        - ⭐⭐⭐ High reliability (70%+)
-        - ⭐⭐ Medium reliability (60%+)
-        - ⭐ Low reliability (50%+)
+        **Niveaux de Confiance**
+        - ⭐⭐⭐ Fiabilité élevée (70%+)
+        - ⭐⭐ Fiabilité moyenne (60%+)
+        - ⭐ Fiabilité faible (50%+)
         
-        **Best Practices**
-        - Use minimum 1H timeframe (less noise)
-        - Confirm with volume (must spike on breakout)
-        - Check overall trend (pattern > counter-trend)
-        - Wait for complete pattern (don't jump early)
-        - Always use stop loss (even on strong patterns)
-        - Journal every pattern (win/loss rate)
+        **Meilleures Pratiques**
+        - Utilisez minimum 1H de timeframe (moins de bruit)
+        - Confirmez avec le volume (doit augmenter au breakout)
+        - Vérifiez la tendance globale (pattern > contre-tendance)
+        - Attendez le pattern complet (ne sautez pas)
+        - Utilisez toujours un stop loss (même sur les patterns forts)
+        - Enregistrez chaque pattern (taux de victoire/perte)
         """)
         
-        st.info("👉 Head to **PATTERNS & STRATEGIES** page to learn all 19 patterns + take the interactive quiz!")
+        st.info("👉 Allez à la page **PATTERNS & STRATÉGIES** pour apprendre tous les 19 patterns + faire le quiz interactif!")
     
     # === TAB 7: FAQ ===
     with tab_faq:
-        st.markdown("### ❓ Frequently Asked Questions")
+        st.markdown("### ❓ Questions Fréquemment Posées")
         
         faqs = [
             {
-                "q": "How often should I check the app?",
-                "a": "Depends on timeframe. Day traders: every 4H. Swing traders: daily. Position traders: weekly. Set alerts instead of constant checking."
+                "q": "À quelle fréquence dois-je consulter l'appli?",
+                "a": "Cela dépend du timeframe. Day traders: tous les 4H. Swing traders: quotidiennement. Position traders: hebdomadairement. Préférez les alertes plutôt que la vérification constante."
             },
             {
-                "q": "Can I trade directly from this app?",
-                "a": "No. This is an analysis tool. Use Binance, Kraken, XM, eToro, etc. for actual trading. Keep analysis and trading separate."
+                "q": "Puis-je trader directement depuis cette appli?",
+                "a": "Non. C'est un outil d'analyse. Utilisez Binance, Kraken, XM, eToro, etc. pour le trading réel. Séparez l'analyse et le trading."
             },
             {
-                "q": "What's the minimum to start trading?",
-                "a": "Crypto: $10. Forex: $100. However, risk only what you can afford to lose. Most pros recommend $1,000+ to be meaningful."
+                "q": "Quel est le minimum pour commencer le trading?",
+                "a": "Crypto: $10. Forex: $100. Cependant, ne risquez que ce que vous pouvez vous permettre de perdre. La plupart des pros recommandent $1,000+ pour être significatif."
             },
             {
-                "q": "How long does it take to become profitable?",
-                "a": "Most traders: 6-12 months of consistent learning and practice. Some faster, some need years. Depends on discipline and time invested."
+                "q": "Combien de temps faut-il pour devenir rentable?",
+                "a": "La plupart des traders: 6-12 mois d'apprentissage et de pratique constants. Certains plus vite, d'autres ont besoin d'années. Dépend de la discipline et du temps investi."
             },
             {
-                "q": "Why do I keep losing money?",
-                "a": "Most common: No stop losses, over-leveraged, FOMO trading, chasing news, not following your plan. All fixable with discipline."
+                "q": "Pourquoi je perds continuellement de l'argent?",
+                "a": "Plus courant: Pas de stop losses, sur-effet de levier, trading FOMO, chasser les news, ne pas suivre votre plan. Tous fixables avec de la discipline."
             },
             {
-                "q": "Is this app free?",
-                "a": "Yes! Complete analysis tools, education, patterns, news, everything. No hidden fees. We believe in democratizing trading education."
+                "q": "L'appli est-elle gratuite?",
+                "a": "Oui! Outils d'analyse complets, éducation, patterns, actualités, tout. Pas de frais cachés. Nous croyons à la démocratisation de l'éducation trading."
             },
             {
-                "q": "How accurate are the indicators?",
-                "a": "No indicator is 100% accurate. Best traders use 60-70% win rate with proper risk management. Don't expect perfection."
+                "q": "Quelle est la précision des indicateurs?",
+                "a": "Aucun indicateur n'est 100% précis. Les meilleurs traders ont un taux de victoire de 60-70% avec une bonne gestion du risque. N'attendez pas la perfection."
             },
             {
-                "q": "Should I trade 24/7?",
-                "a": "No. Trade when setup is perfect. Crypto: 24/7 possible. Forex: Focus US/EU sessions for liquidity. Rest > overtrading."
+                "q": "Dois-je trader 24/7?",
+                "a": "Non. Tradez quand le setup est parfait. Crypto: 24/7 possible. Forex: Focus sur les sessions US/EU pour la liquidité. Repos > surtrading."
             },
             {
                 "q": "Combien de patterns dois-je apprendre?",
@@ -918,10 +918,10 @@ def page_tutorial():
                 st.markdown(f"**A:** {faq['a']}")
     
     st.divider()
-    st.success("🎓 **Learning Path Complete!** Head to PATTERNS or DASHBOARD to practice what you learned.")
+    st.success("🎓 **Parcours d'Apprentissage Complet!** Allez à PATTERNS ou TABLEAU DE BORD pour pratiquer ce que vous avez appris.")
 
 def page_login_register():
-    """Redesigned login/register flow with email verification integrated"""
+    """Flux de connexion/inscription redessiné avec vérification email intégrée"""
     st.markdown("## Connexion / Inscription")
     
     # Check if user just registered (for showing verification code entry on login)
@@ -1408,7 +1408,7 @@ def page_dashboard():
     with col_m4:
         st.metric("📰 News", "Temps Réel", "4 Sources")
     with col_m5:
-        st.metric("🤖 Patterns", "19", "Analysis Engine")
+        st.metric("🤖 Patterns", "19", "Moteur d'Analyse")
     st.divider()
     
     # === TAB LAYOUT FOR DASHBOARD ===
@@ -1995,9 +1995,9 @@ def page_patterns():
     
     # === 4 MAIN TABS ===
     tab_candlesticks, tab_strategies, tab_risk, tab_psychology = st.tabs([
-        "📊 Candlesticks (19)",
+        "📊 Chandeliers (19)",
         "📈 Stratégies (4)",
-        "⚠️ Risk Management",
+        "⚠️ Gestion du Risque",
         "🧠 Psychologie"
     ])
     
@@ -2362,13 +2362,13 @@ def main():
         # === SIDEBAR FOOTER ===
         st.markdown("### 📞 **SUPPORT**")
         st.caption("© 2025-2026 ELOADXFAMILY")
-        st.caption("*Professional Trading Analysis*")
+        st.caption("*Analyse Professionnelle du Trading*")
         st.caption("📧 **Email:** eloadxfamily@gmail.com")
         
         if st.button("📖 Dépôt GitHub", use_container_width=True):
             st.markdown("[EL-AX/dubai-trading-tools](https://github.com/EL-AX/dubai-trading-tools)")
     
-    # === PAGE ROUTING (only for authenticated users) ===
+    # === ROUTING DES PAGES (uniquement pour utilisateurs authentifiés) ===
     if page == "📈 Tableau de Bord":
         page_dashboard()
     elif page == "📰 Actualités IA":
@@ -2387,7 +2387,7 @@ def main():
         with col_prof2:
             st.metric("✉️ Email", st.session_state.get("user_email", "N/A"))
         with col_prof3:
-            st.metric("📅 Membre depuis", "2025")
+            st.metric("📅 Membre depuis", "2026")
         
         st.divider()
         
