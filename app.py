@@ -2375,9 +2375,9 @@ def main():
             st.markdown("### Préférences Utilisateur")
             st.markdown("""
             **Paramètres d'Affichage:**
-            - Thème: Sombre (Professionnel)
+            - Thème: Clair (Lisibilité Optimale)
             - Langue: Français
-            - Devise: EUR
+            - Devise: USD ($)
             - Période: 1 Jour (24h) - Affichage Uniforme
             - Granularité: Bougies Horaires pour tous les actifs
             """)
