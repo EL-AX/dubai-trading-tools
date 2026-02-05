@@ -277,217 +277,648 @@ def display_live_price_with_animation(ticker):
         }
 
 def page_tutorial():
-    """Tutorial and how-to page"""
-    st.title("📚 Comment Utiliser l'Application")
+    """Tutorial and learning hub - Professional education platform"""
+    st.title("🎓 LEARNING CENTER - Mastering Professional Trading")
     
-    with st.expander("🔐 1. Authentification", expanded=True):
-        st.markdown("""
-        **Étapes:**
-        1. **Inscription**: Créez un compte avec votre email et mot de passe
-        2. **Vérification**: Entrez le code de vérification reçu par email (6 chiffres)
-        3. **Connexion**: Utilisez vos identifiants pour accéder au tableau de bord
-        
-        **Conseils de sécurité:**
-        - Utilisez un mot de passe fort (minimum 8 caractères)
-        - Ne partagez jamais votre code de vérification
-        - Déconnectez-vous toujours après chaque session
-        """)
+    st.markdown("*Complete trading education • Interactive learning • Quiz-based mastery*")
     
-    with st.expander("📊 2. Tableau de Bord - Votre Centre de Contrôle"):
-        st.markdown("""
-        **🎯 Sélection des Actifs**
-        - Choisissez jusqu'à 8 actifs à analyser simultanément
-        - **Crypto**: BTC (Bitcoin), ETH (Ethereum), SOL (Solana), ADA, XRP, DOT
-        - **Forex**: EUR, GBP, JPY, AUD (parités de change)
-        - **Matières**: XAU (Or / Gold)
-        
-        **⏱️ Sélection de la Période** (NOUVEAU!)
-        - 6 boutons: **1H, 4H, 1D, 1W, 1M, 3M**
-        - Cliquez sur une période → le graphe s'actualise automatiquement
-        - Adapte la plage de données historiques
-        - Réajuste tous les indicateurs pour la période
-        
-        **💹 Prix en Temps Réel**
-        - Prix instantané avec changement 24h
-        - Devise convertie selon vos préférences (USD, EUR, GBP)
-        - Mise à jour automatique toutes les 5 minutes
-        - Indicateurs visuels: 🟢 (hausse), 🔴 (baisse)
-        
-        **📈 Graphiques Professionnels (XM Style)**
-        - Bougies candlestick conformes aux standards professionnels
-        - Couleurs: Vert #1bc47d (hausse), Rouge #ff3d3d (baisse)
-        - Sélectionnez votre période pour adapter le graphe
-        - Volume synchronisé en bas
-        - Responsive et optimisé pour mobile
-        
-        **🚨 Signaux & Alertes**
-        - Signaux composites automatiques (STRONG_BUY à STRONG_SELL)
-        - Alertes pour RSI, volatilité, changements 24h
-        """)
-    
-    with st.expander("📈 3. Indicateurs Techniques - Comprendre les Signaux"):
-        st.markdown("""
-        **RSI (Relative Strength Index)**
-        - Mesure le momentum de 0 à 100
-        - **>70**: Suracheté (vendre potentiellement)
-        - **<30**: Survendu (acheter potentiellement)
-        - Période: 14 bougies
-        
-        **MACD (Moving Average Convergence Divergence)**
-        - Détecte les changements de tendance
-        - **Croisement haussier**: Signal d'achat
-        - **Croisement baissier**: Signal de vente
-        - Utilise les moyennes mobiles 12 et 26 jours
-        
-        **Bandes de Bollinger**
-        - Montre la volatilité et les niveaux de support/résistance
-        - **Prix aux limites**: Potentiel retour à la moyenne
-        - Bande supérieure/inférieure = écart-type ±2
-        - Utile pour identifier les extrêmes
-        
-        **Signaux Composites**
-        - Combine **4 indicateurs** pour une fiabilité accrue
-        - **STRONG_BUY (80-100)**: Signal très bullish
-        - **BUY (60-80)**: Signal bullish modéré
-        - **NEUTRAL (40-60)**: Pas de direction claire
-        - **SELL (20-40)**: Signal bearish modéré
-        - **STRONG_SELL (0-20)**: Signal très bearish
-        """)
-    
-    with st.expander("🎯 4. Stratégies de Trading"):
-        st.markdown("""
-        **Stratégie Simple (Débutants)**
-        - Sélectionnez la période 1D pour tendances court-moyen terme
-        - Attendez STRONG_BUY (>80) pour acheter
-        - Attendez STRONG_SELL (<20) pour vendre
-        - Combinez avec les bandes de Bollinger pour confirmation
-        
-        **Stratégie Avancée (Professionnels)**
-        - Utilisez RSI + MACD + Bollinger ensemble
-        - Testez différentes périodes (1H pour scalping, 1W pour swing)
-        - Cherchez les divergences (prix monte, RSI baisse = signal faible)
-        - Identifiez les zones de support/résistance
-        - Gérez votre risque avec stop-loss et take-profit
-        
-        **Gestion du Risque**
-        - Risquez jamais >2% du portefeuille par trade
-        - Définissez un ratio risque/récompense minimum 1:2
-        - Utilisez les alertes pour détecter les mouvements
-        - Diversifiez sur plusieurs actifs
-        """)
-    
-    with st.expander("📰 5. Actualités IA - Analyse du Marché"):
-        st.markdown("""
-        **📊 Sentiment du Marché**
-        - Jauge visuelle montrant si marché est haussier ou baissier
-        - Pourcentage de news bullish/bearish/neutres
-        - Badge global: "TRÈS HAUSSIER" → "NEUTRE" → "TRÈS BAISSIER"
-        
-        **🔍 Filtres Avancés**
-        - Filtrez par **sentiment** (Haussier, Baissier, Neutre)
-        - Filtrez par **source** (Reddit, CoinDesk, CoinTelegraph, CoinGecko)
-        - Combinez les filtres pour analyses précises
-        
-        **💹 Sources de News**
-        - **Reddit**: Discussions communauté crypto
-        - **CoinDesk**: News institutionnelles
-        - **CoinTelegraph**: Analyses détaillées
-        - **CoinGecko**: Trending et signaux
-        
-        **💡 Comment utiliser:**
-        1. Vérifiez le sentiment global (jauge)
-        2. Filtrez pour "Haussier" = opportunités achat
-        3. Filtrez pour "Baissier" = prudence/vente
-        4. Cliquez les articles intéressants
-        5. Combinez avec votre analyse technique
-        
-        **⚠️ Important**: Les actualités et sentiment ne remplacent PAS votre stratégie!
-        """)
-    
-    with st.expander("🕯️ 6. Patterns & Trading - Maîtrisez les Chandeliers"):
-        st.markdown("""
-        **📚 19 Chandeliers Japonais Essentiels**
-        - Base du trading technique
-        - Chaque pattern a un signal (haussier/baissier)
-        - Fiabilité notée: ⭐⭐⭐ Haute, ⭐⭐ Moyenne, ⭐ Basse
-        
-        **📔 Journal de Patterns - Tracker Votre Apprentissage**
-        - Ajouter des patterns observés dans le marché
-        - Statuts: observé → confirmé → tradé → validé
-        - Exportez en CSV pour analyse
-        
-        **🎯 Quiz Interactif - Testez Vos Connaissances**
-        - 5 questions sur les chandeliers
-        - Explications complètes pour chaque réponse
-        - Score avec conseil basé sur performance
-        - Objectif: 100% pour maîtrise complète
-        
-        **📊 Statistiques d'Apprentissage**
-        - Pie chart de vos patterns tracés
-        - Barre de progression par sujet
-        - Recommandations personnalisées
-        - Gestion du risque intégrée
-        
-        **💰 Calculateur de Position Sizing**
-        - Entrez solde du compte, risque %, prix d'entrée/stop
-        - Calcule la taille exacte de position
-        - Valide si conforme aux règles (max 2% risque)
-        
-        **⚙️ 5 Stratégies de Trading**
-        1. **Simple**: STRONG_BUY/SELL sur RSI
-        2. **Avancée**: RSI + MACD + Bollinger
-        3. **Gestion Risque**: Position sizing + stop loss
-        4. **Psychologie**: 7 règles mentales du pro
-        5. **Checklist**: 10 points avant chaque trade
-        
-        **📝 Comment Progresser**
-        1. Étudiez les 19 patterns (onglet Patterns)
-        2. Pratiquez le quiz jusqu'à 100%
-        3. Trackez les patterns observés
-        4. Validez vos observations
-        5. Maîtrisez d'abord 2-3 patterns avant d'en apprendre d'autres
-        """)
-    
-    with st.expander("❓ 7. FAQ & Dépannage"):
-        st.markdown("""
-        **Q: Comment fonctionne le sélecteur de période?**
-        A: Cliquez sur 1H, 4H, 1D, 1W, 1M ou 3M → le graphe s'actualise automatiquement avec les données de cette période.
-        
-        **Q: Comment interpréter le sentiment de news?**
-        A: Vert (bullish) = marché positif, Rouge (bearish) = marché négatif, Gris (neutre) = pas de direction. Utilisez comme confirmation avec vos signaux techniques.
-        
-        **Q: Puis-je exporter mon journal de patterns?**
-        A: Oui! Onglet Journal → bouton "Exporter en CSV" → télécharge automatiquement.
-        
-        **Q: Comment gagner au quiz?**
-        A: Étudiez les descriptions de patterns dans l'onglet "Patterns". Répondez aux 5 questions. Visez 100% pour maîtrise complète.
-        
-        **Q: Pourquoi les prix ne se mettent pas à jour?**
-        A: L'app s'actualise toutes les 5 minutes. Attendez ou rechargez la page avec F5.
-        
-        **Q: Puis-je trader en direct?**
-        A: Cette app est un **outil d'analyse**, pas une plateforme de trading. Utilisez Binance, Kraken, XM, etc. pour les vraies positions.
-        
-        **Q: Mes données sont-elles sécurisées?**
-        A: Oui. Mot de passe hashé, emails vérifiés, données encryptées.
-        """)
+    # Overview metrics
+    col_m1, col_m2, col_m3, col_m4 = st.columns(4)
+    with col_m1:
+        st.metric("📚 Modules", "7", "Complete")
+    with col_m2:
+        st.metric("🎯 Topics", "50+", "Covered")
+    with col_m3:
+        st.metric("🎓 Quiz", "15+", "Interactive")
+    with col_m4:
+        st.metric("⏱️ Time", "2-3h", "To Master")
     
     st.divider()
-    st.info("💡 **Conseil Pro**: Testez vos stratégies avec les graphiques en papier avant d'investir de l'argent réel. Les performances passées n'indiquent pas les performances futures.")
     
-    st.markdown("""
-    ---
-    ## 📌 Résumé des 4 Sections Principales
+    # === 7 LEARNING TABS ===
+    tab_auth, tab_dashboard, tab_indicators, tab_strategy, tab_news, tab_patterns, tab_faq = st.tabs([
+        "🔐 Auth & Start",
+        "📊 Dashboard Guide",
+        "📈 Indicators",
+        "🎯 Strategies",
+        "📰 News Analysis",
+        "🕯️ Patterns Mastery",
+        "❓ FAQ"
+    ])
     
-    | Section | Fonction | Objectif |
-    |---------|----------|----------|
-    | 📊 **Dashboard** | Graphiques + Indicateurs | Analyser les prix en temps réel |
-    | 📰 **Actualités** | Sentiment marché + filtres | Comprendre la psychologie du marché |
-    | 🕯️ **Patterns** | 19 chandeliers + Quiz | Apprendre le trading technique |
-    | 📚 **Tutoriel** | Documentation complète | Maîtriser tous les outils |
+    # === TAB 1: AUTHENTICATION ===
+    with tab_auth:
+        st.markdown("### 🔐 Getting Started - Registration & Security")
+        st.markdown("Learn how to safely create an account and secure your data")
+        
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            st.markdown("#### ✅ Registration Process")
+            st.markdown("""
+            **Step 1: Sign Up**
+            - Enter your email address
+            - Create a strong password (8+ chars, mixed case, numbers)
+            - Agree to terms
+            
+            **Step 2: Email Verification**
+            - Check your inbox (within 2 min)
+            - Copy the 6-digit code
+            - Enter code to confirm
+            
+            **Step 3: Login**
+            - Use your email and password
+            - Access your personalized dashboard
+            - Start analyzing!
+            """)
+        
+        with col2:
+            st.markdown("#### 🔒 Security Best Practices")
+            st.markdown("""
+            **Password Security:**
+            - ✅ Use 12+ characters for accounts with money
+            - ✅ Mix upper/lowercase, numbers, symbols
+            - ✅ Don't reuse across multiple sites
+            - ❌ Never share your password
+            
+            **2FA & Verification:**
+            - ✅ Verify your email (required)
+            - ✅ Enable 2FA if available
+            - ✅ Save recovery codes securely
+            - ❌ Don't share verification codes
+            
+            **Data Privacy:**
+            - Your data is encrypted at rest
+            - Passwords are hashed (cannot be recovered)
+            - Sessions expire after inactivity
+            """)
+        
+        st.divider()
+        st.success("✅ Account secured? Let's move to the Dashboard!")
     
-    **Bon trading! 🚀**
-    """)
+    # === TAB 2: DASHBOARD GUIDE ===
+    with tab_dashboard:
+        st.markdown("### 📊 Dashboard Master - Real-Time Analysis Hub")
+        st.markdown("Your command center for monitoring 11 assets with professional tools")
+        
+        # 4 sub-sections
+        sub_col1, sub_col2 = st.columns(2)
+        
+        with sub_col1:
+            with st.expander("💰 **Asset Selection**", expanded=True):
+                st.markdown("""
+                **Available Assets (11 Total)**
+                
+                🪙 **Cryptocurrencies (6)**
+                - BTC (Bitcoin) - Largest cap
+                - ETH (Ethereum) - Smart contracts
+                - SOL (Solana) - High speed
+                - ADA (Cardano) - Proof-of-stake
+                - XRP (Ripple) - Payments
+                - DOT (Polkadot) - Interoperability
+                
+                💱 **Forex Pairs (4)**
+                - EUR (Euro) - European
+                - GBP (British Pound)
+                - JPY (Japanese Yen)
+                - AUD (Australian Dollar)
+                
+                🏆 **Commodities (1)**
+                - XAU (Gold) - Safe haven
+                
+                **💡 Tip**: Start with 2-3 assets, master them, then expand.
+                """)
+        
+        with sub_col2:
+            with st.expander("⏱️ **Period Selector (NEW)**", expanded=True):
+                st.markdown("""
+                **6 Timeframes Available**
+                
+                ⏱️ **Short-Term Trading**
+                - 1H (1 Hour) - Scalping
+                - 4H (4 Hours) - Day trading
+                
+                📅 **Medium-Term**
+                - 1D (1 Day) - Swing trading
+                - 1W (1 Week) - Position trading
+                
+                📈 **Long-Term**
+                - 1M (1 Month) - Trend following
+                - 3M (3 Months) - Long-term investing
+                
+                **Each period:**
+                - Fetches appropriate data range
+                - Recalculates all indicators
+                - Shows only relevant candles
+                - Updates title with period info
+                """)
+        
+        st.divider()
+        
+        col_a, col_b, col_c = st.columns(3)
+        
+        with col_a:
+            with st.expander("📈 **Live Price Display**"):
+                st.markdown("""
+                **Real-Time Updates**
+                - Current price in USD
+                - 24h change (%+$)
+                - 🟢 Green = Positive
+                - 🔴 Red = Negative
+                - Auto-refresh every 5 seconds
+                - Data from CoinGecko + IEX
+                """)
+        
+        with col_b:
+            with st.expander("📊 **Candlestick Chart**"):
+                st.markdown("""
+                **Professional Styling**
+                - XM-aligned colors
+                - 🟢 Green (#1bc47d) = Bullish
+                - 🔴 Red (#ff3d3d) = Bearish
+                - Volume bars synchronized
+                - Dark theme for eyes
+                - Mobile-friendly responsive
+                
+                **Interactions:**
+                - Hover for OHLC details
+                - Pan with mouse
+                - Zoom in/out
+                - Ranged selection
+                """)
+        
+        with col_c:
+            with st.expander("🎛️ **Indicator Toggle**"):
+                st.markdown("""
+                **Select Your Indicators**
+                
+                ✅ RSI (14)
+                - Momentum oscillator
+                - Default ON
+                
+                ⬜ MACD
+                - Trend detector
+                - Default OFF
+                
+                ⬜ Bollinger Bands
+                - Volatility bands
+                - Default OFF
+                
+                **Mix & Match:**
+                Enable the ones you use
+                Most traders start with RSI
+                """)
+    
+    # === TAB 3: INDICATORS ===
+    with tab_indicators:
+        st.markdown("### 📈 Technical Indicators - Complete Guide")
+        
+        # 3 main indicators
+        ind_tabs = st.tabs(["📊 RSI", "📉 MACD", "📈 Bollinger Bands"])
+        
+        with ind_tabs[0]:
+            st.markdown("#### RSI (Relative Strength Index)")
+            col_rsi1, col_rsi2 = st.columns(2)
+            
+            with col_rsi1:
+                st.markdown("""
+                **What It Measures**
+                
+                RSI compares average gains to average losses
+                - Range: 0 to 100
+                - Formula: 100 - (100 / (1 + RS))
+                - Period: 14 candles (default)
+                - Smoothing: Wilder's method
+                
+                **Interpretation**
+                - **>70**: Overbought (potential SELL)
+                - **30-70**: Normal range (NEUTRAL)
+                - **<30**: Oversold (potential BUY)
+                - **Divergence**: Price ↑ but RSI ↓ = Weak
+                """)
+            
+            with col_rsi2:
+                st.markdown("""
+                **Trading Signals**
+                
+                ✅ **Buy Signals**
+                - RSI crosses above 30 (from oversold)
+                - RSI divergence at lows
+                - RSI < 30 on support
+                
+                🔴 **Sell Signals**
+                - RSI crosses below 70 (from overbought)
+                - RSI divergence at highs
+                - RSI > 70 on resistance
+                
+                **⚠️ Warning**
+                - RSI alone not enough
+                - Combine with other indicators
+                - Can stay overbought/oversold
+                - Use confluence, not isolation
+                """)
+        
+        with ind_tabs[1]:
+            st.markdown("#### MACD (Moving Average Convergence Divergence)")
+            col_macd1, col_macd2 = st.columns(2)
+            
+            with col_macd1:
+                st.markdown("""
+                **What It Measures**
+                
+                MACD detects momentum shifts
+                - Uses exponential moving averages
+                - Compares EMA12 and EMA26
+                - Signal line = EMA9 of MACD
+                - Histogram = MACD - Signal
+                
+                **Components**
+                - **MACD Line** (blue): Fast component
+                - **Signal Line** (red): Slow component
+                - **Histogram** (bars): The difference
+                """)
+            
+            with col_macd2:
+                st.markdown("""
+                **Trading Signals**
+                
+                🟢 **Bullish Crossover**
+                - MACD crosses above Signal line
+                - Histogram turns positive
+                - MACD > 0
+                
+                🔴 **Bearish Crossover**
+                - MACD crosses below Signal line
+                - Histogram turns negative
+                - MACD < 0
+                
+                **Strategy**
+                - Trade MACD crosses for momentum
+                - Confirm with price action
+                - Strongest on daily timeframes
+                - Good for trend-following
+                """)
+        
+        with ind_tabs[2]:
+            st.markdown("#### Bollinger Bands - Volatility & Support/Resistance")
+            col_bb1, col_bb2 = st.columns(2)
+            
+            with col_bb1:
+                st.markdown("""
+                **What It Measures**
+                
+                Bollinger Bands track volatility
+                - Middle Band = SMA(20)
+                - Upper Band = SMA + (2 × StdDev)
+                - Lower Band = SMA - (2 × StdDev)
+                - Shows ±2 standard deviations
+                - Expands/contracts with volatility
+                """)
+            
+            with col_bb2:
+                st.markdown("""
+                **Trading Signals**
+                
+                📊 **Band Touches**
+                - Touch upper = Potential resistance
+                - Touch lower = Potential support
+                - Price reverts ~95% of time
+                
+                📈 **Expansion**
+                - Narrow bands = Low volatility
+                - Wide bands = High volatility
+                - Squeeze = Breakout coming
+                
+                **Combined Signal**
+                - Price at band + RSI extreme = Strong
+                - Use for mean reversion trades
+                - Works best in ranging markets
+                """)
+    
+    # === TAB 4: STRATEGIES ===
+    with tab_strategy:
+        st.markdown("### 🎯 Trading Strategies - From Beginner to Pro")
+        
+        strat_tabs = st.tabs(["🟢 Simple", "📊 Advanced", "⚠️ Risk", "🧠 Psychology", "✅ Checklist"])
+        
+        with strat_tabs[0]:
+            st.markdown("#### 🟢 SIMPLE Strategy - Best for Beginners")
+            st.markdown("""
+            **Rules (Super Simple)**
+            1. Select 1D (daily) timeframe
+            2. Watch for STRONG_BUY signal (>80)
+            3. Enter BUY trade with 1% risk
+            4. Stop loss at recent low
+            5. Take profit at 2:1 ratio
+            6. Wait for STRONG_SELL (<20) to exit
+            
+            **Why It Works**
+            - Based on composite signals
+            - RSI + MACD + Bollinger confirmation
+            - Filters noise on daily
+            - Clear entry/exit rules
+            
+            **Example Trade**
+            - BTC at $45,000 on 1D
+            - Signal: STRONG_BUY (85%)
+            - Account: $10,000
+            - Risk: 1% = $100
+            - Entry: 45,000 → SL: 44,500 → TP: 46,000
+            """)
+        
+        with strat_tabs[1]:
+            st.markdown("#### 📊 ADVANCED Strategy - For Experienced Traders")
+            st.markdown("""
+            **Multi-Timeframe Analysis**
+            1. Start with 1W (weekly) for trend
+            2. Filter into 1D for entries
+            3. Use 4H for momentum confirmation
+            4. Check 1H for precise entry
+            
+            **Indicator Confluence**
+            - RSI > 50 AND MACD > signal AND Price > BB-mid
+            - = Strong uptrend signal
+            - Risk/Reward minimum 1:2
+            
+            **Advanced Rules**
+            - Identify support/resistance zones
+            - Trade pullbacks to zones
+            - Look for divergences (power signals)
+            - Use volume confirmation
+            - Manage with trailing stops
+            
+            **Risk Management**
+            - Risk 1-2% max per trade
+            - Use position sizing formula
+            - Win rate target: 55%+
+            - Profit factor target: 2.0+
+            """)
+        
+        with strat_tabs[2]:
+            st.markdown("#### ⚠️ Risk Management - THE KEY TO SURVIVAL")
+            st.markdown("""
+            **Position Sizing Formula**
+            ```
+            Risk Amount = Account × Risk%
+            Position Size = Risk Amount ÷ (Entry - StopLoss)
+            ```
+            
+            **The 2% Rule**
+            - Risk maximum 2% per trade
+            - If you lose 10 trades in a row: -20% drawdown
+            - Sustainable long-term
+            - Protects capital for recovery
+            
+            **Risk/Reward Ratio**
+            - Minimum 1:2 (risk $100 to make $200)
+            - Ideal 1:3 or better
+            - Means winners > losers
+            - Profitable with 50% win rate
+            
+            **Stop Loss Placement**
+            - Always set before entry
+            - Below recent low (support)
+            - Based on volatility (ATR)
+            - Not "hoping" distance away
+            """)
+        
+        with strat_tabs[3]:
+            st.markdown("#### 🧠 Psychology - Discipline > Analysis")
+            st.markdown("""
+            **The 7 Rules of Trading Psychology**
+            
+            1. **Accept Small Losses Quickly**
+                - Stops are part of the game
+                - Protect capital > pride
+                - Move to next opportunity
+            
+            2. **Follow Your Plan 100%**
+                - No exceptions, no "gut feelings"
+                - Mechanical execution
+                - Test, then trust
+            
+            3. **Never Add to Losing Positions**
+                - Revenge trading kills accounts
+                - If wrong, wrong = cut
+                - Double down = double loss
+            
+            4. **Take Profits When Planned**
+                - Don't get greedy
+                - Lock in wins
+                - Let small winners be small
+            
+            5. **Keep a Trading Journal**
+                - Record every trade (win/loss)
+                - Write why you entered/exited
+                - Review weekly
+                - Find patterns in failures
+            
+            6. **Use Stop-Loss ALWAYS**
+                - Psychology tool more than price
+                - Forces discipline
+                - Removes "hope"
+                - Defines risk upfront
+            
+            7. **Trade the Plan, Not the News**
+                - News creates noise/emotions
+                - Stick to your strategy
+                - React to signals, not headlines
+                - Don't FOMO trade
+            """)
+        
+        with strat_tabs[4]:
+            st.markdown("#### ✅ Trading Checklist - Before Every Trade")
+            st.markdown("""
+            **Pre-Trade Checklist (MANDATORY)**
+            
+            □ **Timeframe Analysis**
+              - Checked 1W/1D for trend?
+              - Price above/below key MA?
+              - Clear support/resistance identified?
+            
+            □ **Entry Signal**
+              - Signal strength > 70%?
+              - Multiple indicators aligned?
+              - Price at support/resistance?
+              - Volume confirming?
+            
+            □ **Risk Management**
+              - Position size calculated?
+              - Risk/Reward ≥ 1:2?
+              - Stop loss set BEFORE entry?
+              - Risk ≤ 2% account?
+            
+            □ **Psychology**
+              - Emotionally calm?
+              - No revenge trading?
+              - Following the plan?
+              - Not overtraded today?
+            
+            □ **Execution**
+              - Order correct quantity?
+              - Entry price confirmed?
+              - Stop loss entered?
+              - Take profit entered?
+              - Recorded in journal?
+            
+            **If ANY checkbox is empty = SKIP THE TRADE**
+            
+            An imperfect execution of perfect rules
+            beats perfect execution of imperfect rules.
+            """)
+    
+    # === TAB 5: NEWS ANALYSIS ===
+    with tab_news:
+        st.markdown("### 📰 News Analysis - Understanding Market Sentiment")
+        
+        col_news1, col_news2 = st.columns(2)
+        
+        with col_news1:
+            st.markdown("""
+            **📊 4 News Sources**
+            
+            🟠 **Reddit**
+            - Community discussions
+            - Retail sentiment
+            - Real-time reactions
+            - May have hype
+            
+            🔵 **CoinDesk**
+            - Professional news
+            - Institutional focus
+            - Regulated reporting
+            - Most reliable
+            
+            🟡 **CoinTelegraph**
+            - Detailed analyses
+            - Technical breakdowns
+            - Good for learning
+            - Sometimes sensational
+            
+            🟢 **CoinGecko**
+            - Market trending
+            - Volume signals
+            - Trending cryptos
+            - Aggregated data
+            """)
+        
+        with col_news2:
+            st.markdown("""
+            **🎯 How to Use Sentiment**
+            
+            🟢 **BULLISH Signals**
+            - >50% bullish news
+            - Positive sentiment gauge
+            - Institutions buying
+            - Opportunity to BUY
+            
+            🔴 **BEARISH Signals**
+            - >50% bearish news
+            - Negative sentiment gauge
+            - Institutions selling
+            - Opportunity to SELL
+            
+            ⚪ **NEUTRAL Market**
+            - 40-50% bullish/bearish
+            - No clear direction
+            - Wait for clarity
+            - High risk trades
+            
+            **⚠️ Important**
+            - News confirms technical, not opposite
+            - Don't trade on news alone
+            - Check before and after major news
+            - Remember: "buy rumor, sell news"
+            """)
+    
+    # === TAB 6: PATTERNS MASTERY ===
+    with tab_patterns:
+        st.markdown("### 🕯️ Candlestick Patterns - Master 19 Essential Patterns")
+        
+        st.markdown("""
+        **Why Candlestick Patterns Matter**
+        - 400+ years of trading history
+        - Millions of traders read the same patterns
+        - Self-fulfilling prophecy = patterns work
+        - Foundation of technical analysis
+        - Combines with indicators = powerful
+        
+        **Learning Path**
+        1. **Level 1 (Week 1-2)**: Master Hammer + Engulfing
+        2. **Level 2 (Week 3-4)**: Add Double Top/Bottom
+        3. **Level 3 (Month 2)**: Learn all 19 patterns
+        4. **Level 4 (Month 3)**: Trade with 80%+ accuracy
+        5. **Level 5 (Month 6)**: Combine with strategies
+        
+        **Confidence Levels**
+        - ⭐⭐⭐ High reliability (70%+)
+        - ⭐⭐ Medium reliability (60%+)
+        - ⭐ Low reliability (50%+)
+        
+        **Best Practices**
+        - Use minimum 1H timeframe (less noise)
+        - Confirm with volume (must spike on breakout)
+        - Check overall trend (pattern > counter-trend)
+        - Wait for complete pattern (don't jump early)
+        - Always use stop loss (even on strong patterns)
+        - Journal every pattern (win/loss rate)
+        """)
+        
+        st.info("👉 Head to **PATTERNS & STRATEGIES** page to learn all 19 patterns + take the interactive quiz!")
+    
+    # === TAB 7: FAQ ===
+    with tab_faq:
+        st.markdown("### ❓ Frequently Asked Questions")
+        
+        faqs = [
+            {
+                "q": "How often should I check the app?",
+                "a": "Depends on timeframe. Day traders: every 4H. Swing traders: daily. Position traders: weekly. Set alerts instead of constant checking."
+            },
+            {
+                "q": "Can I trade directly from this app?",
+                "a": "No. This is an analysis tool. Use Binance, Kraken, XM, eToro, etc. for actual trading. Keep analysis and trading separate."
+            },
+            {
+                "q": "What's the minimum to start trading?",
+                "a": "Crypto: $10. Forex: $100. However, risk only what you can afford to lose. Most pros recommend $1,000+ to be meaningful."
+            },
+            {
+                "q": "How long does it take to become profitable?",
+                "a": "Most traders: 6-12 months of consistent learning and practice. Some faster, some need years. Depends on discipline and time invested."
+            },
+            {
+                "q": "Why do I keep losing money?",
+                "a": "Most common: No stop losses, over-leveraged, FOMO trading, chasing news, not following your plan. All fixable with discipline."
+            },
+            {
+                "q": "Is this app free?",
+                "a": "Yes! Complete analysis tools, education, patterns, news, everything. No hidden fees. We believe in democratizing trading education."
+            },
+            {
+                "q": "How accurate are the indicators?",
+                "a": "No indicator is 100% accurate. Best traders use 60-70% win rate with proper risk management. Don't expect perfection."
+            },
+            {
+                "q": "Should I trade 24/7?",
+                "a": "No. Trade when setup is perfect. Crypto: 24/7 possible. Forex: Focus US/EU sessions for liquidity. Rest > overtrading."
+            },
+            {
+                "q": "How many patterns should I learn?",
+                "a": "Master 2-3 completely before learning more. Quality > Quantity. Most pros use same 5 patterns repeatedly."
+            },
+            {
+                "q": "What's the biggest mistake beginners make?",
+                "a": "Not using stop losses. This single mistake destroys 90% of accounts. Always set stops BEFORE entering."
+            }
+        ]
+        
+        for idx, faq in enumerate(faqs):
+            with st.expander(f"**Q: {faq['q']}**"):
+                st.markdown(f"**A:** {faq['a']}")
+    
+    st.divider()
+    st.success("🎓 **Learning Path Complete!** Head to PATTERNS or DASHBOARD to practice what you learned.")
 
 def page_login_register():
     """Redesigned login/register flow with email verification integrated"""
