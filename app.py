@@ -1512,42 +1512,25 @@ def page_dashboard():
                 """)
     
     with tab_analysis:
-        st.markdown("### Analyse Graphique & Patterns")
+        st.markdown("### Analyse Graphique - Fluctuations 1 Jour")
         
-        selected_period = st.session_state.get("selected_period", "1D")
+        st.markdown("Tous les graphiques affichent les fluctuations de **1 JOUR** (24h) en temps réel")
+        st.info("📊 Période fixée: **1 Jour** • Données: Dernières 24h • Mise à jour: Temps Réel")
         
-        st.markdown("#### ️ Sélectionnez la Période Temporelle")
-        st.markdown("*Choisissez la timeframe pour votre analyse technique*")
-        
-        period_cols = st.columns(6)
-        
-        periods = ["1H", "4H", "1D", "1W", "1M", "3M"]
-        period_labels = ["️ 1H", "️ 4H", " 1D", " 1W", " 1M", " 3M"]
-        
-        for idx, (period, label) in enumerate(zip(periods, period_labels)):
-            with period_cols[idx]:
-                if st.button(label, use_container_width=True, key=f"period_{period}"):
-                    st.session_state.selected_period = period
-                    st.rerun()
-        
-        selected_period = st.session_state.get("selected_period", "1D")
+        # Force selected_period to 1D
+        selected_period = "1D"
+        st.session_state.selected_period = "1D"
     
     # === CHARTS DISPLAY ===
     if st.session_state.get("selected_tickers", []):
         selected_tickers = st.session_state.selected_tickers
         
         st.divider()
-        st.subheader(" Graphiques en Temps Réel")
+        st.subheader(" Graphiques en Temps Réel - Fluctuations 24H")
         
-        # For short periods, fetch more data to calculate indicators properly
-        days_to_fetch = {
-            "1H": 7, # 7 days for 1H period (better indicators)
-            "4H": 7, # 7 days for 4H period
-            "1D": 30, # 30 days for daily
-            "1W": 90, # 90 days for weekly
-            "1M": 180, # 180 days for monthly
-            "3M": 365 # 365 days for quarterly
-        }.get(selected_period, 30)
+        # FORCE 1 DAY FOR ALL - No more period options
+        selected_period = "1D"
+        days_to_fetch = 1  # Always fetch 1 day of data for ALL assets
         
         for ticker in selected_tickers:
             # Display with period badge
@@ -1580,19 +1563,8 @@ def page_dashboard():
             # Keep all data for indicator calculations, but display only relevant range
             display_data = hist_data.copy()
             
-            # Determine how many candles to display based on period
-            display_candles = {
-                "1H": 2, # Show last 2 hours worth of 1H candles
-                "4H": 2, # Show last 8 hours worth of 4H candles (2 x 4h)
-                "1D": 30, # Show last 30 days
-                "1W": 12, # Show last 12 weeks
-                "1M": 12, # Show last 12 months
-                "3M": 12 # Show last 12 months
-            }.get(selected_period, 30)
-            
-            # Limit display data to show only relevant timeframe
-            if len(display_data) > display_candles:
-                display_data = display_data.tail(display_candles)
+            # For 1D: Show all hourly candles (24 hours = 24 candles, or whatever granularity we have)
+            display_candles = len(display_data)  # Show ALL data since we're only fetching 1 day
             
             # Recalculate indicators on FULL data for accuracy
             prices = hist_data['close'].values
