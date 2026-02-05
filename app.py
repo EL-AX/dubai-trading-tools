@@ -746,18 +746,18 @@ def page_dashboard():
 
             # Determine style based on user selection - use consistent unified premium style for ALL tickers including GOLD
             c_style = st.session_state.get("candle_style", "classic")
-            # Professional XM-style colors
+            # XM Platform colors - Exact match to professional standards
             # Green for bullish (up), red for bearish (down)
-            inc = dict(fillcolor='#00c853', line=dict(color='#00c853', width=1.5))  # Bright green
-            dec = dict(fillcolor='#ff1744', line=dict(color='#ff1744', width=1.5))  # Bright red
+            inc = dict(fillcolor='#1bc47d', line=dict(color='#1bc47d', width=1.5))  # Professional green
+            dec = dict(fillcolor='#ff3d3d', line=dict(color='#ff3d3d', width=1.5))  # Professional red
             
             # Force reset Plotly template to prevent style override for GOLD
             template_name = "plotly_dark"
             
-            # Apply dark premium background for all styles
+            # Apply XM-style professional dark background
             fig.update_layout(
-                plot_bgcolor='#0f1419', 
-                paper_bgcolor='#0f1419', 
+                plot_bgcolor='#0f1729',  # XM style very dark blue-black
+                paper_bgcolor='#0f1729',  # Exact XM color
                 font=dict(color='#ffffff', family='Arial, sans-serif'),
                 title_font_size=16,
                 margin=dict(l=50, r=50, t=60, b=50)
@@ -871,7 +871,7 @@ def page_dashboard():
                     domain=[0.25, 1.0],
                     showline=True, 
                     linewidth=1, 
-                    linecolor='rgba(255,255,255,0.2)',
+                    linecolor='rgba(255,255,255,0.1)',
                     automargin=True,
                     title='Price'
                 ),
@@ -881,11 +881,11 @@ def page_dashboard():
                     title='Volume', 
                     showline=True, 
                     linewidth=1, 
-                    linecolor='rgba(255,255,255,0.2)',
+                    linecolor='rgba(255,255,255,0.1)',
                     side='right'
                 ),
-                plot_bgcolor='#0f1419',
-                paper_bgcolor='#0f1419',
+                plot_bgcolor='#0f1729',
+                paper_bgcolor='#0f1729',
                 font=dict(color='#e0e0e0', size=11, family="Arial, sans-serif"),
                 margin=dict(b=70, t=80, l=50, r=70),
                 title_font_size=16,
@@ -894,8 +894,8 @@ def page_dashboard():
                 legend=dict(
                     x=0.01, 
                     y=0.97, 
-                    bgcolor='rgba(15, 20, 25, 0.9)', 
-                    bordercolor='rgba(255,255,255,0.1)',
+                    bgcolor='rgba(15, 23, 41, 0.95)', 
+                    bordercolor='rgba(255,255,255,0.08)',
                     borderwidth=1,
                     font=dict(size=10)
                 ),
