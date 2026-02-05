@@ -1861,13 +1861,13 @@ def page_dashboard():
             
             col1, col2, col3, col4, col5 = st.columns(5)
             with col1:
-                st.metric("RSI", f"{signals['rsi']:.0f}")
+                st.metric("RSI", f"{signals['rsi']:.1f}", "0-100")
             with col2:
-                st.metric("MACD", f"{signals['macd']:.0f}")
+                st.metric("MACD", f"{signals['macd']:.4f}")
             with col3:
-                st.metric("Bollinger", f"{signals['bollinger']:.0f}")
+                st.metric("Bollinger", f"{signals['bollinger']:.1f}", "-100 to +100")
             with col4:
-                st.metric("Trend", f"{signals['trend']:.0f}")
+                st.metric("Trend", f"{signals['trend']:.1f}")
             with col5:
                 signal_text = signals['signal']
                 if "BUY" in signal_text:
@@ -1884,19 +1884,20 @@ def page_dashboard():
             hist_data = get_historical_data(ticker, days=30)
             prices = hist_data['close'].values
             
-            risk_assessment = RiskAssessment(prices)
+            risk_assessment = RiskAssessment(prices, period=30)
             risk_data = risk_assessment.calculate_risk_reward()
             
             st.write(f"**{ticker}**")
             col1, col2, col3, col4 = st.columns(4)
             with col1:
-                st.metric("Entrée", f"${risk_data['entry']:.4f}")
+                st.metric("Prix Actuel", f"${risk_data['entry']:.4f}")
             with col2:
-                st.metric("Support", f"${risk_data['support']:.4f}")
+                st.metric("Support (30J)", f"${risk_data['support']:.4f}")
             with col3:
-                st.metric("Résistance", f"${risk_data['resistance']:.4f}")
+                st.metric("Résistance (30J)", f"${risk_data['resistance']:.4f}")
             with col4:
-                st.metric("Ratio R/R", f"{risk_data['ratio']:.2f}")
+                ratio_display = f"{risk_data['ratio']:.2f}" if risk_data['ratio'] > 0 else "N/A"
+                st.metric("Ratio R/R", ratio_display)
         
         st.markdown("---")
         st.subheader("6️⃣ Historique des Alertes")

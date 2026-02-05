@@ -84,13 +84,30 @@ class SmartSignals:
     
     def get_detailed_signals(self):
         return {
-            "rsi": self.rules.rsi_signal(),
-            "macd": self.rules.macd_signal(),
-            "bollinger": self.rules.bollinger_signal(),
-            "trend": self.rules.trend_signal(),
-            "composite": self.get_composite_signal(),
+            "rsi": self.rules.rsi[-1] if self.rules.rsi is not None and len(self.rules.rsi) > 0 else 50,
+            "macd": self.rules.histogram[-1] if self.rules.histogram is not None and len(self.rules.histogram) > 0 else 0,
+            "bollinger": self._get_bollinger_position(),
+            "trend": self.rules.trend[-1] if self.rules.trend is not None and len(self.rules.trend) > 0 else 0,
             "signal": self.get_signal_text()
         }
+    
+    def _get_bollinger_position(self):
+        """Return position between Bollinger bands (-100 to 100)"""
+        if not self.rules.prices or len(self.rules.prices) == 0:
+            return 0
+        if not self.rules.bb_upper or not self.rules.bb_lower or len(self.rules.bb_upper) == 0:
+            return 0
+        
+        current = self.rules.prices[-1]
+        upper = self.rules.bb_upper[-1]
+        lower = self.rules.bb_lower[-1]
+        
+        if upper == lower:
+            return 0
+        
+        # Position from lower (-100) to upper (+100)
+        position = ((current - lower) / (upper - lower)) * 200 - 100
+        return np.clip(position, -100, 100)
 
 class RiskAssessment:
     def __init__(self, prices, period=50):
