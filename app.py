@@ -1,9 +1,9 @@
 """
-╔═══════════════════════════════════════════════════════════════════╗
-║                    DUBAI TRADING TOOLS v2.0                       ║
-║              © 2025-2026 ELOADXFAMILY - Tous droits réservés       ║
-║     Outil d'analyse trading professionnel avec IA et éducation     ║
-╚═══════════════════════════════════════════════════════════════════╝
+
+ DUBAI TRADING TOOLS v2.0 
+ © 2025-2026 ELOADXFAMILY - Tous droits réservés 
+ Outil d'analyse trading professionnel avec IA et éducation 
+
 """
 
 import streamlit as st
@@ -24,19 +24,19 @@ from src.tooltips import get_tooltip, format_tooltip_markdown
 
 st.set_page_config(
     page_title="Dubai Trading Tools",
-    page_icon="📈",
+    page_icon="",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# Auto-refresh for live prices - robust approach: click the '🔄' refresh button every 5s
+# Auto-refresh for live prices - robust approach: click the '' refresh button every 5s
 st.markdown("""
 <script>
 function clickRefresh() {
   try {
     const buttons = Array.from(window.parent.document.querySelectorAll('button'));
     for (const b of buttons) {
-      if (b.innerText && b.innerText.trim() === '🔄') { b.click(); break; }
+      if (b.innerText && b.innerText.trim() === '') { b.click(); break; }
     }
   } catch(e) { /* ignore cross-origin or layout issues */ }
 }
@@ -91,9 +91,9 @@ def show_header():
         try:
             st.image("logo/IMG-20250824-WA0020.jpg", width=120)
         except:
-            st.write("📊")
+            st.write("")
     with col2:
-        st.markdown("<h1 style='text-align: center;'>📈 Dubai Trading Tools</h1>", unsafe_allow_html=True)
+        st.markdown("<h1 style='text-align: center;'> Dubai Trading Tools</h1>", unsafe_allow_html=True)
         st.markdown("<p style='text-align:center;'>Outil d'analyse et d'aide à la décision pour traders</p>", unsafe_allow_html=True)
 
 def get_ai_news(force_refresh=False):
@@ -118,8 +118,8 @@ def get_ai_news(force_refresh=False):
     # Actualités Trading VRAIMENT utiles - basées sur les PDFs éducatifs
     trading_news_data = [
         {
-            "titre_fr": "📊 Chandeliers Japonais: Maîtrisez les 19 Patterns Essentiels",
-            "titre_en": "📊 Japanese Candlesticks: Master the 19 Essential Patterns",
+            "titre_fr": " Chandeliers Japonais: Maîtrisez les 19 Patterns Essentiels",
+            "titre_en": " Japanese Candlesticks: Master the 19 Essential Patterns",
             "resume_fr": "Doji, Harami, Engulfing: Les patterns qui prédisent les retournements. Apprendre à les identifier pour 80% de fiabilité en plus.",
             "resume_en": "Doji, Harami, Engulfing: Patterns that predict reversals. Learn to identify them for 80% more reliability.",
             "strategie_fr": "Cherchez l'Engulfing haussier après une baisse. Stop loss sous le low. Ratio risque/bénéfice 1:3 minimum.",
@@ -127,8 +127,8 @@ def get_ai_news(force_refresh=False):
             "source": "Dubai Trading Tools - Éducation", "sentiment": "educative", "symbol": "BTC,ETH,SOL"
         },
         {
-            "titre_fr": "⚠️ Gestion du Risque: Les 5 Erreurs qui Ruinent les Comptes",
-            "titre_en": "⚠️ Risk Management: The 5 Mistakes That Destroy Accounts",
+            "titre_fr": "️ Gestion du Risque: Les 5 Erreurs qui Ruinent les Comptes",
+            "titre_en": "️ Risk Management: The 5 Mistakes That Destroy Accounts",
             "resume_fr": "Position trop grande (>2%), pas de stop loss, revenge trading... Évitez ces pièges pour protéger votre capital.",
             "resume_en": "Position too large (>2%), no stop loss, revenge trading... Avoid these traps to protect your capital.",
             "strategie_fr": "Règle 1-2%: Max 1-2% du compte par trade. Stop loss obligatoire AVANT l'entrée. Acceptez les petites pertes.",
@@ -136,8 +136,8 @@ def get_ai_news(force_refresh=False):
             "source": "Dubai Trading Tools - Éducation", "sentiment": "warning", "symbol": "ALL"
         },
         {
-            "titre_fr": "📈 Stratégies Éprouvées: Support & Résistance + Breakouts",
-            "titre_en": "📈 Proven Strategies: Support & Resistance + Breakouts",
+            "titre_fr": " Stratégies Éprouvées: Support & Résistance + Breakouts",
+            "titre_en": " Proven Strategies: Support & Resistance + Breakouts",
             "resume_fr": "Les niveaux qui rebondissent 2-3 fois = zones clés. Attendez cassure + volume pour les meilleurs ratios.",
             "resume_en": "Levels that bounce 2-3 times = key zones. Wait for breakout + volume for best ratios.",
             "strategie_fr": "Tracer support/résistance. Attendre cassure avec volume élevé. Entrée immédiate, stop loss sur l'ancien niveau.",
@@ -145,8 +145,8 @@ def get_ai_news(force_refresh=False):
             "source": "Dubai Trading Tools - Éducation", "sentiment": "bullish", "symbol": "BTC,ETH,SOL"
         },
         {
-            "titre_fr": "💰 Psychologie du Trading: Discipline > Prédiction",
-            "titre_en": "💰 Trading Psychology: Discipline > Prediction",
+            "titre_fr": " Psychologie du Trading: Discipline > Prédiction",
+            "titre_en": " Trading Psychology: Discipline > Prediction",
             "resume_fr": "Peur et Avidité = ennemis du trader. La discipline à suivre les règles = profit long terme garanti.",
             "resume_en": "Fear and Greed = trader's enemies. Discipline to follow rules = guaranteed long-term profit.",
             "strategie_fr": "Créez un plan de trading. Suivez-le 100%. Journal chaque trade. Analysez vos erreurs.",
@@ -154,8 +154,8 @@ def get_ai_news(force_refresh=False):
             "source": "Dubai Trading Tools - Éducation", "sentiment": "neutral", "symbol": "ALL"
         },
         {
-            "titre_fr": "🎯 Signaux Composites: RSI + MACD + Bollinger = Fiabilité +80%",
-            "titre_en": "🎯 Composite Signals: RSI + MACD + Bollinger = 80% Reliability",
+            "titre_fr": " Signaux Composites: RSI + MACD + Bollinger = Fiabilité +80%",
+            "titre_en": " Composite Signals: RSI + MACD + Bollinger = 80% Reliability",
             "resume_fr": "Combinez 3 indicateurs = fiabilité multipliée. RSI>70 + MACD positif + prix > Bollinger = STRONG_BUY confirmé.",
             "resume_en": "Combine 3 indicators = reliability multiplied. RSI>70 + MACD positive + price > Bollinger = confirmed STRONG_BUY.",
             "strategie_fr": "Attendez confirmation de tous les 3 avant d'entrer. Diminue les faux signaux de 70%.",
@@ -163,8 +163,8 @@ def get_ai_news(force_refresh=False):
             "source": "Dubai Trading Tools - Éducation", "sentiment": "bullish", "symbol": "BTC,ETH,SOL"
         },
         {
-            "titre_fr": "🔄 Divergences: Quand le Prix Monte mais RSI Baisse = Faiblesse",
-            "titre_en": "🔄 Divergences: When Price Rises but RSI Falls = Weakness",
+            "titre_fr": " Divergences: Quand le Prix Monte mais RSI Baisse = Faiblesse",
+            "titre_en": " Divergences: When Price Rises but RSI Falls = Weakness",
             "resume_fr": "Divergence = signal d'inversion majeur. Prix nouveau high mais RSI baisse = retournement baissier proche.",
             "resume_en": "Divergence = major reversal signal. Price new high but RSI falls = bearish reversal coming.",
             "strategie_fr": "Cherchez divergences régulièrement. Meilleures à la 3ème ou 4ème tentative haussière.",
@@ -172,8 +172,8 @@ def get_ai_news(force_refresh=False):
             "source": "Dubai Trading Tools - Éducation", "sentiment": "warning", "symbol": "BTC,ETH,SOL"
         },
         {
-            "titre_fr": "💡 Opportunité du Jour: Volatilité Élevée = Meilleurs Ratios R:B",
-            "titre_en": "💡 Today's Opportunity: High Volatility = Best R:B Ratios",
+            "titre_fr": " Opportunité du Jour: Volatilité Élevée = Meilleurs Ratios R:B",
+            "titre_en": " Today's Opportunity: High Volatility = Best R:B Ratios",
             "resume_fr": "Aujourd'hui: Volatilité HAUTE. Augmentez taille position de 25-50% (mais respectez 2% max par trade).",
             "resume_en": "Today: HIGH Volatility. Increase position size 25-50% (but respect 2% max per trade).",
             "strategie_fr": "À volatilité haute: Risquez 2% max. À volatilité basse: Risquez 0.5-1% seulement.",
@@ -193,7 +193,7 @@ def get_ai_news(force_refresh=False):
             "symbol": news["symbol"],
             "date": datetime.now().isoformat()
         } for news in trading_news_data]
-    else:  # French
+    else: # French
         news_data = [{
             "titre": news["titre_fr"],
             "resume": news["resume_fr"],
@@ -246,16 +246,16 @@ def display_live_price_with_animation(ticker):
         
         # Color and emoji based on change with animations
         if change_24h > 0:
-            color = "🟢"
-            emoji = "📈"
+            color = ""
+            emoji = ""
             animation = "pulse-green"
         elif change_24h < 0:
-            color = "🔴"
-            emoji = "📉"
+            color = ""
+            emoji = ""
             animation = "pulse-red"
         else:
-            color = "⚫"
-            emoji = "➡️"
+            color = ""
+            emoji = "️"
             animation = "pulse-neutral"
         
         return {
@@ -273,48 +273,48 @@ def display_live_price_with_animation(ticker):
             "price_str": "N/A",
             "change_24h": 0,
             "change_str": "N/A",
-            "color": "⚫"
+            "color": ""
         }
 
 def page_tutorial():
     """Tutoriel et centre d'apprentissage - Plateforme d'éducation professionnelle"""
-    st.title("🎓 CENTRE D'APPRENTISSAGE - Maîtriser le Trading Professionnel")
+    st.title(" CENTRE D'APPRENTISSAGE - Maîtriser le Trading Professionnel")
     
     st.markdown("*Complete trading education • Interactive learning • Quiz-based mastery*")
     
     # Overview metrics
     col_m1, col_m2, col_m3, col_m4 = st.columns(4)
     with col_m1:
-        st.metric("📚 Modules", "7", "Complete")
+        st.metric(" Modules", "7", "Complete")
     with col_m2:
-        st.metric("🎯 Topics", "50+", "Covered")
+        st.metric(" Topics", "50+", "Covered")
     with col_m3:
-        st.metric("🎓 Quiz", "15+", "Interactive")
+        st.metric(" Quiz", "15+", "Interactive")
     with col_m4:
-        st.metric("⏱️ Time", "2-3h", "To Master")
+        st.metric("️ Time", "2-3h", "To Master")
     
     st.divider()
     
     # === 7 LEARNING TABS ===
     tab_auth, tab_dashboard, tab_indicators, tab_strategy, tab_news, tab_patterns, tab_faq = st.tabs([
-        "🔐 Auth & Start",
-        "📊 Dashboard Guide",
-        "📈 Indicators",
-        "🎯 Strategies",
-        "📰 News Analysis",
-        "🕯️ Patterns Mastery",
-        "❓ FAQ"
+        " Auth & Start",
+        " Dashboard Guide",
+        " Indicators",
+        " Strategies",
+        " News Analysis",
+        "️ Patterns Mastery",
+        " FAQ"
     ])
     
     # === TAB 1: AUTHENTICATION ===
     with tab_auth:
-        st.markdown("### 🔐 Démarrage - Inscription et Sécurité")
+        st.markdown("### Démarrage - Inscription et Sécurité")
         st.markdown("Apprenez à créer un compte en toute sécurité et protégez vos données")
         
         col1, col2 = st.columns(2)
         
         with col1:
-            st.markdown("#### ✅ Registration Process")
+            st.markdown("#### Registration Process")
             st.markdown("""
             **Step 1: Sign Up**
             - Enter your email address
@@ -333,19 +333,19 @@ def page_tutorial():
             """)
         
         with col2:
-            st.markdown("#### 🔒 Meilleures Pratiques de Sécurité")
+            st.markdown("#### Meilleures Pratiques de Sécurité")
             st.markdown("""
             **Sécurité du Mot de Passe:**
-            - ✅ Utilisez 12+ caractères pour les comptes avec argent
-            - ✅ Mélangez majuscules, minuscules, chiffres, symboles
-            - ✅ Ne réutilisez pas sur d'autres sites
-            - ❌ Ne partagez jamais votre mot de passe
+            - Utilisez 12+ caractères pour les comptes avec argent
+            - Mélangez majuscules, minuscules, chiffres, symboles
+            - Ne réutilisez pas sur d'autres sites
+            - Ne partagez jamais votre mot de passe
             
             **2FA et Vérification:**
-            - ✅ Vérifiez votre email (obligatoire)
-            - ✅ Activez 2FA si disponible
-            - ✅ Sauvegardez les codes de récupération en sécurité
-            - ❌ Ne partagez pas les codes de vérification
+            - Vérifiez votre email (obligatoire)
+            - Activez 2FA si disponible
+            - Sauvegardez les codes de récupération en sécurité
+            - Ne partagez pas les codes de vérification
             
             **Confidentialité des Données:**
             - Vos données sont chiffrées au repos
@@ -354,18 +354,18 @@ def page_tutorial():
             """)
         
         st.divider()
-        st.success("✅ Compte s\u00e9curis\u00e9? Passons au Tableau de Bord!")
+        st.success(" Compte s\u00e9curis\u00e9? Passons au Tableau de Bord!")
     
     # === TAB 2: DASHBOARD GUIDE ===
     with tab_dashboard:
-        st.markdown("### 📊 Maître du Tableau de Bord - Centre d'Analyse en Temps Réel")
+        st.markdown("### Maître du Tableau de Bord - Centre d'Analyse en Temps Réel")
         st.markdown("Votre centre de commande pour surveiller 11 actifs avec des outils professionnels")
         
         # 4 sub-sections
         sub_col1, sub_col2 = st.columns(2)
         
         with sub_col1:
-            with st.expander("💰 **Sélection d'Actifs**", expanded=True):
+            with st.expander(" **Sélection d'Actifs**", expanded=True):
                 st.markdown("""
                 **Available Assets (11 Total)**
                 
@@ -377,32 +377,32 @@ def page_tutorial():
                 - XRP (Ripple) - Payments
                 - DOT (Polkadot) - Interoperability
                 
-                💱 **Forex Pairs (4)**
+                 **Forex Pairs (4)**
                 - EUR (Euro) - European
                 - GBP (British Pound)
                 - JPY (Japanese Yen)
                 - AUD (Australian Dollar)
                 
-                🏆 **Commodities (1)**
+                 **Commodities (1)**
                 - XAU (Gold) - Safe haven
                 
-                **💡 Tip**: Start with 2-3 assets, master them, then expand.
+                ** Tip**: Start with 2-3 assets, master them, then expand.
                 """)
         
         with sub_col2:
-            with st.expander("⏱️ **Sélecteur de Période (NOUVEAU)**", expanded=True):
+            with st.expander("️ **Sélecteur de Période (NOUVEAU)**", expanded=True):
                 st.markdown("""
                 **6 Timeframes Available**
                 
-                ⏱️ **Short-Term Trading**
+                ️ **Short-Term Trading**
                 - 1H (1 Hour) - Scalping
                 - 4H (4 Hours) - Day trading
                 
-                📅 **Medium-Term**
+                 **Medium-Term**
                 - 1D (1 Day) - Swing trading
                 - 1W (1 Week) - Position trading
                 
-                📈 **Long-Term**
+                 **Long-Term**
                 - 1M (1 Month) - Trend following
                 - 3M (3 Months) - Long-term investing
                 
@@ -418,24 +418,24 @@ def page_tutorial():
         col_a, col_b, col_c = st.columns(3)
         
         with col_a:
-            with st.expander("📈 **Live Price Display**"):
+            with st.expander(" **Live Price Display**"):
                 st.markdown("""
                 **Mises à Jour en Temps Réel**
                 - Current price in USD
                 - 24h change (%+$)
-                - 🟢 Green = Positive
-                - 🔴 Red = Negative
+                - Green = Positive
+                - Red = Negative
                 - Auto-refresh every 5 seconds
                 - Data from CoinGecko + IEX
                 """)
         
         with col_b:
-            with st.expander("📊 **Candlestick Chart**"):
+            with st.expander(" **Candlestick Chart**"):
                 st.markdown("""
                 **Style Professionnel**
                 - XM-aligned colors
-                - 🟢 Green (#1bc47d) = Bullish
-                - 🔴 Red (#ff3d3d) = Bearish
+                - Green (#1bc47d) = Bullish
+                - Red (#ff3d3d) = Bearish
                 - Volume bars synchronized
                 - Dark theme for eyes
                 - Mobile-friendly responsive
@@ -448,11 +448,11 @@ def page_tutorial():
                 """)
         
         with col_c:
-            with st.expander("🎛️ **Indicator Toggle**"):
+            with st.expander("️ **Indicator Toggle**"):
                 st.markdown("""
                 **Select Your Indicators**
                 
-                ✅ RSI (14)
+                 RSI (14)
                 - Momentum oscillator
                 - Default ON
                 
@@ -471,10 +471,10 @@ def page_tutorial():
     
     # === TAB 3: INDICATORS ===
     with tab_indicators:
-        st.markdown("### 📈 Technical Indicators - Complete Guide")
+        st.markdown("### Technical Indicators - Complete Guide")
         
         # 3 main indicators
-        ind_tabs = st.tabs(["📊 RSI", "📉 MACD", "📈 Bollinger Bands"])
+        ind_tabs = st.tabs([" RSI", " MACD", " Bollinger Bands"])
         
         with ind_tabs[0]:
             st.markdown("#### RSI (Relative Strength Index)")
@@ -501,17 +501,17 @@ def page_tutorial():
                 st.markdown("""
                 **Trading Signals**
                 
-                ✅ **Buy Signals**
+                 **Buy Signals**
                 - RSI crosses above 30 (from oversold)
                 - RSI divergence at lows
                 - RSI < 30 on support
                 
-                🔴 **Sell Signals**
+                 **Sell Signals**
                 - RSI crosses below 70 (from overbought)
                 - RSI divergence at highs
                 - RSI > 70 on resistance
                 
-                **⚠️ Warning**
+                **️ Warning**
                 - RSI alone not enough
                 - Combine with other indicators
                 - Can stay overbought/oversold
@@ -542,12 +542,12 @@ def page_tutorial():
                 st.markdown("""
                 **Signaux de Trading**
                 
-                🟢 **Croisement Haussier**
+                 **Croisement Haussier**
                 - MACD croise au-dessus de la ligne Signal
                 - L'histogramme devient positif
                 - MACD > 0
                 
-                🔴 **Croisement Baissier**
+                 **Croisement Baissier**
                 - MACD croise au-dessous de la ligne Signal
                 - L'histogramme devient négatif
                 - MACD < 0
@@ -579,12 +579,12 @@ def page_tutorial():
                 st.markdown("""
                 **Trading Signals**
                 
-                📊 **Band Touches**
+                 **Band Touches**
                 - Touch upper = Potential resistance
                 - Touch lower = Potential support
                 - Price reverts ~95% of time
                 
-                📈 **Expansion**
+                 **Expansion**
                 - Narrow bands = Low volatility
                 - Wide bands = High volatility
                 - Squeeze = Breakout coming
@@ -597,12 +597,12 @@ def page_tutorial():
     
     # === TAB 4: STRATEGIES ===
     with tab_strategy:
-        st.markdown("### 🎯 Trading Strategies - From Beginner to Pro")
+        st.markdown("### Trading Strategies - From Beginner to Pro")
         
-        strat_tabs = st.tabs(["🟢 Simple", "📊 Advanced", "⚠️ Risk", "🧠 Psychology", "✅ Checklist"])
+        strat_tabs = st.tabs([" Simple", " Advanced", "️ Risk", " Psychology", " Checklist"])
         
         with strat_tabs[0]:
-            st.markdown("#### 🟢 SIMPLE Strategy - Best for Beginners")
+            st.markdown("#### SIMPLE Strategy - Best for Beginners")
             st.markdown("""
             **Rules (Super Simple)**
             1. Select 1D (daily) timeframe
@@ -627,7 +627,7 @@ def page_tutorial():
             """)
         
         with strat_tabs[1]:
-            st.markdown("#### 📊 ADVANCED Strategy - For Experienced Traders")
+            st.markdown("#### ADVANCED Strategy - For Experienced Traders")
             st.markdown("""
             **Multi-Timeframe Analysis**
             1. Start with 1W (weekly) for trend
@@ -655,7 +655,7 @@ def page_tutorial():
             """)
         
         with strat_tabs[2]:
-            st.markdown("#### ⚠️ Risk Management - THE KEY TO SURVIVAL")
+            st.markdown("#### ️ Risk Management - THE KEY TO SURVIVAL")
             st.markdown("""
             **Position Sizing Formula**
             ```
@@ -683,7 +683,7 @@ def page_tutorial():
             """)
         
         with strat_tabs[3]:
-            st.markdown("#### 🧠 Psychology - Discipline > Analysis")
+            st.markdown("#### Psychology - Discipline > Analysis")
             st.markdown("""
             **The 7 Rules of Trading Psychology**
             
@@ -727,34 +727,34 @@ def page_tutorial():
             """)
         
         with strat_tabs[4]:
-            st.markdown("#### ✅ Trading Checklist - Before Every Trade")
+            st.markdown("#### Trading Checklist - Before Every Trade")
             st.markdown("""
             **Pre-Trade Checklist (MANDATORY)**
             
-            □ **Timeframe Analysis**
+             **Timeframe Analysis**
               - Checked 1W/1D for trend?
               - Price above/below key MA?
               - Clear support/resistance identified?
             
-            □ **Entry Signal**
+             **Entry Signal**
               - Signal strength > 70%?
               - Multiple indicators aligned?
               - Price at support/resistance?
               - Volume confirming?
             
-            □ **Risk Management**
+             **Risk Management**
               - Position size calculated?
               - Risk/Reward ≥ 1:2?
               - Stop loss set BEFORE entry?
               - Risk ≤ 2% account?
             
-            □ **Psychology**
+             **Psychology**
               - Emotionally calm?
               - No revenge trading?
               - Following the plan?
               - Not overtraded today?
             
-            □ **Execution**
+             **Execution**
               - Order correct quantity?
               - Entry price confirmed?
               - Stop loss entered?
@@ -769,33 +769,33 @@ def page_tutorial():
     
     # === TAB 5: NEWS ANALYSIS ===
     with tab_news:
-        st.markdown("### 📰 News Analysis - Understanding Market Sentiment")
+        st.markdown("### News Analysis - Understanding Market Sentiment")
         
         col_news1, col_news2 = st.columns(2)
         
         with col_news1:
             st.markdown("""
-            **📊 4 News Sources**
+            ** 4 News Sources**
             
-            🟠 **Reddit**
+             **Reddit**
             - Discussions communautaires
             - Sentiment retail
             - Réactions en temps réel
             - Peut avoir du hype
             
-            🔵 **CoinDesk**
+             **CoinDesk**
             - Actualités professionnelles
             - Focus institutionnel
             - Rapports régulés
             - Plus fiable
             
-            🟡 **CoinTelegraph**
+             **CoinTelegraph**
             - Analyses détaillées
             - Décompositions techniques
             - Bon pour l'apprentissage
             - Parfois sensationaliste
             
-            🟢 **CoinGecko**
+             **CoinGecko**
             - Tendances du marché
             - Signaux de volume
             - Cryptos en tendance
@@ -804,27 +804,27 @@ def page_tutorial():
         
         with col_news2:
             st.markdown("""
-            **🎯 Comment Utiliser le Sentiment**
+            ** Comment Utiliser le Sentiment**
             
-            🟢 **Signaux HAUSSIERS**
+             **Signaux HAUSSIERS**
             - >50% actualités haussières
             - Sentiment positif
             - Institutions achètent
             - Opportunité d'ACHETER
             
-            🔴 **Signaux BAISSIERS**
+             **Signaux BAISSIERS**
             - >50% actualités baissières
             - Sentiment négatif
             - Institutions vendent
             - Opportunité de VENDRE
             
-            ⚪ **Marché NEUTRE**
+             **Marché NEUTRE**
             - 40-50% haussier/baissier
             - Pas de direction claire
             - Attendez de la clarté
             - Trades à haut risque
             
-            **⚠️ Important**
+            **️ Important**
             - Les actualités confirment le technique, pas l'inverse
             - Ne tradez pas sur les actualités seules
             - Vérifiez avant et après les grande actualités
@@ -833,7 +833,7 @@ def page_tutorial():
     
     # === TAB 6: PATTERNS MASTERY ===
     with tab_patterns:
-        st.markdown("### 🕯️ Patterns Candlestick - Maîtrisez les 19 Patterns Essentiels")
+        st.markdown("### ️ Patterns Candlestick - Maîtrisez les 19 Patterns Essentiels")
         
         st.markdown("""
         **Pourquoi les Patterns Candlestick Comptent**
@@ -864,11 +864,11 @@ def page_tutorial():
         - Enregistrez chaque pattern (taux de victoire/perte)
         """)
         
-        st.info("👉 Allez à la page **PATTERNS & STRATÉGIES** pour apprendre tous les 19 patterns + faire le quiz interactif!")
+        st.info(" Allez à la page **PATTERNS & STRATÉGIES** pour apprendre tous les 19 patterns + faire le quiz interactif!")
     
     # === TAB 7: FAQ ===
     with tab_faq:
-        st.markdown("### ❓ Questions Fréquemment Posées")
+        st.markdown("### Questions Fréquemment Posées")
         
         faqs = [
             {
@@ -918,7 +918,7 @@ def page_tutorial():
                 st.markdown(f"**A:** {faq['a']}")
     
     st.divider()
-    st.success("🎓 **Parcours d'Apprentissage Complet!** Allez à PATTERNS ou TABLEAU DE BORD pour pratiquer ce que vous avez appris.")
+    st.success(" **Parcours d'Apprentissage Complet!** Allez à PATTERNS ou TABLEAU DE BORD pour pratiquer ce que vous avez appris.")
 
 def page_login_register():
     """Flux de connexion/inscription redessiné avec vérification email intégrée"""
@@ -943,7 +943,7 @@ def page_login_register():
         needs_verification = not user.get("verified", False)
         
         if needs_verification and email in users:
-            st.info("⚠️ Votre email n'a pas encore été vérifié. Veuillez entrer le code reçu par email.")
+            st.info("️ Votre email n'a pas encore été vérifié. Veuillez entrer le code reçu par email.")
             verification_code = st.text_input("Code de vérification (6 chiffres)", placeholder="000000", key="login_ver_code", max_chars=6)
         else:
             verification_code = None
@@ -984,10 +984,10 @@ def page_login_register():
         
         # Resend verification code if needed
         if needs_verification and email in users:
-            if st.button("📧 Renvoyer le code de vérification", key="btn_resend_login", use_container_width=True):
+            if st.button(" Renvoyer le code de vérification", key="btn_resend_login", use_container_width=True):
                 resend = resend_verification_code(email)
                 if resend.get("success"):
-                    st.success("✅ Code renvoyé! Vérifiez votre boîte mail.")
+                    st.success(" Code renvoyé! Vérifiez votre boîte mail.")
                 else:
                     st.error(f"Erreur: {resend.get('message')}")
     
@@ -1002,13 +1002,13 @@ def page_login_register():
         if st.button("S'inscrire", key="btn_register", use_container_width=True):
             if reg_name and reg_email and reg_password:
                 if len(reg_password) < 8:
-                    st.error("❌ Le mot de passe doit faire au moins 8 caractères")
+                    st.error(" Le mot de passe doit faire au moins 8 caractères")
                 elif "@" not in reg_email:
-                    st.error("❌ Veuillez entrer une adresse email valide")
+                    st.error(" Veuillez entrer une adresse email valide")
                 else:
                     result = register_user(reg_email, reg_password, reg_name)
                     if result["success"]:
-                        st.success("✅ Compte créé avec succès!")
+                        st.success(" Compte créé avec succès!")
                         st.info(result["message"])
                         
                         # Show next steps
@@ -1023,24 +1023,24 @@ def page_login_register():
                         """)
                         st.balloons()
                     else:
-                        st.error(f"❌ Erreur: {result['message']}")
+                        st.error(f" Erreur: {result['message']}")
             else:
-                st.warning("⚠️ Remplissez tous les champs")
+                st.warning("️ Remplissez tous les champs")
 
 def page_news_ai():
     """Section actualités IA PREMIUM - Intelligence artificielle du marché en temps réel"""
-    st.title("📰 Actualités Marché - IA Intelligence Platform")
+    st.title(" Actualités Marché - IA Intelligence Platform")
     
     # Refresh button with status
     col_refresh, col_info = st.columns([1, 4])
     with col_refresh:
-        if st.button("🔄 Actualiser", use_container_width=True):
+        if st.button(" Actualiser", use_container_width=True):
             from src.cache import CacheManager
             cache = CacheManager()
             cache.delete("real_news_all")
             st.rerun()
     with col_info:
-        st.info("🤖 IA SENTIMENT ANALYSIS | ✅ Cache 10min | 4 SOURCES RÉELLES | 📊 ANALYSE TEMPS RÉEL | 🚀 POWERED BY ML")
+        st.info(" IA SENTIMENT ANALYSIS | Cache 10min | 4 SOURCES RÉELLES | ANALYSE TEMPS RÉEL | POWERED BY ML")
     
     # Get REAL news from real sources
     from src.real_news import get_all_real_news
@@ -1054,37 +1054,37 @@ def page_news_ai():
         total_count = len(news_items)
         
         # === TAB 1: MARKET INTELLIGENCE DASHBOARD ===
-        tab1, tab2, tab3, tab4 = st.tabs(["📊 Dashboard", "🔥 Trending", "📈 Analytics", "📚 All News"])
+        tab1, tab2, tab3, tab4 = st.tabs([" Dashboard", " Trending", " Analytics", " All News"])
         
         with tab1:
-            st.subheader("🎯 Intelligence Dashboard - Vue Globale du Marché")
+            st.subheader(" Intelligence Dashboard - Vue Globale du Marché")
             
             # Professional metrics with impact scores
             col1, col2, col3, col4, col5 = st.columns(5)
             
             with col1:
                 bullish_pct = round(bullish_count/total_count*100)
-                st.metric("🟢 BULLISH", bullish_count, f"+{bullish_pct}%", delta_color="normal")
+                st.metric(" BULLISH", bullish_count, f"+{bullish_pct}%", delta_color="normal")
                 
             with col2:
                 bearish_pct = round(bearish_count/total_count*100)
-                st.metric("🔴 BEARISH", bearish_count, f"-{bearish_pct}%", delta_color="inverse")
+                st.metric(" BEARISH", bearish_count, f"-{bearish_pct}%", delta_color="inverse")
                 
             with col3:
                 neutral_pct = round(neutral_count/total_count*100)
-                st.metric("⚪ NEUTRE", neutral_count, f"{neutral_pct}%")
+                st.metric(" NEUTRE", neutral_count, f"{neutral_pct}%")
                 
             with col4:
-                st.metric("📰 TOTAL", total_count, "articles")
+                st.metric(" TOTAL", total_count, "articles")
                 
             with col5:
                 momentum = ((bullish_count - bearish_count) / total_count * 100)
-                st.metric("📈 MOMENTUM", f"{momentum:+.1f}%", "Market Force")
+                st.metric(" MOMENTUM", f"{momentum:+.1f}%", "Market Force")
             
             st.divider()
             
             # === SENTIMENT GAUGE & MARKET STATE ===
-            st.markdown("### 🎬 État du Marché - IA Analysis")
+            st.markdown("### État du Marché - IA Analysis")
             
             sentiment_balance = ((bullish_count - bearish_count) / total_count * 100) if total_count > 0 else 0
             
@@ -1096,25 +1096,25 @@ def page_news_ai():
                 
             with col_gauge2:
                 if sentiment_balance > 50:
-                    badge = "🚀 EXTRÊMEMENT HAUSSIER"
+                    badge = " EXTRÊMEMENT HAUSSIER"
                     color = "green"
                 elif sentiment_balance > 30:
-                    badge = "🟢 TRÈS HAUSSIER"
+                    badge = " TRÈS HAUSSIER"
                     color = "green"
                 elif sentiment_balance > 10:
-                    badge = "📈 HAUSSIER"
+                    badge = " HAUSSIER"
                     color = "lightgreen"
                 elif sentiment_balance > -10:
-                    badge = "⚪ NEUTRE"
+                    badge = " NEUTRE"
                     color = "gray"
                 elif sentiment_balance > -30:
-                    badge = "📉 BAISSIER"
+                    badge = " BAISSIER"
                     color = "lightcoral"
                 elif sentiment_balance > -50:
-                    badge = "🔴 TRÈS BAISSIER"
+                    badge = " TRÈS BAISSIER"
                     color = "red"
                 else:
-                    badge = "💥 EXTRÊMEMENT BAISSIER"
+                    badge = " EXTRÊMEMENT BAISSIER"
                     color = "darkred"
                 
                 st.markdown(f"<h3 style='color:{color}'>{badge}</h3>", unsafe_allow_html=True)
@@ -1126,7 +1126,7 @@ def page_news_ai():
             st.divider()
             
             # === SOURCE ANALYSIS ===
-            st.markdown("### 📊 Analyse par Source")
+            st.markdown("### Analyse par Source")
             source_stats = {}
             for n in news_items:
                 src = n.get('source', 'Unknown')
@@ -1149,7 +1149,7 @@ def page_news_ai():
             st.divider()
             
             # === TOP ASSETS ===
-            st.markdown("### 💰 Actifs les Plus Mentionnés")
+            st.markdown("### Actifs les Plus Mentionnés")
             asset_count = {}
             asset_sentiment = {}
             for n in news_items:
@@ -1172,14 +1172,14 @@ def page_news_ai():
                         asset_momentum = ((bullish_asset - bearish_asset) / len(sentiments_for_asset) * 100)
                         
                         st.metric(
-                            f"💎 {asset}",
+                            f" {asset}",
                             f"{count} mentions",
                             f"{asset_momentum:+.0f}%",
                             delta_color="normal" if asset_momentum > 0 else "inverse"
                         )
         
         with tab2:
-            st.subheader("🔥 Trending - Actualités CRITIQUES")
+            st.subheader(" Trending - Actualités CRITIQUES")
             
             # Get highest impact news
             st.markdown("### ⭐ HOT TOPICS - Sujets les Plus Chauds")
@@ -1191,36 +1191,36 @@ def page_news_ai():
             col_bull, col_bear = st.columns(2)
             
             with col_bull:
-                st.markdown("#### 🟢 TOP BULLISH")
+                st.markdown("#### TOP BULLISH")
                 if bullish_news:
                     for i, news in enumerate(bullish_news[:3], 1):
                         with st.container(border=True):
                             st.markdown(f"**#{i}. {news.get('titre', 'N/A')}**")
                             st.caption(f"{news.get('source', 'Unknown')} • `{news.get('symbol', 'N/A')}`")
                             st.markdown(f"_{news.get('resume', 'N/A')}_")
-                            st.markdown(f"🎯 Impact: **POSITIF**")
+                            st.markdown(f" Impact: **POSITIF**")
                 else:
                     st.info("Aucune news bullish pour le moment")
                     
             with col_bear:
-                st.markdown("#### 🔴 TOP BEARISH")
+                st.markdown("#### TOP BEARISH")
                 if bearish_news:
                     for i, news in enumerate(bearish_news[:3], 1):
                         with st.container(border=True):
                             st.markdown(f"**#{i}. {news.get('titre', 'N/A')}**")
                             st.caption(f"{news.get('source', 'Unknown')} • `{news.get('symbol', 'N/A')}`")
                             st.markdown(f"_{news.get('resume', 'N/A')}_")
-                            st.markdown(f"⚠️ Impact: **NÉGATIF**")
+                            st.markdown(f"️ Impact: **NÉGATIF**")
                 else:
                     st.info("Aucune news bearish pour le moment")
         
         with tab3:
-            st.subheader("📈 Advanced Analytics")
+            st.subheader(" Advanced Analytics")
             
             col_anal1, col_anal2 = st.columns(2)
             
             with col_anal1:
-                st.markdown("#### 📊 Distribution Sentiment")
+                st.markdown("#### Distribution Sentiment")
                 # Create pie chart data
                 chart_data = {
                     'Sentiment': ['Bullish', 'Bearish', 'Neutre'],
@@ -1239,7 +1239,7 @@ def page_news_ai():
                 st.plotly_chart(fig_pie, use_container_width=True)
             
             with col_anal2:
-                st.markdown("#### 📰 Distribution par Source")
+                st.markdown("#### Distribution par Source")
                 source_chart_data = {
                     'Source': list(source_stats.keys()),
                     'Articles': [stats['total'] for stats in source_stats.values()]
@@ -1258,24 +1258,24 @@ def page_news_ai():
                 st.plotly_chart(fig_bar, use_container_width=True)
         
         with tab4:
-            st.subheader("📚 Toutes les Actualités - Recherche Complète")
+            st.subheader(" Toutes les Actualités - Recherche Complète")
             
             # Advanced Filters
-            st.markdown("### 🔍 Filtres Avancés")
+            st.markdown("### Filtres Avancés")
             filter_cols = st.columns(3)
             
             with filter_cols[0]:
                 sentiment_filter = st.multiselect(
-                    "📊 Sentiment",
-                    ["🟢 Haussier", "🔴 Baissier", "⚪ Neutre"],
-                    default=["🟢 Haussier", "🔴 Baissier", "⚪ Neutre"],
+                    " Sentiment",
+                    [" Haussier", " Baissier", " Neutre"],
+                    default=[" Haussier", " Baissier", " Neutre"],
                     key="all_sentiment_filter"
                 )
             
             with filter_cols[1]:
                 sources = sorted(list(set([n.get('source', 'Unknown') for n in news_items])))
                 source_filter = st.multiselect(
-                    "🌐 Source",
+                    " Source",
                     sources,
                     default=sources,
                     key="all_source_filter"
@@ -1290,7 +1290,7 @@ def page_news_ai():
                 symbols = sorted(list(all_symbols))
                 if symbols:
                     symbol_filter = st.multiselect(
-                        "💰 Actif",
+                        " Actif",
                         symbols,
                         default=symbols[:3] if len(symbols) > 3 else symbols,
                         key="all_symbol_filter"
@@ -1299,7 +1299,7 @@ def page_news_ai():
                     symbol_filter = []
             
             # Apply filters
-            sentiment_map = {"🟢 Haussier": "bullish", "🔴 Baissier": "bearish", "⚪ Neutre": "neutral"}
+            sentiment_map = {" Haussier": "bullish", " Baissier": "bearish", " Neutre": "neutral"}
             selected_sentiments = [sentiment_map.get(s, s) for s in sentiment_filter]
             
             filtered_news = [
@@ -1310,7 +1310,7 @@ def page_news_ai():
             ]
             
             st.divider()
-            st.markdown(f"### 📰 Résultats ({len(filtered_news)}/{total_count})")
+            st.markdown(f"### Résultats ({len(filtered_news)}/{total_count})")
             
             # Display all filtered news with better cards
             if filtered_news:
@@ -1320,7 +1320,7 @@ def page_news_ai():
                         
                         with col_info:
                             # Title with sentiment
-                            sentiment_emoji = "🟢" if news.get('sentiment') == 'bullish' else "🔴" if news.get('sentiment') == 'bearish' else "⚪"
+                            sentiment_emoji = "" if news.get('sentiment') == 'bullish' else "" if news.get('sentiment') == 'bearish' else ""
                             st.markdown(f"### {sentiment_emoji} {news.get('titre', 'N/A')}")
                             
                             # Content
@@ -1329,43 +1329,43 @@ def page_news_ai():
                             # Metadata
                             col_meta1, col_meta2, col_meta3 = st.columns(3)
                             with col_meta1:
-                                st.caption(f"📌 **Source:** {news.get('source', 'Unknown')}")
+                                st.caption(f" **Source:** {news.get('source', 'Unknown')}")
                             with col_meta2:
                                 if news.get('symbol'):
-                                    st.caption(f"💰 **Actif:** `{news.get('symbol')}`")
+                                    st.caption(f" **Actif:** `{news.get('symbol')}`")
                                 else:
-                                    st.caption("💰 **Actif:** Global")
+                                    st.caption(" **Actif:** Global")
                             with col_meta3:
-                                sentiment_text = "HAUSSIER 📈" if news.get('sentiment') == 'bullish' else "BAISSIER 📉" if news.get('sentiment') == 'bearish' else "NEUTRE ➡️"
-                                st.caption(f"📊 **Sentiment:** {sentiment_text}")
+                                sentiment_text = "HAUSSIER " if news.get('sentiment') == 'bullish' else "BAISSIER " if news.get('sentiment') == 'bearish' else "NEUTRE ️"
+                                st.caption(f" **Sentiment:** {sentiment_text}")
                         
                         with col_action:
                             url = news.get('url', '')
                             if url:
-                                st.markdown(f"[🔗 **Lire**]({url})")
+                                st.markdown(f"[ **Lire**]({url})")
             else:
-                st.info("❌ Aucune actualité correspondant aux filtres")
+                st.info(" Aucune actualité correspondant aux filtres")
     else:
-        st.warning("❌ Aucune news disponible pour le moment. Les APIs peuvent être momentanément indisponibles.")
+        st.warning(" Aucune news disponible pour le moment. Les APIs peuvent être momentanément indisponibles.")
 
 def page_dashboard():
-    st.title("📊 TRADING COMMAND CENTER - Tableau de Bord Premium")
+    st.title(" TRADING COMMAND CENTER - Tableau de Bord Premium")
     
     # Header with logout and info
     col_header1, col_header2, col_header3 = st.columns([2, 2, 1])
     with col_header1:
-        st.markdown(f"🔑 **User:** `{st.session_state.user_name}`")
+        st.markdown(f" **User:** `{st.session_state.user_name}`")
     with col_header2:
-        st.info("⚡ PLATFORM LIVE | ✅ Données temps réel | 🎯 11 Actifs | 📊 6 Périodes")
+        st.info(" PLATFORM LIVE | Données temps réel | 11 Actifs | 6 Périodes")
     with col_header3:
-        if st.button("🚪 Déconnecter", key="btn_logout", use_container_width=True):
+        if st.button(" Déconnecter", key="btn_logout", use_container_width=True):
             logout(st)
             st.rerun()
 
     # Show one-time welcome message after successful login - ANIMATED
     if st.session_state.get("show_welcome"):
         name = st.session_state.get("just_logged_in_user", st.session_state.get("user_name", "Trader"))
-        name = name if name else "Trader"  # Fallback if None
+        name = name if name else "Trader" # Fallback if None
         # Animated welcome with confetti effect
         st.markdown(f"""
         <style>
@@ -1387,8 +1387,8 @@ def page_dashboard():
         }}
         </style>
         <div class="welcome-box">
-        ✨ Bienvenue <b>{name}</b>! 🎉 ✨<br>
-        <small style="font-size: 14px; margin-top: 10px;">Prêt à trader comme un pro? 🚀</small>
+         Bienvenue <b>{name}</b>! <br>
+        <small style="font-size: 14px; margin-top: 10px;">Prêt à trader comme un pro? </small>
         </div>
         """, unsafe_allow_html=True)
         st.balloons()
@@ -1400,22 +1400,22 @@ def page_dashboard():
     # Dashboard Metrics Row
     col_m1, col_m2, col_m3, col_m4, col_m5 = st.columns(5)
     with col_m1:
-        st.metric("🎯 Actifs", "11", "Crypto/Forex/Gold")
+        st.metric(" Actifs", "11", "Crypto/Forex/Gold")
     with col_m2:
-        st.metric("📊 Indicateurs", "3", "RSI • MACD • Bollinger")
+        st.metric(" Indicateurs", "3", "RSI • MACD • Bollinger")
     with col_m3:
-        st.metric("⏱️ Périodes", "6", "1H → 3M")
+        st.metric("️ Périodes", "6", "1H → 3M")
     with col_m4:
-        st.metric("📰 News", "Temps Réel", "4 Sources")
+        st.metric(" News", "Temps Réel", "4 Sources")
     with col_m5:
-        st.metric("🤖 Patterns", "19", "Moteur d'Analyse")
+        st.metric(" Patterns", "19", "Moteur d'Analyse")
     st.divider()
     
     # === TAB LAYOUT FOR DASHBOARD ===
-    tab_assets, tab_prices, tab_indicators, tab_analysis = st.tabs(["💰 Actifs", "📊 Prix Live", "📈 Indicateurs", "🎯 Analyse"])
+    tab_assets, tab_prices, tab_indicators, tab_analysis = st.tabs([" Actifs", " Prix Live", " Indicateurs", " Analyse"])
     
     with tab_assets:
-        st.markdown("### 💰 Sélection des Actifs - Choisissez vos Pairs")
+        st.markdown("### Sélection des Actifs - Choisissez vos Pairs")
         st.markdown("Sélectionnez les cryptomonnaies, devises forex, ou matières premières à analyser en temps réel.")
         
         # ALL supported tickers
@@ -1423,16 +1423,16 @@ def page_dashboard():
         
         col_btn1, col_btn2 = st.columns(2)
         with col_btn1:
-            if st.button("✅ Sélectionner Tous", use_container_width=True):
+            if st.button(" Sélectionner Tous", use_container_width=True):
                 st.session_state.selected_tickers = tickers
                 st.rerun()
         with col_btn2:
-            if st.button("❌ Désélectionner Tous", use_container_width=True):
+            if st.button(" Désélectionner Tous", use_container_width=True):
                 st.session_state.selected_tickers = ["BTC", "EUR"]
                 st.rerun()
         
         selected_tickers = st.multiselect(
-            "🎯 **Choisir les Actifs:**",
+            " **Choisir les Actifs:**",
             tickers,
             default=st.session_state.get("selected_tickers", ["BTC", "EUR"]),
             key="assets_selector"
@@ -1447,13 +1447,13 @@ def page_dashboard():
             st.metric("🪙 Cryptos", crypto_count, "sélectionnées")
         with col_c2:
             forex_count = sum(1 for t in selected_tickers if t in ["EUR", "GBP", "JPY", "AUD"])
-            st.metric("💱 Forex", forex_count, "sélectionnées")
+            st.metric(" Forex", forex_count, "sélectionnées")
         with col_c3:
             commodities = sum(1 for t in selected_tickers if t in ["XAU"])
-            st.metric("🏆 Matières 1ères", commodities, "sélectionnées")
+            st.metric(" Matières 1ères", commodities, "sélectionnées")
     
     with tab_prices:
-        st.markdown("### 📊 Prix en Temps Réel - Market Snapshot")
+        st.markdown("### Prix en Temps Réel - Market Snapshot")
         
         if st.session_state.get("selected_tickers", []):
             selected_tickers = st.session_state.selected_tickers
@@ -1463,9 +1463,9 @@ def page_dashboard():
             now = dt.now().strftime("%H:%M:%S")
             col_info, col_btn = st.columns([5, 1])
             with col_info:
-                st.caption(f"🔴 EN DIRECT | Mise à jour: {now} | {len(selected_tickers)} pairs monitorés | Auto-refresh 5s")
+                st.caption(f" EN DIRECT | Mise à jour: {now} | {len(selected_tickers)} pairs monitorés | Auto-refresh 5s")
             with col_btn:
-                if st.button("🔄 Refresh", key="refresh_prices", use_container_width=True):
+                if st.button(" Refresh", key="refresh_prices", use_container_width=True):
                     st.session_state.price_refresh_counter = (st.session_state.get("price_refresh_counter", 0) + 1)
                     st.rerun()
             
@@ -1488,21 +1488,21 @@ def page_dashboard():
                         delta_color="normal"
                     )
         else:
-            st.warning("👈 Sélectionnez des actifs dans l'onglet 'Actifs'")
+            st.warning(" Sélectionnez des actifs dans l'onglet 'Actifs'")
     
     with tab_indicators:
-        st.markdown("### 📈 Sélection des Indicateurs")
+        st.markdown("### Sélection des Indicateurs")
         st.markdown("Choisissez les indicateurs techniques à afficher sur les graphes.")
         
         col1, col2, col3 = st.columns(3)
         with col1:
-            show_rsi = st.checkbox("📊 RSI (14)", value=st.session_state.get("show_rsi", True), key="rsi_check")
+            show_rsi = st.checkbox(" RSI (14)", value=st.session_state.get("show_rsi", True), key="rsi_check")
             st.session_state.show_rsi = show_rsi
         with col2:
-            show_macd = st.checkbox("📉 MACD", value=st.session_state.get("show_macd", False), key="macd_check")
+            show_macd = st.checkbox(" MACD", value=st.session_state.get("show_macd", False), key="macd_check")
             st.session_state.show_macd = show_macd
         with col3:
-            show_bollinger = st.checkbox("📈 Bollinger Bands", value=st.session_state.get("show_bollinger", False), key="bb_check")
+            show_bollinger = st.checkbox(" Bollinger Bands", value=st.session_state.get("show_bollinger", False), key="bb_check")
             st.session_state.show_bollinger = show_bollinger
         
         st.divider()
@@ -1512,17 +1512,17 @@ def page_dashboard():
             with st.expander("ℹ️ RSI (Relative Strength Index)"):
                 st.markdown("""
                 **RSI** mesure la force relative d'un actif:
-                - **> 70:** Suracheté 🔴 (vente potentielle)
-                - **< 30:** Survendu 🟢 (achat potentiel)
-                - **30-70:** Zone neutre ⚪
+                - **> 70:** Suracheté (vente potentielle)
+                - **< 30:** Survendu (achat potentiel)
+                - **30-70:** Zone neutre 
                 """)
         
         if show_macd:
             with st.expander("ℹ️ MACD (Moving Average Convergence Divergence)"):
                 st.markdown("""
                 **MACD** identifie les changements de momentum:
-                - **Ligne MACD > Signal:** Momentum haussier 🟢
-                - **Ligne MACD < Signal:** Momentum baissier 🔴
+                - **Ligne MACD > Signal:** Momentum haussier 
+                - **Ligne MACD < Signal:** Momentum baissier 
                 - **Histogramme:** Force du signal
                 """)
         
@@ -1530,23 +1530,23 @@ def page_dashboard():
             with st.expander("ℹ️ Bandes de Bollinger"):
                 st.markdown("""
                 **Bollinger Bands** détectent volatilité et niveaux extrêmes:
-                - **Bande Supérieure:** Résistance 🔴
-                - **Bande Inférieure:** Support 🟢
-                - **Écartement:** Volatilité accrue 📈
+                - **Bande Supérieure:** Résistance 
+                - **Bande Inférieure:** Support 
+                - **Écartement:** Volatilité accrue 
                 """)
     
     with tab_analysis:
-        st.markdown("### 🎯 Analyse Graphique & Patterns")
+        st.markdown("### Analyse Graphique & Patterns")
         
         selected_period = st.session_state.get("selected_period", "1D")
         
-        st.markdown("#### ⏱️ Sélectionnez la Période Temporelle")
+        st.markdown("#### ️ Sélectionnez la Période Temporelle")
         st.markdown("*Choisissez la timeframe pour votre analyse technique*")
         
         period_cols = st.columns(6)
         
         periods = ["1H", "4H", "1D", "1W", "1M", "3M"]
-        period_labels = ["⏱️ 1H", "⏱️ 4H", "📅 1D", "📆 1W", "📊 1M", "📈 3M"]
+        period_labels = ["️ 1H", "️ 4H", " 1D", " 1W", " 1M", " 3M"]
         
         for idx, (period, label) in enumerate(zip(periods, period_labels)):
             with period_cols[idx]:
@@ -1561,25 +1561,25 @@ def page_dashboard():
         selected_tickers = st.session_state.selected_tickers
         
         st.divider()
-        st.subheader("📊 Graphiques en Temps Réel")
+        st.subheader(" Graphiques en Temps Réel")
         
         # For short periods, fetch more data to calculate indicators properly
         days_to_fetch = {
-            "1H": 7,      # 7 days for 1H period (better indicators)
-            "4H": 7,      # 7 days for 4H period
-            "1D": 30,     # 30 days for daily
-            "1W": 90,     # 90 days for weekly
-            "1M": 180,    # 180 days for monthly
-            "3M": 365     # 365 days for quarterly
+            "1H": 7, # 7 days for 1H period (better indicators)
+            "4H": 7, # 7 days for 4H period
+            "1D": 30, # 30 days for daily
+            "1W": 90, # 90 days for weekly
+            "1M": 180, # 180 days for monthly
+            "3M": 365 # 365 days for quarterly
         }.get(selected_period, 30)
         
         for ticker in selected_tickers:
             # Display with period badge
-            period_badge = {"1H": "⏱️ 1 Heure", "4H": "⏱️ 4 Heures", "1D": "📅 1 Jour", "1W": "📆 1 Semaine", "1M": "📊 1 Mois", "3M": "📈 3 Mois"}
+            period_badge = {"1H": "️ 1 Heure", "4H": "️ 4 Heures", "1D": " 1 Jour", "1W": " 1 Semaine", "1M": " 1 Mois", "3M": " 3 Mois"}
             badge = period_badge.get(selected_period, "1 Jour")
             col_title, col_badge = st.columns([3, 1])
             with col_title:
-                st.subheader(f"📈 {ticker}")
+                st.subheader(f" {ticker}")
             with col_badge:
                 st.info(badge)
             
@@ -1606,12 +1606,12 @@ def page_dashboard():
             
             # Determine how many candles to display based on period
             display_candles = {
-                "1H": 2,      # Show last 2 hours worth of 1H candles
-                "4H": 2,      # Show last 8 hours worth of 4H candles (2 x 4h)
-                "1D": 30,     # Show last 30 days
-                "1W": 12,     # Show last 12 weeks
-                "1M": 12,     # Show last 12 months
-                "3M": 12      # Show last 12 months
+                "1H": 2, # Show last 2 hours worth of 1H candles
+                "4H": 2, # Show last 8 hours worth of 4H candles (2 x 4h)
+                "1D": 30, # Show last 30 days
+                "1W": 12, # Show last 12 weeks
+                "1M": 12, # Show last 12 months
+                "3M": 12 # Show last 12 months
             }.get(selected_period, 30)
             
             # Limit display data to show only relevant timeframe
@@ -1633,16 +1633,16 @@ def page_dashboard():
             c_style = st.session_state.get("candle_style", "classic")
             # XM Platform colors - Exact match to professional standards
             # Green for bullish (up), red for bearish (down)
-            inc = dict(fillcolor='#1bc47d', line=dict(color='#1bc47d', width=1.5))  # Professional green
-            dec = dict(fillcolor='#ff3d3d', line=dict(color='#ff3d3d', width=1.5))  # Professional red
+            inc = dict(fillcolor='#1bc47d', line=dict(color='#1bc47d', width=1.5)) # Professional green
+            dec = dict(fillcolor='#ff3d3d', line=dict(color='#ff3d3d', width=1.5)) # Professional red
             
             # Force reset Plotly template to prevent style override for GOLD
             template_name = "plotly_dark"
             
             # Apply XM-style professional dark background
             fig.update_layout(
-                plot_bgcolor='#0f1729',  # XM style very dark blue-black
-                paper_bgcolor='#0f1729',  # Exact XM color
+                plot_bgcolor='#0f1729', # XM style very dark blue-black
+                paper_bgcolor='#0f1729', # Exact XM color
                 font=dict(color='#ffffff', family='Arial, sans-serif'),
                 title_font_size=16,
                 margin=dict(l=50, r=50, t=60, b=50)
@@ -1689,7 +1689,7 @@ def page_dashboard():
                         fillcolor=dec['fillcolor'],
                         line=dict(color=dec['line']['color'], width=dec['line']['width'])
                     ),
-                    opacity=1.0,  # Full opacity for clarity
+                    opacity=1.0, # Full opacity for clarity
                     showlegend=False,
                     hovertemplate='<b>%{x|%d-%m-%Y}</b><br>Open: %{open:.2f}<br>High: %{high:.2f}<br>Low: %{low:.2f}<br>Close: %{close:.2f}<extra></extra>'
                 ), row=1, col=1)
@@ -1738,7 +1738,7 @@ def page_dashboard():
             
             fig.update_layout(
                 title=f"<b>{ticker} - {period_name} (Affichage: {len(df_candle)} candles)</b>",
-                height=600,  # Professional height for mobile-friendly viewing
+                height=600, # Professional height for mobile-friendly viewing
                 xaxis_rangeslider_visible=False,
                 template=template_name,
                 hovermode='x unified',
@@ -1874,7 +1874,7 @@ def page_dashboard():
             st.divider()
         
         st.markdown("---")
-        st.subheader("🚨 Alertes en Temps Réel")
+        st.subheader(" Alertes en Temps Réel")
         
         # Check for active alerts
         all_alerts = []
@@ -1899,7 +1899,7 @@ def page_dashboard():
                 else:
                     st.info(alert.get("message", f"Alert: {alert['type']}"))
         else:
-            st.success("✅ Aucune alerte active - Marché stable")
+            st.success(" Aucune alerte active - Marché stable")
         
         st.markdown("---")
         st.subheader("4️⃣ Signaux de Trading Intelligents")
@@ -1979,31 +1979,31 @@ def page_patterns():
         PSYCHOLOGY_RULES
     )
     
-    st.title("📚 TRADING MASTERY - Patterns & Stratégies Pro")
+    st.title(" TRADING MASTERY - Patterns & Stratégies Pro")
     st.markdown("*19 Chandeliers Japonais • 4 Stratégies • Risk Management • Psychologie*")
     
     # Info bar
     col_info1, col_info2, col_info3 = st.columns(3)
     with col_info1:
-        st.metric("📊 Patterns", "19", "Chandeliers")
+        st.metric(" Patterns", "19", "Chandeliers")
     with col_info2:
-        st.metric("📈 Stratégies", "4", "Éprouvées")
+        st.metric(" Stratégies", "4", "Éprouvées")
     with col_info3:
-        st.metric("🎯 Mastery", "100%", "Apprentissage")
+        st.metric(" Mastery", "100%", "Apprentissage")
     
     st.divider()
     
     # === 4 MAIN TABS ===
     tab_candlesticks, tab_strategies, tab_risk, tab_psychology = st.tabs([
-        "📊 Chandeliers (19)",
-        "📈 Stratégies (4)",
-        "⚠️ Gestion du Risque",
-        "🧠 Psychologie"
+        " Chandeliers (19)",
+        " Stratégies (4)",
+        "️ Gestion du Risque",
+        " Psychologie"
     ])
     
     # === TAB 1: CANDLESTICKS ===
     with tab_candlesticks:
-        st.markdown("### 📊 19 Patterns Candlestick - Maîtrise Complète")
+        st.markdown("### 19 Patterns Candlestick - Maîtrise Complète")
         st.markdown("Apprenez à reconnaître les 19 patterns essentiels pour trader avec précision")
         
         st.divider()
@@ -2012,13 +2012,13 @@ def page_patterns():
         col_filter1, col_filter2 = st.columns(2)
         with col_filter1:
             pattern_type = st.selectbox(
-                "🔍 Filtrer par type:",
-                ["🟢 Tous les Patterns", "🟢 Haussiers (Bullish)", "🔴 Baissiers (Bearish)"],
+                " Filtrer par type:",
+                [" Tous les Patterns", " Haussiers (Bullish)", " Baissiers (Bearish)"],
                 key="pattern_type_filter"
             )
         with col_filter2:
             difficulty = st.selectbox(
-                "📊 Niveau de Difficulté:",
+                " Niveau de Difficulté:",
                 ["Tous", "Débutant", "Intermédiaire", "Avancé"],
                 key="pattern_difficulty_filter"
             )
@@ -2028,7 +2028,7 @@ def page_patterns():
         # Pattern selector
         pattern_names = list(CANDLESTICK_PATTERNS.keys())
         selected_pattern = st.selectbox(
-            "🎯 **Choisir un Pattern à analyser:**",
+            " **Choisir un Pattern à analyser:**",
             pattern_names,
             key="pattern_selector"
         )
@@ -2042,7 +2042,7 @@ def page_patterns():
                 with col_title:
                     st.markdown(f"## {selected_pattern}")
                 with col_type:
-                    type_badge = "🟢 BULLISH" if pattern_info.get('type') == 'bullish' else "🔴 BEARISH"
+                    type_badge = " BULLISH" if pattern_info.get('type') == 'bullish' else " BEARISH"
                     st.markdown(f"**{type_badge}**")
                 
                 st.divider()
@@ -2051,17 +2051,17 @@ def page_patterns():
                 col1, col2 = st.columns(2)
                 
                 with col1:
-                    with st.expander("📖 **Description**", expanded=True):
+                    with st.expander(" **Description**", expanded=True):
                         st.markdown(pattern_info.get('description', 'N/A'))
                     
-                    with st.expander("🎯 **Signification**"):
+                    with st.expander(" **Signification**"):
                         st.markdown(pattern_info.get('signification', 'N/A'))
                 
                 with col2:
-                    with st.expander("✅ **Comment l'identifier**"):
+                    with st.expander(" **Comment l'identifier**"):
                         st.markdown(pattern_info.get('identification', 'N/A'))
                     
-                    with st.expander("💡 **Conseil de Trading**"):
+                    with st.expander(" **Conseil de Trading**"):
                         st.markdown(pattern_info.get('trading_tip', 'N/A'))
                 
                 st.divider()
@@ -2069,16 +2069,16 @@ def page_patterns():
                 # Reliability metrics
                 col_m1, col_m2, col_m3 = st.columns(3)
                 with col_m1:
-                    st.metric("📊 Fiabilité", f"{pattern_info.get('reliability', 70)}%")
+                    st.metric(" Fiabilité", f"{pattern_info.get('reliability', 70)}%")
                 with col_m2:
                     frequency = pattern_info.get('frequency', 'Modérée')
-                    st.metric("📈 Fréquence", frequency)
+                    st.metric(" Fréquence", frequency)
                 with col_m3:
                     timeframe = pattern_info.get('best_timeframe', '1D')
-                    st.metric("⏱️ Meilleur Timeframe", timeframe)
+                    st.metric("️ Meilleur Timeframe", timeframe)
         
         st.divider()
-        st.markdown("### 📊 Comparaison des 19 Patterns")
+        st.markdown("### Comparaison des 19 Patterns")
         st.markdown("Tableau complet de tous les patterns avec leurs caractéristiques")
         
         # Create comparison table
@@ -2086,7 +2086,7 @@ def page_patterns():
         for name, info in CANDLESTICK_PATTERNS.items():
             patterns_data.append({
                 "Pattern": name,
-                "Type": "🟢 Haussier" if info.get('type') == 'bullish' else "🔴 Baissier",
+                "Type": " Haussier" if info.get('type') == 'bullish' else " Baissier",
                 "Fiabilité": f"{info.get('reliability', 70)}%",
                 "Fréquence": info.get('frequency', 'Modérée'),
                 "Timeframe": info.get('best_timeframe', '1D')
@@ -2097,7 +2097,7 @@ def page_patterns():
     
     # === TAB 2: STRATEGIES ===
     with tab_strategies:
-        st.markdown("### 📈 4 Stratégies Éprouvées")
+        st.markdown("### 4 Stratégies Éprouvées")
         st.markdown("Stratégies complètes et testées en live trading")
         
         st.divider()
@@ -2106,14 +2106,14 @@ def page_patterns():
         with col_strat1:
             st.info("**Stratégies couvrant:** Patterns • Support/Résistance • Signaux Composites • Risk Management")
         with col_strat2:
-            st.success("**Toutes les stratégies:** Backtestées ✅ • Éprouvées en Live ✅ • Rentables ✅")
+            st.success("**Toutes les stratégies:** Backtestées • Éprouvées en Live • Rentables ")
         
         st.divider()
         
         # Strategy selector
         strategy_names = list(TRADING_STRATEGIES.keys())
         selected_strategy = st.selectbox(
-            "🎯 **Choisir une Stratégie:**",
+            " **Choisir une Stratégie:**",
             strategy_names,
             key="strategy_selector"
         )
@@ -2127,44 +2127,44 @@ def page_patterns():
                 
                 col1, col2, col3 = st.columns(3)
                 with col1:
-                    st.metric("📊 Win Rate", f"{strategy_info.get('win_rate', 65)}%")
+                    st.metric(" Win Rate", f"{strategy_info.get('win_rate', 65)}%")
                 with col2:
-                    st.metric("💰 Profit Factor", f"{strategy_info.get('profit_factor', 2.1):.2f}x")
+                    st.metric(" Profit Factor", f"{strategy_info.get('profit_factor', 2.1):.2f}x")
                 with col3:
                     difficulty = strategy_info.get('difficulty', 'Moyen')
-                    st.metric("📚 Difficulté", difficulty)
+                    st.metric(" Difficulté", difficulty)
                 
                 st.divider()
                 
                 col_a, col_b = st.columns(2)
                 with col_a:
-                    with st.expander("📖 **Description**", expanded=True):
+                    with st.expander(" **Description**", expanded=True):
                         st.markdown(strategy_info.get('nom', 'N/A'))
                         st.markdown(strategy_info.get('description', 'N/A'))
                 
                 with col_b:
-                    with st.expander("🔧 **Mise en Place**"):
+                    with st.expander(" **Mise en Place**"):
                         st.markdown(strategy_info.get('setup', 'N/A'))
                 
                 st.divider()
                 
                 col_x, col_y = st.columns(2)
                 with col_x:
-                    with st.expander("✅ **Signaux d'Entrée**"):
+                    with st.expander(" **Signaux d'Entrée**"):
                         st.markdown(strategy_info.get('entry_signals', 'N/A'))
                 
                 with col_y:
-                    with st.expander("❌ **Signaux de Sortie**"):
+                    with st.expander(" **Signaux de Sortie**"):
                         st.markdown(strategy_info.get('exit_signals', 'N/A'))
                 
                 st.divider()
                 
-                with st.expander("💡 **Tips et Conseils**"):
+                with st.expander(" **Tips et Conseils**"):
                     st.markdown(strategy_info.get('tips', 'N/A'))
     
     # === TAB 3: RISK MANAGEMENT ===
     with tab_risk:
-        st.markdown("### ⚠️ Gestion du Risque - La Clé du Succès")
+        st.markdown("### ️ Gestion du Risque - La Clé du Succès")
         st.markdown("Les règles essentielles pour protéger votre capital et maximiser les gains")
         
         st.divider()
@@ -2173,44 +2173,44 @@ def page_patterns():
         col_calc1, col_calc2 = st.columns(2)
         
         with col_calc1:
-            st.markdown("#### 📊 Calculateur de Risque")
-            account_balance = st.number_input("💰 Solde du compte ($):", min_value=100, value=10000, key="risk_account")
-            risk_percent = st.slider("📊 Risque par trade (%):", 0.5, 2.0, 1.0, 0.1, key="risk_slider")
-            entry_price = st.number_input("📈 Prix d'entrée ($):", min_value=0.01, value=100.0, key="risk_entry")
-            stop_loss = st.number_input("📉 Stop Loss ($):", min_value=0.01, value=95.0, key="risk_stop")
+            st.markdown("#### Calculateur de Risque")
+            account_balance = st.number_input(" Solde du compte ($):", min_value=100, value=10000, key="risk_account")
+            risk_percent = st.slider(" Risque par trade (%):", 0.5, 2.0, 1.0, 0.1, key="risk_slider")
+            entry_price = st.number_input(" Prix d'entrée ($):", min_value=0.01, value=100.0, key="risk_entry")
+            stop_loss = st.number_input(" Stop Loss ($):", min_value=0.01, value=95.0, key="risk_stop")
         
         with col_calc2:
-            st.markdown("#### 📈 Résultats")
+            st.markdown("#### Résultats")
             risk_amount = account_balance * (risk_percent / 100)
             pips_risk = abs(entry_price - stop_loss)
             lot_size = risk_amount / pips_risk if pips_risk > 0 else 0
             
-            st.metric("💵 Risque ($)", f"${risk_amount:.2f}")
-            st.metric("📍 Pips en Risque", f"{pips_risk:.4f}")
-            st.metric("📦 Taille Lot", f"{lot_size:.2f}")
+            st.metric(" Risque ($)", f"${risk_amount:.2f}")
+            st.metric(" Pips en Risque", f"{pips_risk:.4f}")
+            st.metric(" Taille Lot", f"{lot_size:.2f}")
             
             # Risk/Reward ratio
             if pips_risk > 0:
-                take_profit = st.number_input("🎯 Take Profit ($):", min_value=entry_price + 0.01, value=110.0, key="risk_tp")
+                take_profit = st.number_input(" Take Profit ($):", min_value=entry_price + 0.01, value=110.0, key="risk_tp")
                 pips_gain = abs(take_profit - entry_price)
                 rr_ratio = pips_gain / pips_risk
                 
                 if rr_ratio >= 2.0:
-                    st.success(f"✅ **Ratio R/R: {rr_ratio:.2f}** (EXCELLENT)")
+                    st.success(f" **Ratio R/R: {rr_ratio:.2f}** (EXCELLENT)")
                 elif rr_ratio >= 1.5:
-                    st.info(f"✅ **Ratio R/R: {rr_ratio:.2f}** (BON)")
+                    st.info(f" **Ratio R/R: {rr_ratio:.2f}** (BON)")
                 else:
-                    st.warning(f"⚠️ **Ratio R/R: {rr_ratio:.2f}** (À AMÉLIORER)")
+                    st.warning(f"️ **Ratio R/R: {rr_ratio:.2f}** (À AMÉLIORER)")
         
         st.divider()
         
         # Risk rules display
-        st.markdown("#### 📖 Règles Fondamentales de Risk Management")
+        st.markdown("#### Règles Fondamentales de Risk Management")
         
         from src.educational_content import RISK_MANAGEMENT_RULES
         for idx, (key, rule) in enumerate(RISK_MANAGEMENT_RULES.items(), 1):
             titre = rule.get('titre', f'Règle {idx}')
-            with st.expander(f"🔹 **Règle {idx}: {titre}**"):
+            with st.expander(f" **Règle {idx}: {titre}**"):
                 st.markdown(f"**Règle:** {rule.get('règle', 'N/A')}")
                 st.markdown(f"**Exemple:** {rule.get('exemple', 'N/A')}")
                 st.markdown(f"**Erreur à éviter:** {rule.get('erreur', 'N/A')}")
@@ -2218,7 +2218,7 @@ def page_patterns():
     
     # === TAB 4: PSYCHOLOGY ===
     with tab_psychology:
-        st.markdown("### 🧠 Psychologie du Trading - Discipline > Prédiction")
+        st.markdown("### Psychologie du Trading - Discipline > Prédiction")
         st.markdown("Maîtriser votre psychologie est plus important que vos indicateurs")
         
         st.divider()
@@ -2226,19 +2226,19 @@ def page_patterns():
         # Psychology metrics
         col_psy1, col_psy2, col_psy3 = st.columns(3)
         with col_psy1:
-            st.metric("🧠 Impact Psychologie", "50-70%", "Du succès")
+            st.metric(" Impact Psychologie", "50-70%", "Du succès")
         with col_psy2:
-            st.metric("📊 Impact Analyse", "20-30%", "Du succès")
+            st.metric(" Impact Analyse", "20-30%", "Du succès")
         with col_psy3:
-            st.metric("💰 Discipline", "★★★★★", "Essentielle")
+            st.metric(" Discipline", "", "Essentielle")
         
         st.divider()
         
         # Psychology rules
-        st.markdown("#### 📖 Règles de Psychologie du Trading")
+        st.markdown("#### Règles de Psychologie du Trading")
         
         for idx, rule in enumerate(PSYCHOLOGY_RULES.values(), 1):
-            with st.expander(f"🧠 **Règle {idx}: {rule.get('titre', 'N/A')}**"):
+            with st.expander(f" **Règle {idx}: {rule.get('titre', 'N/A')}**"):
                 st.markdown(f"**Problème:** {rule.get('probleme', 'N/A')}")
                 st.markdown(f"**Solution:** {rule.get('solution', 'N/A')}")
                 st.markdown(f"**Action:** {rule.get('action', 'N/A')}")
@@ -2246,39 +2246,39 @@ def page_patterns():
         st.divider()
         
         # Discipline quiz
-        st.markdown("#### 🎯 Quiz: Testez Votre Discipline")
+        st.markdown("#### Quiz: Testez Votre Discipline")
         
         with st.form("psychology_quiz"):
-            q1 = st.radio("❌ J'ai perdu mon dernier trade. Je dois:", [
+            q1 = st.radio(" J'ai perdu mon dernier trade. Je dois:", [
                 "Ignorer la perte et trader plus agressif",
                 "Analyser la perte calmement avant le prochain trade",
                 "Doubler ma mise pour compenser"
             ])
             
-            q2 = st.radio("📊 Face à un trade gagnant:", [
+            q2 = st.radio(" Face à un trade gagnant:", [
                 "Fermer très tôt par peur de perdre le gain",
                 "Laisser mon TP faire son travail",
                 "Ajouter à la position"
             ])
             
-            q3 = st.radio("⏱️ Avant chaque trade:", [
+            q3 = st.radio("️ Avant chaque trade:", [
                 "Checker rapidement les news",
                 "Suivre mon plan sans distraction",
                 "Écouter les autres traders"
             ])
             
-            if st.form_submit_button("📊 Voir mon Score", use_container_width=True):
+            if st.form_submit_button(" Voir mon Score", use_container_width=True):
                 score = 0
                 if q1 == "Analyser la perte calmement avant le prochain trade": score += 1
                 if q2 == "Laisser mon TP faire son travail": score += 1
                 if q3 == "Suivre mon plan sans distraction": score += 1
                 
                 if score == 3:
-                    st.success("🏆 **EXCELLENT (3/3)** - Vous avez une excellente discipline!")
+                    st.success(" **EXCELLENT (3/3)** - Vous avez une excellente discipline!")
                 elif score == 2:
-                    st.info("✅ **BON (2/3)** - Travaillez sur les points faibles")
+                    st.info(" **BON (2/3)** - Travaillez sur les points faibles")
                 else:
-                    st.warning("📈 **À AMÉLIORER (0-1/3)** - Discipline prioritaire!")
+                    st.warning(" **À AMÉLIORER (0-1/3)** - Discipline prioritaire!")
 
 
 def main():
@@ -2305,23 +2305,23 @@ def main():
         try:
             st.image("logo/IMG-20250824-WA0020.jpg", width=100)
         except:
-            st.markdown("### 📊")
+            st.markdown("### ")
     with col_title:
         st.markdown("# **DUBAI TRADING TOOLS** - Plateforme Professionnelle")
     with col_version:
-        st.caption("v6.1 ✨")
+        st.caption("v6.1 ")
     
     st.divider()
     
     # === SIDEBAR NAVIGATION (only for authenticated users) ===
     with st.sidebar:
-        st.markdown("### 🗺️ **NAVIGATION**")
+        st.markdown("### ️ **NAVIGATION**")
         st.markdown("Sélectionnez votre destination:")
         
         # Main page selector
         page = st.radio(
             "Pages:",
-            ["📈 Tableau de Bord", "📰 Actualités IA", "📚 Patterns", "🎓 Formation", "⚙️ Profil"],
+            [" Tableau de Bord", " Actualités IA", " Patterns", " Formation", "️ Profil"],
             label_visibility="collapsed",
             key="main_nav"
         )
@@ -2329,77 +2329,77 @@ def main():
         st.sidebar.divider()
         
         # === SIDEBAR STATS ===
-        st.markdown("### 📊 **STATISTIQUES DE LA PLATEFORME**")
+        st.markdown("### **STATISTIQUES DE LA PLATEFORME**")
         
         col_s1, col_s2 = st.columns(2)
         with col_s1:
-            st.metric("🟢 Status", "LIVE")
-            st.metric("📊 Assets", "11")
+            st.metric(" Status", "LIVE")
+            st.metric(" Assets", "11")
         with col_s2:
-            st.metric("⏱️ Periods", "6")
-            st.metric("🔄 Refresh", "Auto 5s")
+            st.metric("️ Periods", "6")
+            st.metric(" Refresh", "Auto 5s")
         
         st.divider()
         
         # === STATISTIQUES RAPIDES DE LA BARRE LATÉRALE ===
-        st.markdown("### ⚡ **STATISTIQUES RAPIDES**")
+        st.markdown("### **STATISTIQUES RAPIDES**")
         
         if st.session_state.get("logged_in", False):
             st.markdown(f"""
-            **👤 Utilisateur:** {st.session_state.get('user_name', 'Trader')}
+            ** Utilisateur:** {st.session_state.get('user_name', 'Trader')}
             
-            **📊 Outils:**
-            - ✅ Prix en temps réel
-            - ✅ 3 Indicateurs
-            - ✅ Tableau de bord 4 onglets
-            - ✅ Analyse IA des Actualités
-            - ✅ 19 Patterns
-            - ✅ Quiz Interactif
+            ** Outils:**
+            - Prix en temps réel
+            - 3 Indicateurs
+            - Tableau de bord 4 onglets
+            - Analyse IA des Actualités
+            - 19 Patterns
+            - Quiz Interactif
             """)
         
         st.divider()
         
         # === SIDEBAR FOOTER ===
-        st.markdown("### 📞 **SUPPORT**")
+        st.markdown("### **SUPPORT**")
         st.caption("© 2025-2026 ELOADXFAMILY")
         st.caption("*Analyse Professionnelle du Trading*")
-        st.caption("📧 **Email:** eloadxfamily@gmail.com")
+        st.caption(" **Email:** eloadxfamily@gmail.com")
         
-        if st.button("📖 Dépôt GitHub", use_container_width=True):
+        if st.button(" Dépôt GitHub", use_container_width=True):
             st.markdown("[EL-AX/dubai-trading-tools](https://github.com/EL-AX/dubai-trading-tools)")
     
     # === ROUTING DES PAGES (uniquement pour utilisateurs authentifiés) ===
-    if page == "📈 Tableau de Bord":
+    if page == " Tableau de Bord":
         page_dashboard()
-    elif page == "📰 Actualités IA":
+    elif page == " Actualités IA":
         page_news_ai()
-    elif page == "📚 Patterns":
+    elif page == " Patterns":
         page_patterns()
-    elif page == "🎓 Formation":
+    elif page == " Formation":
         page_tutorial()
-    elif page == "⚙️ Profil":
-        st.title("⚙️ Paramètres du Compte")
+    elif page == "️ Profil":
+        st.title("️ Paramètres du Compte")
         
         # Profile information
         col_prof1, col_prof2, col_prof3 = st.columns(3)
         with col_prof1:
-            st.metric("👤 Nom d'utilisateur", st.session_state.get("user_name", "N/A"))
+            st.metric(" Nom d'utilisateur", st.session_state.get("user_name", "N/A"))
         with col_prof2:
-            st.metric("✉️ Email", st.session_state.get("user_email", "N/A"))
+            st.metric("️ Email", st.session_state.get("user_email", "N/A"))
         with col_prof3:
-            st.metric("📅 Membre depuis", "2026")
+            st.metric(" Membre depuis", "2026")
         
         st.divider()
         
         # Settings tabs
-        settings_tabs = st.tabs(["👤 Compte", "🔒 Sécurité", "⚙️ Préférences", "📊 Données"])
+        settings_tabs = st.tabs([" Compte", " Sécurité", "️ Préférences", " Données"])
         
         with settings_tabs[0]:
             st.markdown("### Gestion du Compte")
-            st.info("✅ Compte vérifié et actif")
+            st.info(" Compte vérifié et actif")
             st.markdown("""
             **Détails du Compte:**
-            - Statut: Vérifié ✅
+            - Statut: Vérifié 
             - Membre depuis: 2025
             - Dernière connexion: Aujourd'hui
             - Sessions: 1 active
@@ -2407,11 +2407,11 @@ def main():
         
         with settings_tabs[1]:
             st.markdown("### Paramètres de Sécurité")
-            st.warning("🔒 Gardez votre compte en sécurité")
+            st.warning(" Gardez votre compte en sécurité")
             st.markdown("""
             **Liste de Vérification de Sécurité:**
-            - ✅ Mot de passe fort activé
-            - ✅ Email vérifié
+            - Mot de passe fort activé
+            - Email vérifié
             - ⭕ 2FA: Non activé
             - ⭕ Codes de récupération: Non définis
             
@@ -2451,19 +2451,19 @@ def main():
         # Logout button
         col_logout, col_delete = st.columns(2)
         with col_logout:
-            if st.button("🚪 Déconnexion", use_container_width=True, key="logout_main"):
+            if st.button(" Déconnexion", use_container_width=True, key="logout_main"):
                 logout(st)
                 st.rerun()
         with col_delete:
-            st.button("❌ Supprimer le Compte", use_container_width=True, key="delete_account", disabled=True)
+            st.button(" Supprimer le Compte", use_container_width=True, key="delete_account", disabled=True)
     
     # === FOOTER ===
     st.divider()
     st.markdown("""
     <div style='text-align: center; color: #888; font-size: 0.8rem; padding: 20px;'>
-    <p>🌐 <strong>Dubai Trading Tools v6.1</strong> | 📊 Professional Analysis Platform</p>
+    <p> <strong>Dubai Trading Tools v6.1</strong> | Professional Analysis Platform</p>
     <p>© 2025-2026 <strong>ELOADXFAMILY</strong> - All Rights Reserved</p>
-    <p>⚠️ <em>This is an analysis tool, not a trading platform. Conduct your own research before trading.</em></p>
+    <p>️ <em>This is an analysis tool, not a trading platform. Conduct your own research before trading.</em></p>
     </div>
     """, unsafe_allow_html=True)
 
