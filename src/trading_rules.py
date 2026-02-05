@@ -5,51 +5,124 @@ from src.indicators import calculate_rsi, calculate_macd, calculate_bollinger_ba
 
 class TradingRules:
     def __init__(self, prices):
-        self.prices = prices
-        self.rsi = calculate_rsi(prices)
-        self.macd, self.signal, self.histogram = calculate_macd(prices)
-        self.bb_mid, self.bb_upper, self.bb_lower = calculate_bollinger_bands(prices)
-        self.trend = calculate_trend(prices)
+        try:
+            self.prices = np.array(prices) if prices is not None else np.array([])
+            self.rsi = calculate_rsi(self.prices)
+            self.macd, self.signal, self.histogram = calculate_macd(self.prices)
+            self.bb_mid, self.bb_upper, self.bb_lower = calculate_bollinger_bands(self.prices)
+            self.trend = calculate_trend(self.prices)
+            
+            # Asegurar que todos los arrays son válidos (no None, no vacíos, no NaN)
+            self._validate_arrays()
+        except Exception:
+            # En caso de error, inicializar con valores por defecto
+            self.prices = np.array([])
+            self.rsi = np.array([50])
+            self.macd = np.array([0])
+            self.signal = np.array([0])
+            self.histogram = np.array([0])
+            self.bb_mid = np.array([0])
+            self.bb_upper = np.array([0])
+            self.bb_lower = np.array([0])
+            self.trend = np.array([0])
+    
+    def _validate_arrays(self):
+        """Valider et corriger tous les arrays pour éviter NaN, None, ou vides"""
+        # Corriger RSI
+        if self.rsi is None or len(self.rsi) == 0:
+            self.rsi = np.array([50])
+        self.rsi = np.nan_to_num(self.rsi, nan=50)
+        
+        # Corriger MACD
+        if self.macd is None or len(self.macd) == 0:
+            self.macd = np.array([0])
+        self.macd = np.nan_to_num(self.macd, nan=0)
+        
+        # Corriger Signal
+        if self.signal is None or len(self.signal) == 0:
+            self.signal = np.array([0])
+        self.signal = np.nan_to_num(self.signal, nan=0)
+        
+        # Corriger Histogram
+        if self.histogram is None or len(self.histogram) == 0:
+            self.histogram = np.array([0])
+        self.histogram = np.nan_to_num(self.histogram, nan=0)
+        
+        # Corriger Bollinger Bands
+        if self.bb_mid is None or len(self.bb_mid) == 0:
+            self.bb_mid = np.array([0])
+        self.bb_mid = np.nan_to_num(self.bb_mid, nan=0)
+        
+        if self.bb_upper is None or len(self.bb_upper) == 0:
+            self.bb_upper = np.array([0])
+        self.bb_upper = np.nan_to_num(self.bb_upper, nan=0)
+        
+        if self.bb_lower is None or len(self.bb_lower) == 0:
+            self.bb_lower = np.array([0])
+        self.bb_lower = np.nan_to_num(self.bb_lower, nan=0)
+        
+        # Corriger Trend
+        if self.trend is None or len(self.trend) == 0:
+            self.trend = np.array([0])
+        self.trend = np.nan_to_num(self.trend, nan=0)
     
     def rsi_signal(self):
-        if self.rsi is None or len(self.rsi) == 0:
-            return 50
-        current_rsi = self.rsi[-1]
-        if current_rsi > 70:
-            return 20
-        elif current_rsi < 30:
-            return 80
-        else:
+        try:
+            if self.rsi is None or len(self.rsi) == 0:
+                return 50
+            current_rsi = float(self.rsi[-1])
+            if current_rsi > 70:
+                return 20
+            elif current_rsi < 30:
+                return 80
+            else:
+                return 50
+        except (TypeError, ValueError, IndexError):
             return 50
     
     def macd_signal(self):
-        if self.histogram is None or len(self.histogram) == 0:
+        try:
+            if self.histogram is None or len(self.histogram) == 0:
+                return 50
+            current = float(self.histogram[-1])
+            if current > 0:
+                previous = float(self.histogram[-2]) if len(self.histogram) > 1 else current
+                return 70 if current > previous else 50
+            else:
+                previous = float(self.histogram[-2]) if len(self.histogram) > 1 else current
+                return 30 if current < previous else 50
+        except (TypeError, ValueError, IndexError):
             return 50
-        if self.histogram[-1] > 0:
-            return 70 if self.histogram[-1] > self.histogram[-2] else 50
-        else:
-            return 30 if self.histogram[-1] < self.histogram[-2] else 50
     
     def bollinger_signal(self):
-        if self.prices is None or len(self.prices) == 0:
-            return 50
-        current_price = self.prices[-1]
-        if current_price > self.bb_upper[-1]:
-            return 30
-        elif current_price < self.bb_lower[-1]:
-            return 70
-        else:
+        try:
+            if self.prices is None or len(self.prices) == 0:
+                return 50
+            current_price = float(self.prices[-1])
+            upper = float(self.bb_upper[-1]) if self.bb_upper is not None and len(self.bb_upper) > 0 else current_price
+            lower = float(self.bb_lower[-1]) if self.bb_lower is not None and len(self.bb_lower) > 0 else current_price
+            
+            if current_price > upper:
+                return 30
+            elif current_price < lower:
+                return 70
+            else:
+                return 50
+        except (TypeError, ValueError, IndexError):
             return 50
     
     def trend_signal(self):
-        if self.trend is None or len(self.trend) == 0:
-            return 50
-        current_trend = self.trend[-1]
-        if current_trend > 0:
-            return 70
-        elif current_trend < 0:
-            return 30
-        else:
+        try:
+            if self.trend is None or len(self.trend) == 0:
+                return 50
+            current_trend = float(self.trend[-1])
+            if current_trend > 0:
+                return 70
+            elif current_trend < 0:
+                return 30
+            else:
+                return 50
+        except (TypeError, ValueError, IndexError):
             return 50
 
 class SmartSignals:
@@ -83,31 +156,72 @@ class SmartSignals:
             return "STRONG SELL"
     
     def get_detailed_signals(self):
-        return {
-            "rsi": self.rules.rsi[-1] if self.rules.rsi is not None and len(self.rules.rsi) > 0 else 50,
-            "macd": self.rules.histogram[-1] if self.rules.histogram is not None and len(self.rules.histogram) > 0 else 0,
-            "bollinger": self._get_bollinger_position(),
-            "trend": self.rules.trend[-1] if self.rules.trend is not None and len(self.rules.trend) > 0 else 0,
-            "signal": self.get_signal_text()
-        }
+        try:
+            # Extraer RSI de forma segura
+            rsi_val = 50
+            if self.rules.rsi is not None and len(self.rules.rsi) > 0:
+                rsi_val = float(self.rules.rsi[-1])
+            rsi_val = np.nan_to_num(rsi_val, nan=50)
+            
+            # Extraer MACD de forma segura
+            macd_val = 0
+            if self.rules.histogram is not None and len(self.rules.histogram) > 0:
+                macd_val = float(self.rules.histogram[-1])
+            macd_val = np.nan_to_num(macd_val, nan=0)
+            
+            # Extraer Trend de forma segura
+            trend_val = 0
+            if self.rules.trend is not None and len(self.rules.trend) > 0:
+                trend_val = float(self.rules.trend[-1])
+            trend_val = np.nan_to_num(trend_val, nan=0)
+            
+            return {
+                "rsi": rsi_val,
+                "macd": macd_val,
+                "bollinger": self._get_bollinger_position(),
+                "trend": trend_val,
+                "signal": self.get_signal_text()
+            }
+        except Exception:
+            # En cas d'erreur, retourner des valeurs par défaut
+            return {
+                "rsi": 50,
+                "macd": 0,
+                "bollinger": 0,
+                "trend": 0,
+                "signal": "NEUTRAL"
+            }
     
     def _get_bollinger_position(self):
         """Return position between Bollinger bands (-100 to 100)"""
-        if not self.rules.prices or len(self.rules.prices) == 0:
-            return 0
-        if not self.rules.bb_upper or not self.rules.bb_lower or len(self.rules.bb_upper) == 0:
-            return 0
-        
-        current = self.rules.prices[-1]
-        upper = self.rules.bb_upper[-1]
-        lower = self.rules.bb_lower[-1]
-        
-        if upper == lower:
-            return 0
-        
-        # Position from lower (-100) to upper (+100)
-        position = ((current - lower) / (upper - lower)) * 200 - 100
-        return np.clip(position, -100, 100)
+        try:
+            if self.rules.prices is None or len(self.rules.prices) == 0:
+                return 0.0
+            if self.rules.bb_upper is None or self.rules.bb_lower is None or len(self.rules.bb_upper) == 0:
+                return 0.0
+            
+            current = float(self.rules.prices[-1])
+            upper = float(self.rules.bb_upper[-1])
+            lower = float(self.rules.bb_lower[-1])
+            
+            # Gérer les valeurs NaN
+            if np.isnan(current) or np.isnan(upper) or np.isnan(lower):
+                return 0.0
+            
+            if upper == lower:
+                return 0.0
+            
+            # Position from lower (-100) to upper (+100)
+            position = ((current - lower) / (upper - lower)) * 200 - 100
+            result = float(np.clip(position, -100, 100))
+            
+            # Vérifier que le résultat n'est pas NaN
+            if np.isnan(result):
+                return 0.0
+            
+            return result
+        except (TypeError, ValueError, IndexError):
+            return 0.0
 
 class RiskAssessment:
     def __init__(self, prices, period=50):

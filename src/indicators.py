@@ -5,7 +5,8 @@ import pandas as pd
 
 def calculate_rsi(prices, period=14):
     if len(prices) < period + 1:
-        return None
+        # Retourner un array avec valeur neutre (50)
+        return np.array([50] * len(prices)) if len(prices) > 0 else np.array([50])
     
     deltas = np.diff(prices)
     seed = deltas[:period+1]
@@ -33,18 +34,37 @@ def calculate_rsi(prices, period=14):
     return rsis
 
 def calculate_macd(prices, fast=12, slow=26, signal=9):
-    ema_fast = calculate_ema(prices, fast)
-    ema_slow = calculate_ema(prices, slow)
-    macd_line = ema_fast - ema_slow
-    signal_line = calculate_ema(macd_line, signal)
-    histogram = macd_line - signal_line
-    return macd_line, signal_line, histogram
+    try:
+        if prices is None or len(prices) == 0:
+            return np.array([0]), np.array([0]), np.array([0])
+        
+        ema_fast = calculate_ema(prices, fast)
+        ema_slow = calculate_ema(prices, slow)
+        
+        # Asegurar que no hay NaN
+        ema_fast = np.nan_to_num(ema_fast, nan=np.mean(prices))
+        ema_slow = np.nan_to_num(ema_slow, nan=np.mean(prices))
+        
+        macd_line = ema_fast - ema_slow
+        signal_line = calculate_ema(macd_line, signal)
+        signal_line = np.nan_to_num(signal_line, nan=0)
+        
+        histogram = macd_line - signal_line
+        
+        # Retourner arrays de même taille que l'input
+        return (np.nan_to_num(macd_line, nan=0),
+                np.nan_to_num(signal_line, nan=0),
+                np.nan_to_num(histogram, nan=0))
+    except Exception:
+        # En cas d'erreur, retourner des arrays de zéros
+        return np.zeros_like(prices), np.zeros_like(prices), np.zeros_like(prices)
 
 def calculate_ema(prices, period):
     if len(prices) < period:
-        return np.array([np.nan] * len(prices))
+        # Retourner un array avec la moyenne des prix disponibles au lieu de NaN
+        return np.full_like(prices, np.mean(prices) if len(prices) > 0 else 0, dtype=float)
     
-    ema = np.zeros_like(prices)
+    ema = np.zeros_like(prices, dtype=float)
     multiplier = 2 / (period + 1)
     
     ema[:period] = np.mean(prices[:period])
@@ -56,7 +76,9 @@ def calculate_ema(prices, period):
 
 def calculate_bollinger_bands(prices, period=20, std_dev=2):
     if len(prices) < period:
-        return None, None, None
+        # Retourner des arrays neutres si pas assez de données
+        neutral = np.full_like(prices, prices[-1] if len(prices) > 0 else 0, dtype=float)
+        return neutral, neutral * 1.02, neutral * 0.98
     
     sma = np.convolve(prices, np.ones(period) / period, mode='valid')
     pad = len(prices) - len(sma)
@@ -73,7 +95,8 @@ def calculate_bollinger_bands(prices, period=20, std_dev=2):
 
 def calculate_volatility(prices, period=20):
     if len(prices) < period:
-        return None
+        # Retourner un array de volatilité neutre (0.02)
+        return np.full_like(prices, 0.02, dtype=float)
     
     returns = np.diff(np.log(prices))
     volatility = np.zeros_like(prices)
@@ -88,10 +111,10 @@ def calculate_trend(prices, period=20):
     
     Retourne:
     - Array de -1 (baissier), 0 (neutre), 1 (haussier) pour chaque prix
-    - [] si pas assez de données (fallback gracieux)
+    - Retourne TOUJOURS un array (jamais vide)
     """
     if prices is None or len(prices) == 0:
-        return []
+        return np.array([0])  # Retourner au minimum [0]
     
     # Adapter la période si pas assez de données
     if len(prices) < period:
@@ -115,4 +138,4 @@ def calculate_trend(prices, period=20):
             slope = (window[-1] - window[0]) / len(window)
             trend[i] = 1 if slope > 0 else (-1 if slope < 0 else 0)
     
-    return trend
+    return trend if len(trend) > 0 else np.array([0])  # Garantir non-vide

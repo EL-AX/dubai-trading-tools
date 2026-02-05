@@ -278,7 +278,7 @@ def display_live_price_with_animation(ticker):
 
 def page_tutorial():
     """Tutoriel et centre d'apprentissage - Plateforme d'éducation professionnelle"""
-    st.title(" CENTRE D'APPRENTISSAGE - Maîtriser le Trading Professionnel")
+    st.title("🎓 CENTRE D'APPRENTISSAGE - Maîtriser le Trading Professionnel")
     
     st.markdown("*Éducation complète au trading • Apprentissage interactif • Maîtrise basée sur des quiz*")
     
@@ -1053,7 +1053,7 @@ def page_login_register():
 
 def page_news_ai():
     """Section actualités IA - Analyse temps réel des actualités crypto"""
-    st.title(" Actualités Crypto - Analyse en Temps Réel")
+    st.title("📰 Actualités Crypto - Analyse en Temps Réel")
     
     st.markdown("Récupération des actualités LIVE de 4 sources vérifiées • Analyse de sentiment automatique")
     
@@ -1325,7 +1325,7 @@ def page_news_ai():
 
 
 def page_dashboard():
-    st.title(" TRADING COMMAND CENTER - Tableau de Bord Premium")
+    st.title("📊 TRADING COMMAND CENTER - Tableau de Bord Premium")
     
     # Header with logout and info
     col_header1, col_header2, col_header3 = st.columns([2, 2, 1])
@@ -1526,7 +1526,7 @@ def page_dashboard():
         selected_tickers = st.session_state.selected_tickers
         
         st.divider()
-        st.subheader(" Graphiques en Temps Réel - Fluctuations 24H")
+        st.subheader("📈 Graphiques en Temps Réel - Fluctuations 24H")
         
         # FORCE 1 DAY FOR ALL - No more period options
         selected_period = "1D"
@@ -1822,7 +1822,7 @@ def page_dashboard():
             st.divider()
         
         st.markdown("---")
-        st.subheader(" Alertes en Temps Réel")
+        st.subheader("🔔 Alertes en Temps Réel")
         
         # Check for active alerts
         all_alerts = []
@@ -1871,14 +1871,14 @@ def page_dashboard():
             with col5:
                 signal_text = signals['signal']
                 if "BUY" in signal_text:
-                    st.success(f"**{signal_text}**")
+                    st.markdown(f"<h3 style='color: #2ecc71; text-align: center;'>✅ {signal_text}</h3>", unsafe_allow_html=True)
                 elif "SELL" in signal_text:
-                    st.error(f"**{signal_text}**")
+                    st.markdown(f"<h3 style='color: #e74c3c; text-align: center;'>❌ {signal_text}</h3>", unsafe_allow_html=True)
                 else:
-                    st.info(f"**{signal_text}**")
+                    st.markdown(f"<h3 style='color: #95a5a6; text-align: center;'>⚖️ {signal_text}</h3>", unsafe_allow_html=True)
         
         st.markdown("---")
-        st.subheader("5️⃣ Analyse des Risques")
+        st.subheader("⚠️ Analyse des Risques")
         
         for ticker in selected_tickers:
             hist_data = get_historical_data(ticker, days=30)
@@ -1900,7 +1900,7 @@ def page_dashboard():
                 st.metric("Ratio R/R", ratio_display)
         
         st.markdown("---")
-        st.subheader("6️⃣ Historique des Alertes")
+        st.subheader("📜 Historique des Alertes")
         
         alert_history = get_alert_history()
         if alert_history:
@@ -1912,7 +1912,7 @@ def page_dashboard():
             st.info("Aucune alerte pour le moment")
         
         st.markdown("---")
-        st.subheader("7️⃣ Ressources Éducatives")
+        st.subheader("📚 Ressources Éducatives")
         
         concept = st.selectbox("Sélectionnez un concept:", ["RSI", "MACD", "Bollinger", "Trend", "Support", "Resistance", "Volatilite", "Momentum", "Signal", "Ratio_Risque_Rendement"])
         
@@ -1928,7 +1928,7 @@ def page_patterns():
         PSYCHOLOGY_RULES
     )
     
-    st.title(" TRADING MASTERY - Patterns & Stratégies Pro")
+    st.title("🎯 TRADING MASTERY - Patterns & Stratégies Pro")
     st.markdown("*19 Chandeliers Japonais • 4 Stratégies • Risk Management • Psychologie*")
     
     # Info bar
@@ -1989,7 +1989,8 @@ def page_patterns():
             with st.container(border=True):
                 col_title, col_type = st.columns([3, 1])
                 with col_title:
-                    st.markdown(f"## {selected_pattern}")
+                    emoji = pattern_info.get('emoji', '')
+                    st.markdown(f"## {emoji} {selected_pattern}")
                 with col_type:
                     type_badge = " BULLISH" if pattern_info.get('type') == 'bullish' else " BEARISH"
                     st.markdown(f"**{type_badge}**")
@@ -2071,7 +2072,8 @@ def page_patterns():
             strategy_info = TRADING_STRATEGIES[selected_strategy]
             
             with st.container(border=True):
-                st.markdown(f"## {selected_strategy}")
+                emoji = strategy_info.get('emoji', '')
+                st.markdown(f"## {emoji} {selected_strategy}")
                 st.divider()
                 
                 col1, col2, col3 = st.columns(3)
@@ -2327,7 +2329,7 @@ def main():
     elif page == " Formation":
         page_tutorial()
     elif page == "️ Profil":
-        st.title("️ Paramètres du Compte")
+        st.title("⚙️ Paramètres du Compte")
         
         # Profile information
         col_prof1, col_prof2, col_prof3 = st.columns(3)

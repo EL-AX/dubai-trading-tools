@@ -19,6 +19,7 @@ et respectent les standards professionnels de trading.
 # ============================================================================
 CANDLESTICK_PATTERNS = {
     "Doji": {
+        "emoji": "⚖️",
         "description": "Ouverture = Fermeture, avec longues mèches",
         "signification": "Indécision du marché, possible retournement",
         "traduction_fr": "Doji",
@@ -29,6 +30,7 @@ CANDLESTICK_PATTERNS = {
         "best_timeframe": "4H-1D"
     },
     "Harami": {
+        "emoji": "🔄",
         "description": "Petite bougie à l'intérieur de la grande précédente",
         "signification": "Inversion de tendance, perte d'élan",
         "traduction_fr": "Harami",
@@ -39,6 +41,7 @@ CANDLESTICK_PATTERNS = {
         "best_timeframe": "1H-4H"
     },
     "Engulfing_Haussier": {
+        "emoji": "📈",
         "description": "Grande bougie verte englobeant la bougie noire précédente",
         "signification": "Signal d'achat fort, retournement haussier",
         "traduction_fr": "Avalement Haussier",
@@ -49,6 +52,7 @@ CANDLESTICK_PATTERNS = {
         "best_timeframe": "1D-1W"
     },
     "Engulfing_Baissier": {
+        "emoji": "📉",
         "description": "Grande bougie noire englobeant la bougie verte précédente",
         "signification": "Signal de vente fort, retournement baissier",
         "traduction_fr": "Avalement Baissier",
@@ -59,6 +63,7 @@ CANDLESTICK_PATTERNS = {
         "best_timeframe": "1D-1W"
     },
     "Étoile_du_Matin": {
+        "emoji": "🌅",
         "description": "3 bougies: baisse, doji/petite, hausse",
         "signification": "Retournement haussier très fiable",
         "traduction_fr": "Étoile du Matin",
@@ -69,6 +74,7 @@ CANDLESTICK_PATTERNS = {
         "best_timeframe": "1D-1W"
     },
     "Étoile_du_Soir": {
+        "emoji": "🌙",
         "description": "3 bougies: hausse, doji/petite, baisse",
         "signification": "Retournement baissier très fiable",
         "traduction_fr": "Étoile du Soir",
@@ -79,6 +85,7 @@ CANDLESTICK_PATTERNS = {
         "best_timeframe": "1D-1W"
     },
     "Marteau": {
+        "emoji": "🔨",
         "description": "Corps petit, longue mèche basse, peu/pas de mèche haute",
         "signification": "Inversion baissière, support potentiel",
         "traduction_fr": "Marteau",
@@ -89,6 +96,7 @@ CANDLESTICK_PATTERNS = {
         "best_timeframe": "4H-1D"
     },
     "Pendu": {
+        "emoji": "🎪",
         "description": "Idem marteau mais en tendance haussière",
         "signification": "Inversion haussière potentielle",
         "traduction_fr": "Pendu",
@@ -99,6 +107,7 @@ CANDLESTICK_PATTERNS = {
         "best_timeframe": "4H-1D"
     },
     "Trois_Soldats_Blancs": {
+        "emoji": "⚔️",
         "description": "3 bougies vertes consécutives avec corps croissants",
         "signification": "Continuation haussière forte",
         "traduction_fr": "Trois Soldats Blancs",
@@ -109,6 +118,7 @@ CANDLESTICK_PATTERNS = {
         "best_timeframe": "1D-1W"
     },
     "Trois_Corbeau_Noirs": {
+        "emoji": "🐦",
         "description": "3 bougies noires consécutives avec corps décroissants",
         "signification": "Continuation baissière forte",
         "traduction_fr": "Trois Corbeaux Noirs",
@@ -119,6 +129,7 @@ CANDLESTICK_PATTERNS = {
         "best_timeframe": "1D-1W"
     },
     "Piercing_Line": {
+        "emoji": "⚡",
         "description": "Bougie baissière suivie d'une haussière qui perce 50%+ du précédent",
         "signification": "Retournement haussier potentiel",
         "traduction_fr": "Ligne Pierçante",
@@ -129,6 +140,7 @@ CANDLESTICK_PATTERNS = {
         "best_timeframe": "1D-1W"
     },
     "Nuage_Sombre": {
+        "emoji": "☁️",
         "description": "Bougie haussière suivie d'une baissière qui perce 50%+ du précédent",
         "signification": "Retournement baissier potentiel",
         "traduction_fr": "Nuage Sombre",
@@ -139,6 +151,7 @@ CANDLESTICK_PATTERNS = {
         "best_timeframe": "1D-1W"
     },
     "In_Neck_Line": {
+        "emoji": "🔗",
         "description": "Bougie baissière + petite bougie haussière fermant dans la baissière",
         "signification": "Consolidation de la baisse, potentiel inversion",
         "traduction_fr": "In Neck Line",
@@ -149,6 +162,7 @@ CANDLESTICK_PATTERNS = {
         "best_timeframe": "1D"
     },
     "On_Neck_Line": {
+        "emoji": "➖",
         "description": "Bougie baissière + petite bougie haussière fermant au même niveau",
         "signification": "Consolidation sans direction claire",
         "traduction_fr": "On Neck Line",
@@ -159,6 +173,7 @@ CANDLESTICK_PATTERNS = {
         "best_timeframe": "1D"
     },
     "Thrusting_Line": {
+        "emoji": "🎯",
         "description": "Bougie haussière + baissière fermant dans la haussière",
         "signification": "Élan baissier mais résistance haussière",
         "traduction_fr": "Thrusting Line",
@@ -169,6 +184,7 @@ CANDLESTICK_PATTERNS = {
         "best_timeframe": "4H-1D"
     },
     "High_Wave": {
+        "emoji": "🌊",
         "description": "Bougies avec longues mèches hautes et basses, corps petit",
         "signification": "Indécision extrême du marché",
         "traduction_fr": "Vague Haute",
@@ -179,6 +195,7 @@ CANDLESTICK_PATTERNS = {
         "best_timeframe": "1H-4H"
     },
     "Unique_3LineStrike": {
+        "emoji": "💣",
         "description": "3 bougies de même couleur + 4ème opposée englobeant les 3",
         "signification": "Retournement majeur de tendance",
         "traduction_fr": "Attaque de 3 Lignes",
@@ -189,6 +206,7 @@ CANDLESTICK_PATTERNS = {
         "best_timeframe": "1D-1W"
     },
     "Harami_Cross": {
+        "emoji": "✝️",
         "description": "Harami avec doji en 2ème position",
         "signification": "Indécision totale, probable inversion",
         "traduction_fr": "Harami en Croix",
@@ -199,6 +217,7 @@ CANDLESTICK_PATTERNS = {
         "best_timeframe": "1D-1W"
     },
     "Continuation_Stick": {
+        "emoji": "📊",
         "description": "Bougies consécutives de même couleur sans engulfing, pile continue",
         "signification": "Continuation forte de la tendance actuelle",
         "traduction_fr": "Bâton de Continuation",
@@ -215,6 +234,7 @@ CANDLESTICK_PATTERNS = {
 # ============================================================================
 TRADING_STRATEGIES = {
     "Support_Résistance": {
+        "emoji": "📍",
         "nom": "Support & Résistance",
         "description": "Identifier les niveaux clés où le prix rebondit. Les supports et résistances sont des zones de prix où les vendeurs/acheteurs créent des barrières naturelles.",
         "setup": """
@@ -257,6 +277,7 @@ TRADING_STRATEGIES = {
         "difficulty": "Facile"
     },
     "Tendance_Breakout": {
+        "emoji": "🚀",
         "nom": "Breakout de Tendance",
         "description": "Suivre le marché après une période de consolidation. Capter le moment où le prix explose au-delà des bornes de stagnation.",
         "setup": """
@@ -301,6 +322,7 @@ TRADING_STRATEGIES = {
         "difficulty": "Moyen"
     },
     "Moyenne_Mobile": {
+        "emoji": "📈",
         "nom": "Moyenne Mobile (20/50/200)",
         "description": "Utiliser les moyennes mobiles comme indicateur de tendance. Les 3 moyennes forment une hiérarchie qui confirme la direction du marché.",
         "setup": """
@@ -351,6 +373,8 @@ TRADING_STRATEGIES = {
         "difficulty": "Facile"
     },
     "RSI_Divergence": {
+        "emoji": "⚖️",
+        "emoji": "⚖️",
         "nom": "Divergence RSI (Suracheté/Survendu)",
         "description": "Chercher les divergences entre le mouvement du prix et l'indicateur RSI. Cela signale souvent un retournement imminent.",
         "setup": """
