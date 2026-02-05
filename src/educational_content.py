@@ -216,51 +216,195 @@ CANDLESTICK_PATTERNS = {
 TRADING_STRATEGIES = {
     "Support_Résistance": {
         "nom": "Support & Résistance",
-        "description": "Identifier les niveaux clés où le prix rebondit",
-        "étapes": [
-            "1. Identifier 2-3 rebonds au même niveau",
-            "2. Tracer une ligne horizontale (support ou résistance)",
-            "3. Attendre cassure ou rebond confirmé",
-            "4. Entrée au-dessus/dessous du niveau + stop loss"
-        ],
-        "avantages": ["Universelle", "Facile à identifier", "Haute probabilité"],
-        "risques": ["Faux rebonds", "Cassure rapide", "Marché latéral"]
+        "description": "Identifier les niveaux clés où le prix rebondit. Les supports et résistances sont des zones de prix où les vendeurs/acheteurs créent des barrières naturelles.",
+        "setup": """
+        **Étapes d'Identification:**
+        1. Tracer les niveaux où le prix a rebondi 2-3 fois minimum
+        2. Placer une ligne horizontale au niveau de prix exact
+        3. Vérifier que le volume confirme les rebonds
+        4. Observer la distance entre support et résistance
+        
+        **Confirmation:**
+        - Support/Résistance doit être testé au moins 2x
+        - Volume doit augmenter aux niveaux clés
+        - Le prix ne doit pas fermer loin du niveau
+        """,
+        "entry_signals": """
+        **Signaux d'Entrée:**
+        - **LONG**: Prix rebondit sur support + volume haut + clôture au-dessus
+        - **SHORT**: Prix touche résistance + volume haut + clôture en dessous
+        - Attendre la confirmation de la direction (clôture au-delà du niveau)
+        - RSI peut confirmer: < 30 pour LONG, > 70 pour SHORT
+        """,
+        "exit_signals": """
+        **Signaux de Sortie:**
+        - **Take Profit**: À la prochaine résistance/support majeure
+        - **Stop Loss**: Juste en-dessous du support (LONG) ou au-dessus de la résistance (SHORT)
+        - **Sortie Manuelle**: Si clôture de 4H en-dehors du range
+        - **Trailing Stop**: Après profit de 2%, tracer stop loss derrière le prix
+        """,
+        "tips": """
+        **Tips et Conseils Professionnels:**
+        - Privilégier les S/R testés 3+ fois (plus fort)
+        - Les round numbers (100, 1000) sont souvent plus importants
+        - Combiner avec moyennes mobiles pour confirmation
+        - Ne pas trader trop serré - laisser 1-2% de volatilité
+        - Les S/R cassés se retournent souvent en résistance/support opposée
+        - Utiliser le timeframe 1D pour les niveaux majeurs
+        """,
+        "win_rate": 72,
+        "profit_factor": 2.45,
+        "difficulty": "Facile"
     },
     "Tendance_Breakout": {
         "nom": "Breakout de Tendance",
-        "description": "Suivre la tendance après une consolidation",
-        "étapes": [
-            "1. Identifier triangle/rectangle en consolidation",
-            "2. Attendre cassure avec volume élevé",
-            "3. Entrée immédiate après cassure",
-            "4. Stop loss sous/sur le support/résistance cassé"
-        ],
-        "avantages": ["Forte volatilité", "Tendance établie", "Ratio risque/bénéfice favorable"],
-        "risques": ["Faux breakouts", "Whipsaw", "Glissement de prix"]
+        "description": "Suivre le marché après une période de consolidation. Capter le moment où le prix explose au-delà des bornes de stagnation.",
+        "setup": """
+        **Étapes de Reconnaissance:**
+        1. Identifier une consolidation: Triangle, Rectangle ou Flag
+        2. Mesurer la hauteur de la consolidation
+        3. Observer la convergence des prix (hauts baissent, bas montent)
+        4. Vérifier que le volume BAISSE pendant la consolidation
+        5. Placer des ordres au-delà des bornes supérieure/inférieure
+        
+        **Consolidations Optimales:**
+        - Durée: 5-30 bougies (pas trop courte)
+        - Amplitude: 2-5% du prix (assez serré)
+        - Volume: Clairement en baisse
+        """,
+        "entry_signals": """
+        **Signaux d'Entrée:**
+        - **LONG Breakout**: Prix casse la borne supérieure + volume explosion + clôture au-delà
+        - **SHORT Breakout**: Prix casse la borne inférieure + volume explosion + clôture en-dessous
+        - Attendre une clôture complète HORS la consolidation
+        - Idéalement: RSI > 50 pour LONG, RSI < 50 pour SHORT
+        - Volume doit être 1.5x-2x la moyenne habituelle
+        """,
+        "exit_signals": """
+        **Signaux de Sortie:**
+        - **Take Profit**: 127% ou 161.8% de la hauteur du pattern (Fibonacci)
+        - **Stop Loss**: Juste à l'intérieur de la consolidation (autres côté)
+        - **Gestion Progressive**: Vendre 50% au 1er TP, laisser coureur
+        - **Sortie Momentum**: Si RSI dépasse 80/20 extrêmes
+        """,
+        "tips": """
+        **Tips et Conseils Professionnels:**
+        - Les triangles symétriques = breakout solide (faveur baissière légère)
+        - Les rectangles = volume plus important au breakout
+        - Faux breakout courant: surveillance stricte des premiers 5 min
+        - Combiner avec MACD pour confirmation (0 line cross)
+        - Meilleur timeframe: 4H-1D (moins de faux signaux)
+        - Trader le breakout ET le retest = double entrée professionnelle
+        """,
+        "win_rate": 68,
+        "profit_factor": 2.80,
+        "difficulty": "Moyen"
     },
     "Moyenne_Mobile": {
         "nom": "Moyenne Mobile (20/50/200)",
-        "description": "Utiliser les moyennes comme dynamique de tendance",
-        "étapes": [
-            "1. Prix > MM20 > MM50 > MM200 = Tendance haussière",
-            "2. Prix < MM20 < MM50 < MM200 = Tendance baissière",
-            "3. Entrée au toucher de MM20/50",
-            "4. Stop loss sous MM200"
-        ],
-        "avantages": ["Système simple", "Tendance claire", "Adaptatif"],
-        "risques": ["Retard sur mouvements rapides", "Faux signaux latéraux"]
+        "description": "Utiliser les moyennes mobiles comme indicateur de tendance. Les 3 moyennes forment une hiérarchie qui confirme la direction du marché.",
+        "setup": """
+        **Configuration des Moyennes:**
+        - MM20 (court terme) = 20 dernières clôtures
+        - MM50 (moyen terme) = 50 dernières clôtures
+        - MM200 (long terme) = 200 dernières clôtures (tendance majeure)
+        
+        **Alignement Haussier (Trend UP):**
+        Prix > MM20 > MM50 > MM200 (alignées du bas vers le haut)
+        
+        **Alignement Baissier (Trend DOWN):**
+        Prix < MM20 < MM50 < MM200 (alignées du haut vers le bas)
+        
+        **Utiliser le type:** EMA (plus réactif) plutôt que SMA
+        """,
+        "entry_signals": """
+        **Signaux d'Entrée:**
+        - **LONG**: Prix touche/rebondit sur MM20 + alignement haussier + volume normal/haut
+        - **SHORT**: Prix touche/rebondit sur MM20 + alignement baissier + volume normal/haut
+        - Confirmation: RSI entre 40-60 (pas extrême)
+        - Pas d'entrée si MM20 croise MM50/200 (changement de tendance)
+        
+        **Zones Optimales:**
+        - MM20-MM50: Rebonds très actifs (haute probabilité)
+        - MM50-MM200: Rebonds plus rares (plus forts)
+        - Cassure de MM200: Retournement de tendance majeure
+        """,
+        "exit_signals": """
+        **Signaux de Sortie:**
+        - **Take Profit**: À la prochaine MM (MM20→MM50→MM200)
+        - **Stop Loss**: 1-2% au-delà de la MM20 (côté opposé)
+        - **Sortie Automatique**: Si prix croise MM20 en sens contraire
+        - **Sortie Progressive**: Chaque croisement de MM prendre partiel
+        """,
+        "tips": """
+        **Tips et Conseils Professionnels:**
+        - MM200 = ligne dans le sable - ne pas l'ignorer
+        - Tendances les plus fortes: All 3 MMs alignées (très fiable)
+        - Éviter de trader lors de croisement de MMs (zone floue)
+        - Combiner avec MACD pour confirmation du momentum
+        - Sur crypto: MM20 ultra réactif, utiliser MM10 à la place
+        - Timeframe: 1H minimum (les croisements sur 5min sont du bruit)
+        - Les rebonds sur MM200 = quelques des meilleurs setups
+        """,
+        "win_rate": 70,
+        "profit_factor": 2.20,
+        "difficulty": "Facile"
     },
     "RSI_Divergence": {
         "nom": "Divergence RSI (Suracheté/Survendu)",
-        "description": "Chercher divergences entre prix et RSI",
-        "étapes": [
-            "1. RSI > 70 = Suracheté, RSI < 30 = Survendu",
-            "2. Prix haut mais RSI baisse = Divergence baissière",
-            "3. Prix bas mais RSI monte = Divergence haussière",
-            "4. Entrée à la confirmation du retournement"
-        ],
-        "avantages": ["Anticipe les retournements", "Fiable", "Divergences fortes"],
-        "risques": ["Peut rester suracheté longtemps", "Confirmation tardive"]
+        "description": "Chercher les divergences entre le mouvement du prix et l'indicateur RSI. Cela signale souvent un retournement imminent.",
+        "setup": """
+        **Niveaux RSI Critiques:**
+        - RSI > 70: Suracheté (acheteurs fatigués)
+        - RSI < 30: Survendu (vendeurs épuisés)
+        - RSI 50: Neutre (force égale)
+        
+        **Identification de Divergence:**
+        1. Tracer 2 pics/creux de prix et de RSI
+        2. Divergence haussière: Prix fait creux bas → creux moins bas, mais RSI monte
+        3. Divergence baissière: Prix fait pic haut → pic moins haut, mais RSI baisse
+        
+        **Validation:**
+        - Divergence doit être sur 2-3 bougies minimum
+        - Confirmer sur 2 pics/creux différents
+        - Plus la durée longue = plus fort le signal
+        """,
+        "entry_signals": """
+        **Signaux d'Entrée:**
+        - **LONG (Divergence Haussière)**: 
+          * Après que RSI remonte au-dessus de 40
+          * Attendre clôture du prix au-dessus du dernier creux
+          * MACD ou Stochastique peut confirmer
+        
+        - **SHORT (Divergence Baissière)**:
+          * Après que RSI descend au-dessous de 60
+          * Attendre clôture du prix au-dessous du dernier pic
+          * Volume doit confirmer
+        
+        **Timing Optimal:**
+        - Attendre confirmation après détection de divergence
+        - Divergence seule n'est pas un signal (attendre cassure)
+        """,
+        "exit_signals": """
+        **Signaux de Sortie:**
+        - **Take Profit**: Objectif de retournement complet (prix atteint niveau opposé)
+        - **Stop Loss**: Au-delà du creux/pic de la divergence
+        - **Sortie Automatique**: Si RSI revient en zone suracheté/survendu
+        - **Sortie Manuelle**: Si 3-4 bougies sans progression
+        """,
+        "tips": """
+        **Tips et Conseils Professionnels:**
+        - Divergences sont rares = qualité > quantité
+        - Les meilleures: Haute RSI (80-90) → baisse, puis cassure
+        - Combiner TOUJOURS avec 2ème indicateur (MACD, Stochastique)
+        - Divergence + support/résistance = probabilité max
+        - Attention: Peut rester suracheté/survendu longtemps (pas de timing garanti)
+        - Timeframe: 1H-1D (pas de divergences fiables en 5min)
+        - Divergence cachée (hidden) = continuation, pas retournement
+        """,
+        "win_rate": 65,
+        "profit_factor": 2.10,
+        "difficulty": "Moyen"
     }
 }
 
