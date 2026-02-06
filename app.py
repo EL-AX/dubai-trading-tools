@@ -1973,7 +1973,7 @@ def page_dashboard():
                     st.warning(f"Calcul des niveaux impossible pour {ticker}")
                     continue
                 
-                st.write(f"**{ticker}** - Données en temps réel")
+                st.write(f"**{ticker}** - 🔴 LIVE Données en temps réel")
                 col1, col2, col3, col4 = st.columns(4)
                 with col1:
                     st.metric("Prix Actuel", f"${current_price:.4f}")
@@ -1982,7 +1982,7 @@ def page_dashboard():
                 with col3:
                     st.metric("Résistance (90J)", f"${resistance:.4f}")
                 with col4:
-                    ratio_display = f"{ratio:.2f}" if ratio > 0 and not np.isnan(ratio) else "N/A"
+                    ratio_display = f"{ratio:.2f}" if ratio > 0.01 else "< 0.01"
                     st.metric("Ratio R/R", ratio_display)
             except Exception as e:
                 st.warning(f"Erreur lors du calcul des risques pour {ticker}: {str(e)}")

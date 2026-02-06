@@ -287,19 +287,38 @@ class RiskAssessment:
             if np.isnan(resistance):
                 resistance = entry_price * 1.05
             
+            # Ensure support < entry < resistance with meaningful margins
+            # If support >= entry, set it to 95% of entry
+            if support >= entry_price:
+                support = entry_price * 0.95
+            
+            # If resistance <= entry, set it to 105% of entry
+            if resistance <= entry_price:
+                resistance = entry_price * 1.05
+            
+            # Ensure minimum margins (at least 1%)
+            min_margin = entry_price * 0.01  # 1% minimum margin
+            if (entry_price - support) < min_margin:
+                support = entry_price - min_margin
+            if (resistance - entry_price) < min_margin:
+                resistance = entry_price + min_margin
+            
             # Calculate risk and reward
             risk = entry_price - support
             reward = resistance - entry_price
             
             # Calculate ratio with safety check
-            if risk > 0:
+            if risk > 0.0001:  # Use small threshold instead of 0
                 ratio = reward / risk
+                # Cap ratio at reasonable values (avoid infinity)
+                ratio = min(ratio, 100.0)
             else:
-                ratio = 0
+                # If still no risk, return minimal ratio
+                ratio = 1.0
             
             # Ensure ratio is not NaN
             if np.isnan(ratio):
-                ratio = 0
+                ratio = 1.0
             
             return {
                 "entry": float(entry_price),

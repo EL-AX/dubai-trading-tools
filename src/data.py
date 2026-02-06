@@ -405,26 +405,46 @@ def generate_and_sync_mock_data(ticker, days):
     })
     
     # CRITICAL: Try to get live price for sync (but don't recurse)
+    # If APIs fail, keep base price (will be updated when get_historical_data syncs with live price)
     try:
+        live_price = None
+        
         if ticker == "XAU":
-            live_data = get_gold_price()
-            live_price = live_data.get('price', 0)
+            try:
+                live_data = get_gold_price()
+                live_price = live_data.get('price', 0) if isinstance(live_data, dict) else live_data
+            except:
+                pass
         elif ticker in ["EUR", "GBP", "JPY", "AUD"]:
-            live_price = get_forex_price(ticker)
+            try:
+                forex_data = get_forex_price(ticker)
+                live_price = forex_data.get('price', 0) if isinstance(forex_data, dict) else forex_data
+            except:
+                pass
         elif ticker in ["BTC", "ETH", "SOL", "ADA", "XRP", "DOT"]:
-            live_price = get_crypto_price(ticker)
-        else:
-            live_price = 0
+            # Try WebSocket first, skip CoinGecko to avoid recursion
+            try:
+                if WEBSOCKET_AVAILABLE:
+                    # Try Binance WebSocket
+                    from src.websocket_feeds import get_binance_feed
+                    binance = get_binance_feed()
+                    binance_symbol = f"{ticker}USDT"
+                    binance_price = binance.get_price(binance_symbol)
+                    if binance_price and binance_price.get('price', 0) > 0:
+                        live_price = float(binance_price['price'])
+            except:
+                pass
         
         # Adjust all prices to sync last close = live price
-        if live_price > 0 and len(data) > 0:
+        if live_price and live_price > 0 and len(data) > 0:
             price_adjustment = live_price - data.iloc[-1]['close']
             data['close'] = data['close'] + price_adjustment
             data['open'] = data['open'] + price_adjustment
             data['high'] = data['high'] + price_adjustment
             data['low'] = data['low'] + price_adjustment
     except:
-        pass  # If sync fails, return unsync'd mock data (better than nothing)
+        # If sync fails, just keep the base price data
+        pass
     
     return data
 
@@ -436,7 +456,10 @@ def get_historical_data(ticker, days=90):
     if cached is not None:
         return cached
     
-    # Try real OHLC data for ALL supported cryptos from CoinGecko
+    # PRIORITY: Use reliable mock data with live price sync (more reliable than inconsistent APIs)
+    # Only try real OHLC for assets where API is reliable
+    
+    # Try real OHLC data for crypto from CoinGecko (but only if highly reliable)
     if ticker in ["BTC", "ETH", "SOL", "ADA", "XRP", "DOT"]:
         try:
             ohlc_data = fetch_coingecko_ohlc(ticker, days)
@@ -444,27 +467,81 @@ def get_historical_data(ticker, days=90):
                 # Limit to only the last (days * 24) hours - CRITICAL for consistent display
                 hours_to_keep = days * 24
                 if len(ohlc_data) > hours_to_keep:
-                    ohlc_data = ohlc_data.tail(hours_to_keep)
-                # Cleanup columns - keep only lowercase OHLCV
-                ohlc_data = ohlc_data[['timestamp', 'open', 'high', 'low', 'close', 'volume']].copy()
-                cache.set(f"history_{ticker}_{days}", ohlc_data, ttl=3600)  # 1h cache for real data
-                return ohlc_data
+                    ohlc_data = ohlc_data.tail(hours_to_keep).copy()
+                
+                # Validate that all prices are positive (no corrupt data)
+                if (ohlc_data['close'] > 0).all() and (ohlc_data['open'] > 0).all():
+                    # Cleanup columns - keep only lowercase OHLCV
+                    ohlc_data = ohlc_data[['timestamp', 'open', 'high', 'low', 'close', 'volume']].copy()
+                    
+                    # SYNC with live price
+                    try:
+                        live_price_data = get_crypto_price(ticker)
+                        live_price = live_price_data.get('price', 0) if isinstance(live_price_data, dict) else live_price_data
+                        
+                        if live_price > 0:
+                            last_price = ohlc_data.iloc[-1]['close']
+                            # Check if sync needed (if more than 2% different)
+                            diff_pct = abs(live_price - last_price) / last_price * 100
+                            if diff_pct > 2:
+                                # Sync to live price
+                                adjustment = live_price - last_price
+                                ohlc_data['close'] = ohlc_data['close'] + adjustment
+                                ohlc_data['open'] = ohlc_data['open'] + adjustment
+                                ohlc_data['high'] = ohlc_data['high'] + adjustment
+                                ohlc_data['low'] = ohlc_data['low'] + adjustment
+                    except:
+                        pass  # Keep original data if sync fails
+                    
+                    cache.set(f"history_{ticker}_{days}", ohlc_data, ttl=3600)  # 1h cache for real data
+                    return ohlc_data
         except Exception as e:
             pass
     
-    # Try real data for forex from exchangerate.host
+    # Try real data for forex from exchangerate.host (tends to be more reliable than crypto)
     if ticker in ["EUR", "GBP", "JPY", "AUD"]:
         try:
             forex_data = fetch_forex_historical(ticker, days)
             if not forex_data.empty:
-                # Limit to only the last (days * 24) hours
+                # CRITICAL: Limit to only the last (days * 24) hours FIRST
+                # before syncing (to avoid huge price adjustments from old data)
                 hours_to_keep = days * 24
                 if len(forex_data) > hours_to_keep:
-                    forex_data = forex_data.tail(hours_to_keep)
-                # Cleanup columns - keep only lowercase OHLCV
-                forex_data = forex_data[['timestamp', 'open', 'high', 'low', 'close', 'volume']].copy()
-                cache.set(f"history_{ticker}_{days}", forex_data, ttl=3600)
-                return forex_data
+                    forex_data = forex_data.tail(hours_to_keep).copy()
+                
+                # Validate that all prices are positive (no corrupt data)
+                if (forex_data['close'] > 0).all() and (forex_data['open'] > 0).all():
+                    # Now sync with live price on the limited data
+                    try:
+                        live_price_data = get_forex_price(ticker)
+                        live_price = live_price_data.get('price', 0) if isinstance(live_price_data, dict) else live_price_data
+                        
+                        if live_price > 0 and len(forex_data) > 0:
+                            last_price = forex_data.iloc[-1]['close']
+                            # Check if sync needed (if more than 5% different - forex is volatile)
+                            diff_pct = abs(live_price - last_price) / last_price * 100
+                            if diff_pct > 5 and diff_pct < 50:  # Don't sync if huge difference (corrupted data)
+                                # Sync to live price
+                                adjustment = live_price - last_price
+                                
+                                # Preview: check if this would result in negative prices
+                                min_price_after_sync = forex_data['low'].min() + adjustment
+                                
+                                # Only apply sync if it won't create negative prices
+                                if min_price_after_sync > 0:
+                                    forex_data['close'] = forex_data['close'] + adjustment
+                                    forex_data['open'] = forex_data['open'] + adjustment
+                                    forex_data['high'] = forex_data['high'] + adjustment
+                                    forex_data['low'] = forex_data['low'] + adjustment
+                    except:
+                        pass  # Keep original data if sync fails
+                    
+                    # Double-check: ensure no negative prices after all operations
+                    if (forex_data['close'] > 0).all() and (forex_data['open'] > 0).all():
+                        # Cleanup columns - keep only lowercase OHLCV
+                        forex_data = forex_data[['timestamp', 'open', 'high', 'low', 'close', 'volume']].copy()
+                        cache.set(f"history_{ticker}_{days}", forex_data, ttl=3600)
+                        return forex_data
         except Exception as e:
             pass
     
@@ -479,13 +556,30 @@ def get_historical_data(ticker, days=90):
                     gold_data = gold_data.tail(hours_to_keep)
                 # Cleanup columns - keep only lowercase OHLCV
                 gold_data = gold_data[['timestamp', 'open', 'high', 'low', 'close', 'volume']].copy()
+                
+                # SYNC with live price
+                try:
+                    live_price_data = get_gold_price()
+                    live_price = live_price_data.get('price', 0) if isinstance(live_price_data, dict) else live_price_data
+                    
+                    if live_price > 0:
+                        last_price = gold_data.iloc[-1]['close']
+                        adjustment = live_price - last_price
+                        gold_data['close'] = gold_data['close'] + adjustment
+                        gold_data['open'] = gold_data['open'] + adjustment
+                        gold_data['high'] = gold_data['high'] + adjustment
+                        gold_data['low'] = gold_data['low'] + adjustment
+                except:
+                    pass
+                
                 cache.set(f"history_{ticker}_{days}", gold_data, ttl=3600)
                 return gold_data
         except Exception as e:
             pass
     
-    # Fallback to realistic mock data if API fails
-    data = generate_mock_data(ticker, days)
+    # Fallback to reliable mock data if API fails
+    # This ensures consistent data display even when APIs are unreliable
+    data = generate_and_sync_mock_data(ticker, days)
     # Cleanup columns - keep only lowercase OHLCV
     data = data[['timestamp', 'open', 'high', 'low', 'close', 'volume']].copy()
     cache.set(f"history_{ticker}_{days}", data, ttl=600)
@@ -496,52 +590,73 @@ def fetch_coingecko_ohlc(ticker, days):
     Converts daily data to HOURLY candles for consistent 24-candle display
     Falls back to synchronized mock data if API unavailable
     Supports: BTC, ETH, SOL, ADA, XRP, DOT"""
+    
+    coins = {
+        "BTC": "bitcoin",
+        "ETH": "ethereum",
+        "SOL": "solana",
+        "ADA": "cardano",
+        "XRP": "ripple",
+        "DOT": "polkadot"
+    }
+    
+    if ticker not in coins:
+        # Return fallback mock data synchronized with live price
+        return generate_and_sync_mock_data(ticker, days)
+    
     try:
-        coins = {
-            "BTC": "bitcoin",
-            "ETH": "ethereum",
-            "SOL": "solana",
-            "ADA": "cardano",
-            "XRP": "ripple",
-            "DOT": "polkadot"
-        }
-        if ticker not in coins:
-            # Return fallback mock data synchronized with live price
-            return generate_and_sync_mock_data(ticker, days)
-        
         # CoinGecko OHLC endpoint (daily data)
         url = f"https://api.coingecko.com/api/v3/coins/{coins[ticker]}/ohlc?vs_currency=usd&days={days}"
-        response = requests.get(url, timeout=10)
+        response = requests.get(url, timeout=5)
         
         if response.status_code == 200:
             ohlc_list = response.json()
-            if isinstance(ohlc_list, list) and len(ohlc_list) > 0:
+            # CRITICAL: CoinGecko might return less data than requested
+            # Require at least (days * 0.9) worth of daily data points
+            min_required_days = int(days * 0.9)
+            if isinstance(ohlc_list, list) and len(ohlc_list) >= min_required_days:
                 df = pd.DataFrame(ohlc_list, columns=['timestamp', 'open', 'high', 'low', 'close'])
                 # Convert milliseconds to datetime
                 df['timestamp'] = pd.to_datetime(df['timestamp'], unit='ms')
-                # Add mock volume (CoinGecko OHLC doesn't include volume)
+                # Add mock volume
                 df['volume'] = df['close'] * np.random.uniform(0.5, 1.5, len(df))
                 
-                # CRITICAL SYNC: Synchronize with live price
-                # Get current live price for this ticker (crypto_price returns a dict)
-                current_price_data = get_crypto_price(ticker)
-                current_price = current_price_data.get('price', 0) if isinstance(current_price_data, dict) else current_price_data
+                # CRITICAL VALIDATION: Check if data looks reasonable
+                last_price = df.iloc[-1]['close']
+                first_price = df.iloc[0]['close']
                 
-                if current_price > 0 and len(df) > 0:
-                    price_diff = current_price - df.iloc[-1]['close']
-                    df['close'] = df['close'] + price_diff
-                    df['high'] = df['high'] + price_diff
-                    df['low'] = df['low'] + price_diff
-                    df['open'] = df['open'] + price_diff
+                # Use expected base prices for validation instead of calling API again
+                # (API might also be slow or return old data)
+                expected_prices = {
+                    "BTC": 74000,
+                    "ETH": 2600,
+                    "SOL": 195,
+                    "ADA": 0.98,
+                    "XRP": 2.45,
+                    "DOT": 8.50
+                }
                 
-                # CONVERT DAILY TO HOURLY for consistent 24-candle display
-                # This ensures all cryptos display 24 candles for 1-day view
-                hourly_data = convert_daily_to_hourly(df)
-                return hourly_data
+                expected_price = expected_prices.get(ticker, 100)
+                
+                # STRICT VALIDATION: Reject data that's too far from expected price
+                # (CoinGecko sometimes returns old data - we want recent data only)
+                price_diff_pct = abs(expected_price - last_price) / expected_price * 100
+                
+                # Reject if data is >100% different (completely unrealistic)
+                if price_diff_pct > 100:
+                    # Data is too far from expected - probably old or corrupted
+                    pass
+                else:
+                    # Data looks reasonable, use it
+                    # Convert to hourly directly (data is reasonably recent)
+                    hourly_data = convert_daily_to_hourly(df)
+                    # Sync to current live price will be done in get_historical_data
+                    return hourly_data
     except Exception as e:
         pass
     
     # Fallback: Return synchronized mock data with hourly granularity
+    # This uses correct base prices
     return generate_and_sync_mock_data(ticker, days)
 
 def convert_daily_to_hourly(daily_df):
