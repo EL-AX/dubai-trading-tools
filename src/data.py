@@ -369,7 +369,8 @@ def generate_mock_data(ticker, days=1, hours=None):
 
 def generate_and_sync_mock_data(ticker, days):
     """Generate mock data and SYNCHRONIZE with live price
-    This is used when APIs are unavailable"""
+    This is used when APIs are unavailable
+    Generates HOURLY candles (24 per day) for consistent 1-day view"""
     
     base_prices = {
         "BTC": 74000,
@@ -386,19 +387,21 @@ def generate_and_sync_mock_data(ticker, days):
     }
     
     base_price = base_prices.get(ticker, 100)
-    num_candles = days
-    dates = pd.date_range(end=datetime.now(), periods=num_candles, freq="D")
+    # Generate HOURLY candles: days * 24 hours per day
+    num_candles = days * 24
+    dates = pd.date_range(end=datetime.now(), periods=num_candles, freq="h")
     
-    returns = np.random.normal(0.0001, 0.01, num_candles)
+    # Generate realistic hourly returns
+    returns = np.random.normal(0.00001, 0.002, num_candles)
     prices = base_price * np.exp(np.cumsum(returns))
     
     data = pd.DataFrame({
         "timestamp": dates,
-        "open": prices * (1 + np.random.normal(0, 0.001, num_candles)),
-        "high": prices * (1 + abs(np.random.normal(0, 0.005, num_candles))),
-        "low": prices * (1 - abs(np.random.normal(0, 0.005, num_candles))),
+        "open": prices * (1 + np.random.normal(0, 0.0005, num_candles)),
+        "high": prices * (1 + abs(np.random.normal(0, 0.002, num_candles))),
+        "low": prices * (1 - abs(np.random.normal(0, 0.002, num_candles))),
         "close": prices,
-        "volume": np.random.randint(1000000, 10000000, num_candles)
+        "volume": np.random.randint(100000, 1000000, num_candles)
     })
     
     # CRITICAL: Try to get live price for sync (but don't recurse)
@@ -408,7 +411,7 @@ def generate_and_sync_mock_data(ticker, days):
             live_price = live_data.get('price', 0)
         elif ticker in ["EUR", "GBP", "JPY", "AUD"]:
             live_price = get_forex_price(ticker)
-        elif ticker in ["BTC", "ETH", "SOL"]:
+        elif ticker in ["BTC", "ETH", "SOL", "ADA", "XRP", "DOT"]:
             live_price = get_crypto_price(ticker)
         else:
             live_price = 0
@@ -438,6 +441,12 @@ def get_historical_data(ticker, days=90):
         try:
             ohlc_data = fetch_coingecko_ohlc(ticker, days)
             if not ohlc_data.empty:
+                # Limit to only the last (days * 24) hours - CRITICAL for consistent display
+                hours_to_keep = days * 24
+                if len(ohlc_data) > hours_to_keep:
+                    ohlc_data = ohlc_data.tail(hours_to_keep)
+                # Cleanup columns - keep only lowercase OHLCV
+                ohlc_data = ohlc_data[['timestamp', 'open', 'high', 'low', 'close', 'volume']].copy()
                 cache.set(f"history_{ticker}_{days}", ohlc_data, ttl=3600)  # 1h cache for real data
                 return ohlc_data
         except Exception as e:
@@ -484,6 +493,7 @@ def get_historical_data(ticker, days=90):
 
 def fetch_coingecko_ohlc(ticker, days):
     """Fetch real OHLC data from CoinGecko with SYNC to live price
+    Converts daily data to HOURLY candles for consistent 24-candle display
     Falls back to synchronized mock data if API unavailable
     Supports: BTC, ETH, SOL, ADA, XRP, DOT"""
     try:
@@ -524,12 +534,61 @@ def fetch_coingecko_ohlc(ticker, days):
                     df['low'] = df['low'] + price_diff
                     df['open'] = df['open'] + price_diff
                 
-                return df
+                # CONVERT DAILY TO HOURLY for consistent 24-candle display
+                # This ensures all cryptos display 24 candles for 1-day view
+                hourly_data = convert_daily_to_hourly(df)
+                return hourly_data
     except Exception as e:
         pass
     
-    # Fallback: Return synchronized mock data
+    # Fallback: Return synchronized mock data with hourly granularity
     return generate_and_sync_mock_data(ticker, days)
+
+def convert_daily_to_hourly(daily_df):
+    """Convert daily OHLC data to hourly granularity
+    Takes last N daily candles and expands to N*24 hourly candles
+    Uses interpolation to create realistic intraday movements"""
+    
+    hourly_data = []
+    
+    for idx, row in daily_df.iterrows():
+        day_open = row['open']
+        day_high = row['high']
+        day_low = row['low']
+        day_close = row['close']
+        day_volume = row['volume']
+        timestamp = row['timestamp']
+        
+        # Create 24 hourly candles for this day
+        for hour in range(24):
+            # Calculate hour timestamp
+            hour_time = timestamp + timedelta(hours=hour)
+            
+            # Distribute movement evenly throughout the day
+            progress = hour / 24.0
+            
+            # Hourly prices with realistic intraday movement
+            hour_open = day_open + (day_close - day_open) * (hour / 24.0)
+            hour_close = day_open + (day_close - day_open) * ((hour + 1) / 24.0)
+            
+            # Add intraday volatility (high and low)
+            intraday_range = (day_high - day_low) * 0.4  # Use 40% of daily range for hours
+            hour_high = max(hour_open, hour_close) + intraday_range * np.random.uniform(0, 0.5)
+            hour_low = min(hour_open, hour_close) - intraday_range * np.random.uniform(0, 0.5)
+            
+            # Distribute volume
+            hour_volume = day_volume / 24.0 * np.random.uniform(0.8, 1.2)
+            
+            hourly_data.append({
+                'timestamp': hour_time,
+                'open': hour_open,
+                'high': hour_high,
+                'low': hour_low,
+                'close': hour_close,
+                'volume': hour_volume
+            })
+    
+    return pd.DataFrame(hourly_data)
 
 
 def fetch_forex_historical(ticker, days):
