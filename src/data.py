@@ -608,7 +608,7 @@ def fetch_forex_historical(ticker, days):
                 # Create HOURLY candles for last N days (24 per day)
                 # For 1 day = 24 hourly candles
                 hours = days * 24
-                dates = pd.date_range(end=datetime.now(), periods=hours, freq='H')
+                dates = pd.date_range(end=datetime.now(), periods=hours, freq='h')
                 
                 # Generate realistic OHLC with small ±0.3% variation per hour
                 base_price = float(current_rate) * 0.99  # Start slightly below current
@@ -657,7 +657,7 @@ def fetch_forex_historical(ticker, days):
     df = generate_mock_data(ticker, hours)
     # Make sure it's hourly-like
     if len(df) > 0:
-        df['timestamp'] = pd.date_range(end=datetime.now(), periods=len(df), freq='H')
+        df['timestamp'] = pd.date_range(end=datetime.now(), periods=len(df), freq='h')
     return df
 
 
@@ -727,7 +727,7 @@ def fetch_gold_historical(days=90):
         # Ultimate fallback with hourly candles
         hours = days * 24
         df = generate_mock_data("XAU", hours)
-        df['timestamp'] = pd.date_range(end=datetime.now(), periods=len(df), freq='H')
+        df['timestamp'] = pd.date_range(end=datetime.now(), periods=len(df), freq='h')
         if len(df) > 0:
             price_diff = current_price - df.iloc[-1]['close']
             df['close'] = df['close'] + price_diff

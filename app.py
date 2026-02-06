@@ -1825,19 +1825,36 @@ def page_dashboard():
         st.markdown("---")
         st.subheader("🔔 Alertes en Temps Réel")
         
-        # Check for active alerts
+        # Check for active alerts using REAL-TIME data
         all_alerts = []
         for ticker in selected_tickers:
-            price_info = get_live_price(ticker)
-            price = price_info.get('price', 0)
-            
-            # Get RSI for alert checking
-            hist_data = get_historical_data(ticker, days=30)
-            prices = hist_data['close'].values
-            rsi = calculate_rsi(prices)
-            if rsi is not None:
-                ticker_alerts = check_alerts(ticker, float(rsi[-1]), price)
-                all_alerts.extend(ticker_alerts)
+            try:
+                # Get live price
+                live_price_data = get_live_price(ticker)
+                price = live_price_data.get('price', 0) if isinstance(live_price_data, dict) else float(live_price_data)
+                
+                if price <= 0 or np.isnan(price):
+                    continue
+                
+                # Get historical data
+                hist_data = get_historical_data(ticker, days=30)
+                if hist_data is None or len(hist_data) == 0:
+                    continue
+                
+                prices = hist_data['close'].values
+                prices = np.nan_to_num(prices, nan=price)
+                
+                # Synchronize with live price
+                if len(prices) > 0:
+                    prices[-1] = price
+                
+                # Calculate RSI for alerts
+                rsi = calculate_rsi(prices)
+                if rsi is not None and len(rsi) > 0:
+                    ticker_alerts = check_alerts(ticker, float(rsi[-1]), price)
+                    all_alerts.extend(ticker_alerts)
+            except Exception:
+                pass
         
         if all_alerts:
             for alert in all_alerts:
@@ -1848,41 +1865,76 @@ def page_dashboard():
                 else:
                     st.info(alert.get("message", f"Alert: {alert['type']}"))
         else:
-            st.success(" Aucune alerte active - Marché stable")
+            st.success(" ✅ Aucune alerte active - Marché stable")
         
         st.markdown("---")
         st.subheader("4️⃣ Signaux de Trading Intelligents")
         
         for ticker in selected_tickers:
-            hist_data = get_historical_data(ticker, days=30)
-            prices = hist_data['close'].values
-            
-            smart_signals = SmartSignals(prices)
-            signals = smart_signals.get_detailed_signals()
-            
-            col1, col2, col3, col4, col5 = st.columns(5)
-            with col1:
-                st.metric("RSI", f"{signals['rsi']:.1f}", "0-100")
-            with col2:
-                st.metric("MACD", f"{signals['macd']:.4f}")
-            with col3:
-                st.metric("Bollinger", f"{signals['bollinger']:.1f}", "-100 to +100")
-            with col4:
-                st.metric("Trend", f"{signals['trend']:.1f}")
-            with col5:
-                signal_text = signals['signal']
-                if "BUY" in signal_text:
-                    st.markdown(f"<h3 style='color: #2ecc71; text-align: center;'>✅ {signal_text}</h3>", unsafe_allow_html=True)
-                elif "SELL" in signal_text:
-                    st.markdown(f"<h3 style='color: #e74c3c; text-align: center;'>❌ {signal_text}</h3>", unsafe_allow_html=True)
-                else:
-                    st.markdown(f"<h3 style='color: #95a5a6; text-align: center;'>⚖️ {signal_text}</h3>", unsafe_allow_html=True)
+            try:
+                # Get live price for real-time data
+                live_price_data = get_live_price(ticker)
+                current_price = live_price_data.get('price', 0) if isinstance(live_price_data, dict) else float(live_price_data)
+                
+                # Validate live price
+                if current_price <= 0 or np.isnan(current_price):
+                    st.warning(f"Prix en temps réel invalide pour {ticker}")
+                    continue
+                
+                # Get historical data for indicators
+                hist_data = get_historical_data(ticker, days=30)
+                if hist_data is None or len(hist_data) == 0:
+                    st.warning(f"Données historiques indisponibles pour {ticker}")
+                    continue
+                
+                prices = hist_data['close'].values
+                prices = np.nan_to_num(prices, nan=current_price)
+                
+                # Synchronize last price with live price for accuracy
+                if len(prices) > 0:
+                    prices[-1] = current_price
+                
+                # Calculate indicators
+                smart_signals = SmartSignals(prices)
+                signals = smart_signals.get_detailed_signals()
+                
+                # Display ticker header with live price
+                st.write(f"**{ticker}** - Prix en temps réel: ${current_price:.4f}")
+                
+                col1, col2, col3, col4, col5 = st.columns(5)
+                with col1:
+                    st.metric("RSI", f"{signals['rsi']:.1f}", "0-100")
+                with col2:
+                    st.metric("MACD", f"{signals['macd']:.4f}")
+                with col3:
+                    st.metric("Bollinger", f"{signals['bollinger']:.1f}", "-100 to +100")
+                with col4:
+                    st.metric("Trend", f"{signals['trend']:.1f}")
+                with col5:
+                    signal_text = signals['signal']
+                    if "BUY" in signal_text:
+                        st.markdown(f"<h3 style='color: #2ecc71; text-align: center;'>✅ {signal_text}</h3>", unsafe_allow_html=True)
+                    elif "SELL" in signal_text:
+                        st.markdown(f"<h3 style='color: #e74c3c; text-align: center;'>❌ {signal_text}</h3>", unsafe_allow_html=True)
+                    else:
+                        st.markdown(f"<h3 style='color: #95a5a6; text-align: center;'>⚖️ {signal_text}</h3>", unsafe_allow_html=True)
+                
+            except Exception as e:
+                st.warning(f"Erreur calcul signaux pour {ticker}: {str(e)}")
         
         st.markdown("---")
         st.subheader("⚠️ Analyse des Risques")
         
         for ticker in selected_tickers:
             try:
+                # Get live price for real-time accuracy
+                live_price_data = get_live_price(ticker)
+                live_price = live_price_data.get('price', 0) if isinstance(live_price_data, dict) else float(live_price_data)
+                
+                if live_price <= 0 or np.isnan(live_price):
+                    st.warning(f"Prix en temps réel invalide pour {ticker}")
+                    continue
+                
                 # Récupérer les données réelles avec une période plus longue pour meilleure analyse
                 hist_data = get_historical_data(ticker, days=90)
                 
@@ -1897,8 +1949,12 @@ def page_dashboard():
                     st.warning(f"Données invalides pour {ticker}")
                     continue
                 
-                # Nettoyer les NaN
-                prices = np.nan_to_num(prices, nan=np.nanmean(prices) if not np.isnan(np.nanmean(prices)) else prices[-1])
+                # Nettoyer les NaN et synchroniser avec prix en temps réel
+                prices = np.nan_to_num(prices, nan=np.nanmean(prices) if not np.isnan(np.nanmean(prices)) else live_price)
+                
+                # CRITICAL: Replace last price with live price for accuracy
+                if len(prices) > 0:
+                    prices[-1] = live_price
                 
                 # Utiliser une période adaptée selon la quantité de données
                 period = min(30, len(prices) // 3)
@@ -1917,7 +1973,7 @@ def page_dashboard():
                     st.warning(f"Calcul des niveaux impossible pour {ticker}")
                     continue
                 
-                st.write(f"**{ticker}**")
+                st.write(f"**{ticker}** - Données en temps réel")
                 col1, col2, col3, col4 = st.columns(4)
                 with col1:
                     st.metric("Prix Actuel", f"${current_price:.4f}")
